@@ -1,0 +1,49 @@
+const theme={
+  color:{
+      main:'#FF582D',
+      main_light:'#FFAD99',
+      500:'#333',
+      400:'#707070',
+      300:'#CECECE',
+      200:'#E8E8E8',
+      100:'#F8F8F8',
+      white:'#fff',
+  },
+  fonts:{
+      h1:{
+          weight:'700',
+          size:'36px',
+      },
+      h2:{
+          weight:'600',
+          size:'30px',
+      },
+      h3:{
+          weight:'400',
+          size:'24px',
+      },
+      sub_head:{
+          size:'20px',
+      },
+      body1:{
+          weight:'400',
+          size:'18px',
+          letter_spacing:'-0.015em'
+      },
+      body2:{
+          size:'14px',
+      },
+      caption:{
+          weight:'400',
+          size:'12px',
+      }
+  },
+  border:{
+      radius:{
+          main:'10px'
+
+      }
+  }
+}
+
+export default theme;
