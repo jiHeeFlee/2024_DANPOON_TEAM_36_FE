@@ -5,10 +5,11 @@ import themeGet from "../utils/themeGet";
 import NavigationBar from "../components/NavigationBar";
 import SummitItem from "../components/Summit/SummitItem";
 import GotoUpload from "../components/Summit/GotoUpload";
-
+import Modal from "../components/Modal";
 import Background from "../components/Background";
 import Footer from '../components/Footer';
 
+import { ModalMessage } from "../constants/ModalMessage";
 import { SummitInfoContents } from "../constants/SummitMockup";
 import { SummitMapTest } from "../constants/SummitMapTest";
 
@@ -61,7 +62,16 @@ const ItemGrid = styled.div`
 `;
 
 function Summit() {
+  const [isModal, setIsModal] = useState(false);
   const [gotoUpload, setGotoUpload] = useState(false);
+
+  const handle_button_click = () => {
+    setIsModal(true);
+  };
+
+  const handle_close_modal = () => {
+    setIsModal(false);
+  };
 
   const handle_gotoUpload_button = () => {
     setGotoUpload((prev) => !prev);
@@ -91,6 +101,8 @@ function Summit() {
                     로그인 O : Upload 페이지로 이동
                     로그인 X : 로그인 모달 창 띄운 후 로그인 페이지로 이동 */}
           <GotoUpload
+            onClick={handle_button_click}
+            route={ModalMessage.login.router}
           />
         </InfoContainer>
 
@@ -110,6 +122,16 @@ function Summit() {
         </Background>
         <Footer />
 
+        {/* 모달창 코드 */}
+        {isModal && (
+          <Modal
+            icon={ModalMessage.login.icon}
+            message={ModalMessage.login.message}
+            button={ModalMessage.login.button}
+            onClose={handle_close_modal}
+            router={ModalMessage.login.router}
+          />
+        )}
       </Container>
     </>
   );
