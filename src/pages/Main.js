@@ -3,6 +3,11 @@ import styled, { keyframes } from "styled-components";
 import { BsChevronCompactDown } from "react-icons/bs";
 import themeGet from "../utils/themeGet";
 import NavigationBar from "../components/NavigationBar";
+import main_ongoingsummit from '../assets/img/main-ongoingsummit.png';
+import main_signup from "../assets/img/main_signup.png";
+import main_pt from "../assets/img/main_pt.png";
+import main_my from "../assets/img/main_my.png";
+
 
 const Main = () => {
 
@@ -29,10 +34,10 @@ const Main = () => {
         <ContentContainer1>
           <ContentLabel1>진행 중인 써밋</ContentLabel1>
           <ContentDescription>YE;Summit에서는<br />매일이 써밋 데이</ContentDescription>
-          {/* <ContentImg>dk</ContentImg> */}
+          <ImgBox><ContentImg src={main_ongoingsummit} alt="OngoingSummit Image" /></ImgBox>
           <ContentSubDescription1>
-            주 2회 새로운 주제로 써밋이 열려요. <br/>
-            누구든지 언제 어디서나 <br/>
+            주 2회 새로운 주제로 써밋이 열려요. <br />
+            누구든지 언제 어디서나 <br />
             써밋에 참가할 수 있습니다.
           </ContentSubDescription1>
         </ContentContainer1>
@@ -40,23 +45,24 @@ const Main = () => {
         <ContentContainer2>
           <ContentLabel2>마이페이지</ContentLabel2>
           <ContentDescription>쉽고 빠른 참가 등록</ContentDescription>
-          {/* <ContentImg>dk</ContentImg> */}
+          <ContentImg src={main_signup} alt="SignUp Image" />
           <ContentSubDescription2>
-          카카오 소셜 로그인과 단 한 번의 회원정보 등록만으로 <br/>
-          YE;Summit의 모든 서비스를 사용하실 수 있습니다.
+            카카오 소셜 로그인과 단 한 번의 회원정보 등록만으로 <br />
+            YE;Summit의 모든 서비스를 사용하실 수 있습니다.
           </ContentSubDescription2>
         </ContentContainer2>
 
-        <ContentContainer2>
-          <ContentLabel2>써밋 ・ PT</ContentLabel2>
-          <ContentDescription>PT 영상 올리고<br/>투자 제안까지</ContentDescription>
+        <ContentContainer3>
+          <ContentLabel3>써밋 ・ PT</ContentLabel3>
+          <ContentDescription>PT 영상 올리고<br />투자 제안까지</ContentDescription>
           {/* <DesignBox/> */}
-          {/* <ContentImg>dk</ContentImg> */}
+          <ImgBox2><ContentImg2 src={main_my} alt="My Image" /></ImgBox2>
+          <ImgBox3><ContentImg2 src={main_pt} alt="PT Image" /></ImgBox3>
           <ContentSubDescription3>
-          PT 영상을 업로드하고 <br/> 투자를 제안한 예비 투자자와 미팅을 가져보세요.
+            PT 영상을 업로드하고 <br /> 투자를 제안한 예비 투자자와 미팅을 가져보세요.
           </ContentSubDescription3>
-        </ContentContainer2>
-        <ButtonContainer><Button onClick={()=>navigate('/ongoingsummit')}>YE;Summit 시작하기</Button></ButtonContainer>
+        </ContentContainer3>
+        <ButtonContainer><Button onClick={() => navigate('/ongoingsummit')}>YE;Summit 시작하기</Button></ButtonContainer>
       </InfoContainer>
     </Container>
   );
@@ -117,22 +123,29 @@ const Description = styled.div`
 
 const ContentContainer1 = styled.div`
   width: 100%;
-  height: 120vh;
-  max-height: 1240px;
+  height: 160vh;
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, ${themeGet("color.white")} 70%, ${themeGet("color.main")});
-  padding: 80px 0;
+  padding: 5vh 0 11vh 0;
 `;
 
 const ContentContainer2 = styled.div`
   width: 100%;
-  height: 120vh;
-  max-height: 1240px;
+  height: 160vh;
   display: flex;
   flex-direction: column;
   background: ${themeGet("color.white")};
-  padding: 80px 0;
+  padding: 10vh 0;
+`;
+
+const ContentContainer3 = styled.div`
+  width: 100%;
+  height: 180vh;
+  display: flex;
+  flex-direction: column;
+  background: ${themeGet("color.white")};
+  padding: 10vh 0;
 `;
 
 const ContentLabel1 = styled.div`
@@ -156,8 +169,11 @@ const ContentLabel2 = styled(ContentLabel1)`
   width: 234px;
 `;
 
+const ContentLabel3 = styled(ContentLabel2)`
+  margin-top: 100px;
+`;
+
 const ContentDescription = styled.p`
-  margin-top: 80px;
   margin-left: 100px;
   font-size: 50px;
   font-weight: bold;
@@ -171,17 +187,20 @@ const ContentSubDescription1 = styled.p`
   text-align: center;
   padding-left: 0;
   font-size: 32px;
-  color: ${themeGet("color.500")};
+  color: ${themeGet("color.white")};
   line-height: 1.4;
-  margin-top: 80px;
+  margin-top: 10px;
 `;
 
 const ContentSubDescription2 = styled(ContentSubDescription1)`
   color: ${themeGet("color.500")};
+  text-align: left;
+  padding-left: 100px;
 `;
 
 const ContentSubDescription3 = styled(ContentSubDescription2)`
-  margin-left: 45vw;
+  margin-left: 40vw;
+  margin-top: 450px;
 `;
 
 // const DesignBox = styled.div`
@@ -192,6 +211,37 @@ const ContentSubDescription3 = styled(ContentSubDescription2)`
 //   background-color: ${themeGet("color.main")};
 //   padding-top: 280px;
 // `
+
+const ImgBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const ImgBox2 = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+`
+
+const ImgBox3 = styled.div`
+  position: absolute;
+  display: flex;
+  padding-top: 550px;
+  align-items: baseline;
+  z-index: 2;
+`
+
+const ContentImg = styled.img`
+  width: 64vw;
+  z-index: 1;
+  object-fit: cover;
+`
+
+const ContentImg2 = styled.img`
+  width: 65vw;
+    object-fit: cover;
+`
 
 const moveDownUp = keyframes`
   0% {
@@ -212,7 +262,7 @@ const MovingIcon = styled(BsChevronCompactDown)`
 
 const ButtonContainer = styled.div`
   background-color: ${themeGet('color.white')};
-  padding-bottom: 150px;
+  padding-top: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -221,6 +271,7 @@ const ButtonContainer = styled.div`
 const Button = styled.button`
   width: 462px;
   height: 74px;
+  margin-top: 300px;
   border: none;
   border-radius: 10px;
   background-color: ${themeGet('color.main_light')};
