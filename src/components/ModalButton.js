@@ -11,8 +11,8 @@ const Ok = styled.button`
     border-radius: 10px;
     &:hover {
         color: ${themeGet('color.white')};
-        background-color: ${themeGet('color.salmon')};
-        border: 1px solid ${themeGet('color.salmon')};
+        background-color: ${themeGet('color.main_light')};
+        border: 1px solid ${themeGet('color.main_light')};
         font-weight: 600;
         transition: all 0.3s;
     }
@@ -43,8 +43,8 @@ const Yes = styled.button`
     border: 1px solid ${themeGet('color.main') || '#000'};
     &:hover {
         color: ${themeGet('color.white') || '#000'};
-        background-color: ${themeGet('color.salmon') };
-        border: 1px solid ${themeGet('color.salmom') };
+        background-color: ${themeGet('color.main_light') };
+        border: 1px solid ${themeGet('color.main_light') };
         transition: all 0.3s;
     }
     &:active {
@@ -65,8 +65,8 @@ const No = styled.button`
     border: 1px solid ${themeGet('color.main') || '#000'};
     &:hover {
         color: ${themeGet('color.white') || '#000'};
-        background-color: ${themeGet('color.salmon') };
-        border: 1px solid ${themeGet('color.salmom') };
+        background-color: ${themeGet('color.main_light') };
+        border: 1px solid ${themeGet('color.main_light') };
         transition: all 0.3s;
     }
     &:active {

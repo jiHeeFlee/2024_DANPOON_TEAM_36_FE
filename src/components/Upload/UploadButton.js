@@ -21,7 +21,7 @@ const Container=styled.button`
 
     &:hover{
         color: ${themeGet('color.white')};
-        background-color: ${themeGet('color.salmon')};
+        background-color: ${themeGet('color.')};
         transition: all 0.3s;
     }
 

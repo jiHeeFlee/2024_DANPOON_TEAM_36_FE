@@ -48,7 +48,7 @@ const ModalContainer=styled.div`
         width: 60px;
         height: 60px;
         margin: 0px;
-        color:${themeGet('color.salmon')};
+        color:${themeGet('color.main_light')};
     }
 `;
 

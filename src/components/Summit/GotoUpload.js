@@ -23,7 +23,7 @@ const Container=styled.button`
 
     &:hover{
         color: ${themeGet('color.white')};
-        background-color: ${themeGet('color.salmon')};
+        background-color: ${themeGet('color.main_light')};
         font-weight: 600;
         transition: all 0.3s;
     }

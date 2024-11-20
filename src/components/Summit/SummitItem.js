@@ -38,6 +38,7 @@ const Container=styled.div`
     gap: 16px;
 
     /* z-index: 1; */
+    margin-right: 20px;
 `;
 
 const Contents=styled.div`
