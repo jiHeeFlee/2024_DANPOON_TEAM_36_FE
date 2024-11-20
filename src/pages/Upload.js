@@ -4,6 +4,7 @@ import themeGet from "../utils/themeGet";
 
 import NavigationBar from "../components/NavigationBar";
 import Inputs from "../components/InputUpload";
+import InputUpload from "../components/InputUpload";
 import InputMessage from "../constants/InputMessage";
 import FileUpload from "../components/Upload/FileUpload";
 import UploadButton from "../components/Upload/UploadButton";
