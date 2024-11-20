@@ -77,7 +77,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* overflow-x: hidden; */
+  margin-bottom: 100px;
   `;
 
 const InfoContainer = styled.div`
