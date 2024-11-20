@@ -5,7 +5,7 @@ import themeGet from "../utils/themeGet";
 import NavigationBar from "../components/NavigationBar";
 import Inputs from "../components/InputUpload";
 import InputMessage from "../constants/InputMessage";
-
+import FileUpload from "../components/Upload/FileUpload";
 import Modal from "../components/Modal";
 import Footer from "../components/Footer";
 
@@ -68,10 +68,30 @@ function Upload() {
         video_url: "",
         thumbnail: null,
     });
-    
+
+    // const handle_button_click=()=>{
+    //     setIsModal(true);
+    // }
     const handle_close_modal=()=>{
         setIsModal(false);
     }
+
+    // FileUpload에서 파일 정보 업데이트
+    const handle_file_change = (file) => {
+        console.log("Received file:", file);
+        setFormData((prevData) => ({
+            ...prevData,
+            thumbnail: file, // 파일 객체 저장
+        }));
+    };
+
+    // Input 값 변경 시 formData 업데이트
+    const handle_input_change = (field, value) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            [field]: value, // 동적으로 field 업데이트
+        }));
+    };
 
     return (
         <>
@@ -117,6 +137,7 @@ function Upload() {
                             value={formData.video_url}
                             onChange={(e) => handle_input_change("video_url", e.target.value)}
                         />
+                        <FileUpload onChange={handle_file_change} />
                     </UploadContainer>
                 </Items>
                 <Footer />
