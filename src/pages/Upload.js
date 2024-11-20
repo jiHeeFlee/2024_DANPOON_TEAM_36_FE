@@ -6,6 +6,7 @@ import NavigationBar from "../components/NavigationBar";
 import Inputs from "../components/InputUpload";
 import InputMessage from "../constants/InputMessage";
 import FileUpload from "../components/Upload/FileUpload";
+import UploadButton from "../components/Upload/UploadButton";
 import Modal from "../components/Modal";
 import Footer from "../components/Footer";
 
@@ -93,6 +94,13 @@ function Upload() {
         }));
     };
 
+     // Upload 버튼 클릭 시 formData 출력
+    const handle_upload_button = () => {
+        // 비동기 업데이트 문제를 방지하고 최신 상태 출력
+        console.log("Uploaded form data:", { ...formData });
+        setIsModal(true);
+    };
+
     return (
         <>
             <Container>
@@ -139,6 +147,12 @@ function Upload() {
                         />
                         <FileUpload onChange={handle_file_change} />
                     </UploadContainer>
+                    <UploadButton 
+                        onClick={handle_upload_button} 
+                        // router 주소는 서버에서 주는 주소로 처리하기
+        
+                        text='PT 영상 업로드 하러 가기'
+                        />
                 </Items>
                 <Footer />
 
