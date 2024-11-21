@@ -5,6 +5,8 @@ import NavigationBar from "../components/NavigationBar";
 import Carousel from '../components/OngoingSummit/Carousel';
 import GotoUpload from '../components/Summit/GotoUpload';
 import { useNavigate } from 'react-router';
+
+import UplaodSuggestion from '../components/OngoingSummit/UploadSuggestion';
 import Footer from "../components/Footer";
 
 const OngoingSummit = () => {
@@ -40,7 +42,9 @@ const OngoingSummit = () => {
         <NavigationBar />
         <TitleSection>
           <Title>현재 진행 중인 써밋에서 다양한 피칭을 둘러보세요</Title>
-          <Description>YE;Summit에서는 매주 두 개의 써밋이 열립니다.</Description>
+          <Description>
+            <span>YE;Summit</span>에서는 매주 두 개의 써밋이 열립니다.
+            </Description>
         </TitleSection>
       </Header>
 
@@ -53,17 +57,15 @@ const OngoingSummit = () => {
           ) : null
         ))}
 
-        {summitData.map((summit, index) => (
+        {summitData.map((summit, index)=>(
           summit.items.length === 0 && (
-            <CTASection key={index}>
-              <CTAHeader>
-                '{summit.title}'를 선도하는 청년 창업가가 되고 싶으신가요?
-              </CTAHeader>
-              <CTADescription>
-                써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요.
-              </CTADescription>
-              <GotoUpload />
-            </CTASection>
+            <UplaodSuggestion 
+              header={summit.title}
+              caption='써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요.'
+              
+              // 추후 라우터 작업 진행하기
+              // router
+              />
           )
         ))}
       </SummitSection>
@@ -97,58 +99,80 @@ const Header = styled.header`
 `;
 
 const TitleSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 100px 0 80px 0;
 `;
 
 const Title = styled.h1`
   font-size: ${themeGet("fonts.h1.size")};
   margin-bottom: 20px;
+
+  justify-content: center;
+
+  font-family: Pretendard;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 42px;
+  letter-spacing: -0.015em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
 `;
 
 const Description = styled.p`
+  display: inline;
   font-size: ${themeGet("fonts.body1.size")};
   margin: 0;
+
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 34px;
+  letter-spacing: -0.015em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+
+  span{
+    display: inline;
+
+    margin-right:5px ;
+
+    font-family: Pretendard;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: -0.015em;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+  }
 `;
 
 const SummitSection = styled.section`
-  width: 100%;
-  padding: 2rem 0;
   display: flex;
   flex-direction: column;
   justify-items: center;
   align-items: center;
+
+  width: 100%;
+  
+  padding: 2rem 0;
 `;
 
 const CarouselContainer = styled.div`
-  width: 1140px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 530px;
+
+  margin-bottom: 40px;
+
+  width: 1140px;
+  height: 552px;
+  
   border-radius: 10px;
-  border: none;
   box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
   background-color: ${themeGet('color.white')};
-  margin-bottom: 40px;
-`;
-
-const CTASection = styled.section`
-  background-color: ${themeGet('color.main_light')};
-  border-radius: 10px;
-  width: 1020px;
-  height: 220px;
-  padding-left: 40px;
-  color: ${themeGet('color.white')};
-  margin-top: 20px;
-`;
-
-const CTAHeader = styled.h2`
-  font-size: ${themeGet("fonts.h2.size")};
-  font-weight: bold;
-  margin: 20px auto;
-`;
-
-const CTADescription = styled.p`
-  font-size: ${themeGet("fonts.sub_head.size")};
-  margin-bottom: 40px;
 `;
