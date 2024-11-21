@@ -87,13 +87,14 @@ export default Carousel;
 
 // 스타일
 const CarouselContainer = styled.div`
+  display: flex;
   position: relative;
   width: 100%;
   max-width: 1180px;
   height: 552px;
-  background-color: ${themeGet("color.white")};
-  display: flex;
+
   padding-left: 80px;
+
   overflow: hidden;
 `;
 
