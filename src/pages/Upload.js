@@ -4,7 +4,6 @@ import themeGet from "../utils/themeGet";
 
 import NavigationBar from "../components/NavigationBar";
 import Inputs from "../components/InputUpload";
-import InputUpload from "../components/InputUpload";
 import InputMessage from "../constants/InputMessage";
 import FileUpload from "../components/Upload/FileUpload";
 import UploadButton from "../components/Upload/UploadButton";
@@ -12,6 +11,146 @@ import Modal from "../components/Modal";
 import Footer from "../components/Footer";
 
 import { ModalMessage } from "../constants/ModalMessage";
+
+function Upload() {
+    const [isModal, setIsModal] = useState(false);
+    const [modalContent, setModalContent] = useState(null); // 모달 내용을 동적으로 관리
+    const [formData, setFormData] = useState({
+        title: "",
+        summary: "",
+        url: "",
+        video_url: "",
+        thumbnail: null,
+    });
+
+    // 필수 데이터가 비어 있는지 확인
+    const isRequiredFormDataInvalid = () => {
+        return (
+            formData.title === "" ||
+            formData.summary === "" ||
+            formData.video_url === ""
+        );
+    };
+
+    const handleOpenModal = (content) => {
+        setModalContent(content);
+        setIsModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModal(false);
+        setModalContent(null);
+    };
+
+    // 업로드 버튼 클릭 시 처리
+    const handleUploadButton = (event) => {
+        event.preventDefault();
+
+        if (isRequiredFormDataInvalid()) {
+            // 필수 값이 비어있으면 모달을 표시
+            handleOpenModal({
+                icon: ModalMessage.requiredData.icon,
+                message: ModalMessage.requiredData.message,
+                button: ModalMessage.requiredData.button,
+                onClose: handleCloseModal,
+                router: null, // 필수 값 누락 시 페이지 이동 없음
+            });
+        } else {
+            // 정상 처리 로직
+            console.log("Form is valid, proceed to submit.");
+            handleOpenModal({
+                icon: ModalMessage.pt.icon,
+                message: ModalMessage.pt.message,
+                button: ModalMessage.pt.button,
+                onClose: handleCloseModal,
+                router: "/pt", // 정상 입력 시 페이지 이동
+            });
+        }
+        console.log("Uploaded form data:", { ...formData });
+    };
+
+    // FileUpload에서 파일 정보 업데이트
+    const handleFileChange = (file) => {
+        console.log("Received file:", file);
+        setFormData((prevData) => ({
+            ...prevData,
+            thumbnail: file,
+        }));
+    };
+
+    // Input 값 변경 시 formData 업데이트
+    const handleInputChange = (field, value) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            [field]: value,
+        }));
+    };
+
+    return (
+        <>
+            <Container>
+                <NavigationBar />
+                <Items>
+                    <Header>PT 영상 및 정보를 작성해주세요</Header>
+                    <UploadContainer>
+                        <Inputs
+                            header={InputMessage.title.header}
+                            placeholder={InputMessage.title.placeholder}
+                            star={InputMessage.title.star}
+                            caption={InputMessage.title.caption}
+                            value={formData.title}
+                            onChange={(e) => handleInputChange("title", e.target.value)}
+                        />
+                        <Inputs
+                            header={InputMessage.summary.header}
+                            placeholder={InputMessage.summary.placeholder}
+                            star={InputMessage.summary.star}
+                            type="textarea"
+                            caption={InputMessage.title.caption}
+                            value={formData.summary}
+                            onChange={(e) => handleInputChange("summary", e.target.value)}
+                        />
+                        <Inputs
+                            header={InputMessage.server_url.header}
+                            placeholder={InputMessage.server_url.placeholder}
+                            info={InputMessage.server_url.info}
+                            value={formData.url}
+                            onChange={(e) => handleInputChange("url", e.target.value)}
+                        />
+                        <Inputs
+                            header={InputMessage.pt_url.header}
+                            placeholder={InputMessage.pt_url.placeholder}
+                            info={InputMessage.pt_url.info}
+                            star={InputMessage.pt_url.star}
+                            caption={InputMessage.pt_url.caption}
+                            value={formData.video_url}
+                            onChange={(e) => handleInputChange("video_url", e.target.value)}
+                        />
+                        <FileUpload onChange={handleFileChange} />
+                    </UploadContainer>
+                    <UploadButton
+                        onClick={handleUploadButton}
+                        text="PT 영상 업로드 하러 가기"
+                    />
+                </Items>
+                <Footer />
+
+                {isModal && modalContent && (
+                    <Modal
+                        icon={modalContent.icon}
+                        message={modalContent.message}
+                        button={modalContent.button}
+                        onClose={handleCloseModal}
+                        router={modalContent.router}
+                    />
+                )}
+            </Container>
+        </>
+    );
+}
+
+
+export default Upload;
 
 const Container = styled.div`
     display: flex;
@@ -60,114 +199,3 @@ const UploadContainer = styled.div`
     border-radius: 10px;
     box-shadow: 5px 5px 20px 2px #00000040;
 `;
-
-function Upload() {
-    const [isModal,setIsModal]=useState(false);
-    const [formData, setFormData] = useState({
-        title: "",
-        summary: "",
-        url: "",
-        video_url: "",
-        thumbnail: null,
-    });
-
-    // const handle_button_click=()=>{
-    //     setIsModal(true);
-    // }
-    const handle_close_modal=()=>{
-        setIsModal(false);
-    }
-
-    // FileUpload에서 파일 정보 업데이트
-    const handle_file_change = (file) => {
-        console.log("Received file:", file);
-        setFormData((prevData) => ({
-            ...prevData,
-            thumbnail: file, // 파일 객체 저장
-        }));
-    };
-
-    // Input 값 변경 시 formData 업데이트
-    const handle_input_change = (field, value) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            [field]: value, // 동적으로 field 업데이트
-        }));
-    };
-
-     // Upload 버튼 클릭 시 formData 출력
-    const handle_upload_button = () => {
-        // 비동기 업데이트 문제를 방지하고 최신 상태 출력
-        console.log("Uploaded form data:", { ...formData });
-        setIsModal(true);
-    };
-
-    return (
-        <>
-            <Container>
-                <NavigationBar />
-                <Items>
-                    <Header>PT 영상 및 정보를 작성해주세요</Header>
-                    <UploadContainer>
-                        <Inputs
-                            header={InputMessage.title.header}
-                            placeholder={InputMessage.title.placeholder}
-                            star={InputMessage.title.star}
-                            caption={InputMessage.title.caption}
-
-                            value={formData.title}
-                            onChange={(e) => handle_input_change("title", e.target.value)}
-                        />
-                        <Inputs
-                            header={InputMessage.summary.header}
-                            placeholder={InputMessage.summary.placeholder}
-                            star={InputMessage.summary.star}
-                            type="textarea"
-                            caption={InputMessage.title.caption}
-
-                            value={formData.summary}
-                            onChange={(e) => handle_input_change("summary", e.target.value)}
-                        />
-                        <Inputs
-                            header={InputMessage.server_url.header}
-                            placeholder={InputMessage.server_url.placeholder}
-                            info={InputMessage.server_url.info}
-
-                            value={formData.url}
-                            onChange={(e) => handle_input_change("url", e.target.value)}
-                        />
-                        <Inputs
-                            header={InputMessage.pt_url.header}
-                            placeholder={InputMessage.pt_url.placeholder}
-                            info={InputMessage.pt_url.info}
-                            star={InputMessage.pt_url.star}
-                            caption={InputMessage.pt_url.caption}
-                            
-                            value={formData.video_url}
-                            onChange={(e) => handle_input_change("video_url", e.target.value)}
-                        />
-                        <FileUpload onChange={handle_file_change} />
-                    </UploadContainer>
-                    <UploadButton 
-                        onClick={handle_upload_button} 
-                        // router 주소는 서버에서 주는 주소로 처리하기
-        
-                        text='PT 영상 업로드 하러 가기'
-                        />
-                </Items>
-                <Footer />
-
-                {isModal &&(
-                    <Modal 
-                        icon={ModalMessage.pt.icon}
-                        message={ModalMessage.pt.message}
-                        button={ModalMessage.pt.button}
-                        onClose={handle_close_modal}
-                    />
-                )}
-            </Container>
-        </>
-    );
-}
-
-export default Upload;
