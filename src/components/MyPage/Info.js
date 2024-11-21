@@ -120,6 +120,31 @@ function Info({ participant_type }) {
           </ButtonWrapper>
         </Container>
       )}
+       {participant_type === "INVESTOR" && (
+        <Container>
+          <Header>내 정보</Header>
+          <Wrapper>
+            <div>
+              <MyInfoComponent title="구분" content="예비 창업자" />
+              <MyInfoComponent title="연락처" content="01012345678" />
+              <MyInfoComponent title="이메일" content="goorm@gmail.com" />
+              <MyInfoComponent title="알림톡" content="수신" />
+            </div>
+            <div>
+              <MyInfoComponent
+                title="소속 회사 및 직책"
+                content="구름 / 인턴"
+              />
+              
+              <MyInfoComponent title="투자 관심 분야" content="IT" />
+            </div>
+          </Wrapper>
+          <ButtonWrapper>
+            <Button>회원 정보 수정하기</Button>
+            <Button>회원 탈퇴 하기</Button>
+          </ButtonWrapper>
+        </Container>
+      )}
     </>
   );
 }
