@@ -8,13 +8,16 @@ import main_signup from "../assets/img/main_signup.png";
 import main_pt from "../assets/img/main_pt.png";
 import main_my from "../assets/img/main_my.png";
 
+import Features from "../components/Main/Features";
+import Footer from "../components/Footer";
 
 const Main = () => {
 
   const navigate = useNavigate();
 
   return (
-    <Container>
+    <>
+      <Container>
       <InfoContainer>
         <InfoSemiContainer>
           <NavigationBar />
@@ -26,45 +29,59 @@ const Main = () => {
         </TitleContainer>
 
         <Description>
-          다양한 써밋 무대에서 피칭을 선보이고 투자 제안까지 받아보세요. <br />
-          YE;Summit에서 지속 가능한 미래를 이끌 (예비) 청년 창업가분들을 <br />
-          스페셜리스트로 초대합니다.
+          <div>
+            다양한 써밋 무대에서 피칭을 선보이고 투자 제안까지 받아보세요. <br />
+            <span>YE;Summit</span>에서 지속 가능한 미래를 이끌 (예비) 청년 창업가분들을<br />
+            스페셜리스트로 초대합니다.
+          </div>
         </Description>
 
         <ContentContainer1>
-          <ContentLabel1>진행 중인 써밋</ContentLabel1>
+          <Features text='진행 중인 써밋'/>
+          {/* <ContentLabel1>진행 중인 써밋</ContentLabel1> */}
           <ContentDescription>YE;Summit에서는<br />매일이 써밋 데이</ContentDescription>
           <ImgBox><ContentImg src={main_ongoingsummit} alt="OngoingSummit Image" /></ImgBox>
           <ContentSubDescription1>
-            주 2회 새로운 주제로 써밋이 열려요. <br />
-            누구든지 언제 어디서나 <br />
-            써밋에 참가할 수 있습니다.
+            <div>
+              주 2회 새로운 주제로 <span>써밋</span>이 열려요. <br />
+              누구든지 언제 어디서나 <br />
+              써밋에 참가할 수 있습니다.
+            </div>
           </ContentSubDescription1>
         </ContentContainer1>
 
         <ContentContainer2>
-          <ContentLabel2>마이페이지</ContentLabel2>
+          <Features text='마이페이지'/>
+          {/* <ContentLabel2>마이페이지</ContentLabel2> */}
           <ContentDescription>쉽고 빠른 참가 등록</ContentDescription>
           <ContentImg src={main_signup} alt="SignUp Image" />
           <ContentSubDescription2>
+            <div>
             카카오 소셜 로그인과 단 한 번의 회원정보 등록만으로 <br />
-            YE;Summit의 모든 서비스를 사용하실 수 있습니다.
+            <span>YE;Summit</span>의 모든 서비스를 사용하실 수 있습니다.
+            </div>
           </ContentSubDescription2>
         </ContentContainer2>
 
         <ContentContainer3>
-          <ContentLabel3>써밋 ・ PT</ContentLabel3>
+          <Features text='써밋 • PT'/>
+          {/* <ContentLabel3>써밋 • PT</ContentLabel3> */}
           <ContentDescription>PT 영상 올리고<br />투자 제안까지</ContentDescription>
           {/* <DesignBox/> */}
           <ImgBox2><ContentImg2 src={main_my} alt="My Image" /></ImgBox2>
           <ImgBox3><ContentImg2 src={main_pt} alt="PT Image" /></ImgBox3>
           <ContentSubDescription3>
-            PT 영상을 업로드하고 <br /> 투자를 제안한 예비 투자자와 미팅을 가져보세요.
+            <div>
+              PT 영상을 <span>업로드</span>하고 <br /> 
+              투자를 제안한 예비 투자자와 미팅을 가져보세요.
+            </div>
           </ContentSubDescription3>
         </ContentContainer3>
         <ButtonContainer><Button onClick={() => navigate('/ongoingsummit')}>YE;Summit 시작하기</Button></ButtonContainer>
       </InfoContainer>
     </Container>
+    <Footer />
+    </>
   );
 };
 
@@ -77,7 +94,6 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 100px;
   `;
 
 const InfoContainer = styled.div`
@@ -108,17 +124,44 @@ const Title = styled.h1`
 `;
 
 const Description = styled.div`
+  /* display: inline; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+  
+  margin: 40px 0;
+
+  width: 100%;
   height: 87vh;
   background-color: ${themeGet("color.100")};
-  color: ${themeGet("color.500")};
-  font-size: ${themeGet("fonts.h1.size")};
-  line-height: 1.6;
-  margin: 40px 0;
+  letter-spacing: -0.015em;
+
+  div{
+    display: inline;
+      
+    color: ${themeGet("color.500")};
+    font-size: ${themeGet("fonts.h1.size")};
+
+    letter-spacing: -0.015em;
+    line-height: 1.6;
+  }
+
+  span{
+    display: inline;
+    text-align: center;
+
+    margin: 0 5px 0 0;
+
+    font-family: Pretendard;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 52px;
+    letter-spacing: -0.015em;
+    line-height: 1; /* 또는 line-height: 48px; */
+    line-height: 1; /* 고정 */
+  }
 `;
 
 const ContentContainer1 = styled.div`
@@ -190,17 +233,98 @@ const ContentSubDescription1 = styled.p`
   color: ${themeGet("color.white")};
   line-height: 1.4;
   margin-top: 10px;
+
+  div{
+    display: inline;
+      
+    color: ${themeGet("color.white")};
+    font-weight: 500;
+
+    letter-spacing: -0.015em;
+    line-height: 1.6;
+  }
+
+  span{
+    display: inline;
+    text-align: center;
+
+    margin: 0 5px 0 0;
+
+    font-family: Pretendard;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 52px;
+    letter-spacing: -0.015em;
+    line-height: 1; /* 또는 line-height: 48px; */
+    line-height: 1; /* 고정 */
+  }
 `;
 
 const ContentSubDescription2 = styled(ContentSubDescription1)`
   color: ${themeGet("color.500")};
   text-align: left;
   padding-left: 100px;
+
+  letter-spacing: -0.015em;
+
+  div{
+    display: inline;
+      
+    color: ${themeGet("color.500")};
+    font-size: ${themeGet("fonts.h1.size")};
+
+    letter-spacing: -0.015em;
+    line-height: 1.6;
+  }
+
+  span{
+    display: inline;
+    text-align: center;
+
+    margin: 0 5px 0 0;
+
+    font-family: Pretendard;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 52px;
+    letter-spacing: -0.015em;
+    line-height: 1; /* 또는 line-height: 48px; */
+    line-height: 1; /* 고정 */
+  }
 `;
 
 const ContentSubDescription3 = styled(ContentSubDescription2)`
   margin-left: 40vw;
   margin-top: 450px;
+
+  font-size: 36px;
+  letter-spacing: -0.015em;
+  line-height: 1.6;
+
+  div{
+    display: inline;
+      
+    color: ${themeGet("color.500")};
+    font-size: ${themeGet("fonts.h1.size")};
+
+    letter-spacing: -0.015em;
+    line-height: 1.6;
+  }
+
+  span{
+    display: inline;
+    text-align: center;
+
+    margin: 0 5px 0 0;
+
+    font-family: Pretendard;
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 52px;
+    letter-spacing: -0.015em;
+    line-height: 1; /* 또는 line-height: 48px; */
+    line-height: 1; /* 고정 */
+  }
 `;
 
 // const DesignBox = styled.div`
@@ -266,12 +390,13 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const Button = styled.button`
   width: 462px;
   height: 74px;
   margin-top: 300px;
+  margin-bottom: 80px;
   border: none;
   border-radius: 10px;
   background-color: ${themeGet('color.main_light')};
@@ -283,4 +408,4 @@ const Button = styled.button`
   &:hover {
     background-color: ${themeGet('color.main')};
   }
-`
+`;
