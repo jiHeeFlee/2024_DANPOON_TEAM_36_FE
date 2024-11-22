@@ -8,13 +8,8 @@ import Info from "../components/MyPage/Info";
 import VideoWrapper from "../components/MyPage/VideoWrapper";
 import LikePTVideo from "../components/MyPage/LikePTVideo";
 import PTList from "../components/MyPage/PTList";
-import { likePTVideosState, myVideoState, mypageInfoState } from "../state";
-import { useRecoilState } from "recoil";
-import { getMyInfo } from "../apis/Member/getMyInfo";
 import { MypageMockup } from "../constants/MypageMockup";
-import { getBoardLike } from "../apis/Board/getBoardLike";
 import { LikePTVideoMockup } from "../constants/LikePTVideoMockup";
-import { getMyBoard } from "../apis/Board/getMyBoard";
 
 function Mypage() {
   const [userInfo, setUserInfo] = useRecoilState(mypageInfoState);
