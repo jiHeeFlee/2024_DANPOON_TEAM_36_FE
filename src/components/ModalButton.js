@@ -1,9 +1,36 @@
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import themeGet from '../utils/themeGet';
 
+function ModalButton({ button, type, onClick }) {
+    const navigate=useNavigate();
+    const handle_delete_yes=()=>{
+        alert('삭제해!!')
+        navigate('/summit')
+    }
+    return (
+        <>
+            {type === 'yes_no' ? (
+                <ButtonContainer >
+                    <Yes
+                        onClick={handle_delete_yes}
+                    >예</Yes>
+                    <No onClick={onClick}>아니오</No>
+                </ButtonContainer>
+            ) : (
+                <Ok onClick={onClick}>
+                    {button}
+                </Ok>
+            )}
+        </>
+    );
+}
+
+export default ModalButton;
+
 const Ok = styled.button`
     padding: 16px 40px;
-    color: ${themeGet('color.white') || '#000'}; 
+    color: ${themeGet('color.white') || '#000'};  // 기본값 추가
     background-color: ${themeGet('color.main') || '#fff'};
     border: 1px solid ${themeGet('color.main') || '#000'};
     font-size: ${themeGet('fonts.body1.size') || '16px'};
@@ -11,8 +38,8 @@ const Ok = styled.button`
     border-radius: 10px;
     &:hover {
         color: ${themeGet('color.white')};
-        background-color: ${themeGet('color.main_light')};
-        border: 1px solid ${themeGet('color.main_light')};
+        background-color: ${themeGet('color.salmon')};
+        border: 1px solid ${themeGet('color.salmon')};
         font-weight: 600;
         transition: all 0.3s;
     }
@@ -43,8 +70,8 @@ const Yes = styled.button`
     border: 1px solid ${themeGet('color.main') || '#000'};
     &:hover {
         color: ${themeGet('color.white') || '#000'};
-        background-color: ${themeGet('color.main_light') };
-        border: 1px solid ${themeGet('color.main_light') };
+        background-color: ${themeGet('color.salmon') };
+        border: 1px solid ${themeGet('color.salmom') };
         transition: all 0.3s;
     }
     &:active {
@@ -65,8 +92,8 @@ const No = styled.button`
     border: 1px solid ${themeGet('color.main') || '#000'};
     &:hover {
         color: ${themeGet('color.white') || '#000'};
-        background-color: ${themeGet('color.main_light') };
-        border: 1px solid ${themeGet('color.main_light') };
+        background-color: ${themeGet('color.salmon') };
+        border: 1px solid ${themeGet('color.salmom') };
         transition: all 0.3s;
     }
     &:active {
@@ -76,22 +103,3 @@ const No = styled.button`
         transition: all 0.3s;
     }
 `;
-
-function ModalButton({ button, type, onClick }) {
-    return (
-        <>
-            {type === 'yes_no' ? (
-                <ButtonContainer onClick={onClick}>
-                    <Yes>예</Yes>
-                    <No>아니오</No>
-                </ButtonContainer>
-            ) : (
-                <Ok onClick={onClick}>
-                    {button}
-                </Ok>
-            )}
-        </>
-    );
-}
-
-export default ModalButton;

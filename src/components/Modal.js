@@ -6,6 +6,46 @@ import { BsCheckCircleFill,BsFillExclamationCircleFill } from 'react-icons/bs';
 import ModalButton from './ModalButton';
 import { useNavigate } from 'react-router';
 
+function Modal({ icon,message,button,onClose,router }){
+    const navigate = useNavigate();
+    const modalBackground = useRef();
+
+    return(
+        <>
+            <Container
+                ref={modalBackground}
+                onClick={(e) => {
+                    if (e.target === modalBackground.current) {
+                        onClose(); // 모달 외부 클릭 시 onClose 콜백 호출
+                    }
+                }}
+             >
+                <ModalContainer onClick={(e) => e.stopPropagation()}>
+                    {icon === 'check' ? (
+                        <BsCheckCircleFill className="icon" />
+                    ) : (
+                        <BsFillExclamationCircleFill className="icon" />
+                    )}
+                    <Message>{message}</Message>
+                    <ModalButton 
+                        type={button} 
+                        button={button}
+                        onClick={()=>{
+                            if(router){
+                                navigate(router)
+                            }else{
+                                onClose();
+                            }
+                        }}
+                        />
+                </ModalContainer>
+            </Container>
+        </>
+    )
+}
+
+export default Modal;
+
 const Container=styled.div`
     display: flex;
     flex-direction: column;
@@ -48,7 +88,7 @@ const ModalContainer=styled.div`
         width: 60px;
         height: 60px;
         margin: 0px;
-        color:${themeGet('color.main_light')};
+        color:${themeGet('color.salmon')};
     }
 `;
 
@@ -63,44 +103,3 @@ const Message=styled.p`
 
     white-space: pre-line; /* 줄바꿈 적용 */
 `;
-
-function Modal({ icon,message,button,onClose,router }){
-    const navigate = useNavigate();
-    const modalBackground = useRef();
-
-    return(
-        <>
-            <Container
-                ref={modalBackground}
-                onClick={(e) => {
-                    if (e.target === modalBackground.current) {
-                        onClose(); // 모달 외부 클릭 시 onClose 콜백 호출
-                    }
-                }}
-             >
-                <ModalContainer onClick={(e) => e.stopPropagation()}>
-                    {icon === 'check' ? (
-                        <BsCheckCircleFill className="icon" />
-                    ) : (
-                        <BsFillExclamationCircleFill className="icon" />
-                    )}
-                    <Message>{message}</Message>
-                    <ModalButton 
-                        type={button} 
-                        button={button}
-                        onClick={()=>{
-                            if(router){
-                                navigate(router)
-                            }else{
-                                onClose();
-                            }
-                        }}
-                        />
-                </ModalContainer>
-            </Container>
-        </>
-    )
-}
-
-export default Modal;
-
