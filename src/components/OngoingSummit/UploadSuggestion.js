@@ -15,7 +15,9 @@ function UplaodSuggestion({
             <Container>
                 <Header>{header} 를 선도하는 청년 창업가가 되고 싶으신가요?</Header>
                 <Caption>{caption}</Caption>
+
                 <GotoUpload />
+
             </Container>
         </>
     )
@@ -35,6 +37,7 @@ const Container=styled.div`
     max-height: 260px;
 
     background-color: ${themeGet('color.main_light')};
+
     border-radius: 10px;
 
     box-shadow: 5px 5px 20px 2px #00000040;

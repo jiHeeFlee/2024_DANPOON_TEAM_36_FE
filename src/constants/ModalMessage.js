@@ -33,5 +33,10 @@ export const ModalMessage={
         icon:'check',
         message:'회원 정보가\n등록되었습니다.',
         button:'확인'
-    }
+    },	
+    requiredData:{
+		icon:'mark',
+		message:'필수 입력 항목을\n입력해 주세요',
+		button:'확인'
+	}
 }
