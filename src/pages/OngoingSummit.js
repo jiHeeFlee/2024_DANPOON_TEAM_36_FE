@@ -114,9 +114,7 @@ const TitleSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   margin: 80px 0 20px 0;
-
 `;
 
 const Title = styled.h1`
@@ -175,7 +173,6 @@ const SummitSection = styled.section`
   padding: 2rem 0;
 
   cursor: pointer;
-
 `;
 
 const CarouselContainer = styled.div`
