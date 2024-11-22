@@ -2,55 +2,94 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import themeGet from "../utils/themeGet";
+
 import NavigationBar from "../components/NavigationBar";
-import GoToModalButton from "../components/PT/GoToModalButton";
 import CommentInputWithSubmit from "../components/PT/CommentInputWithSubmit";
-import { BiLink } from "react-icons/bi";
-import { BsFillHeartFill } from "react-icons/bs";
 import Modal from "../components/Modal";
 import Footer from "../components/Footer";
 import CommentItem from "../components/PT/CommentItem";
+import EditDelete from "../components/PT/EditDelete";
+import { ModalMessage } from "../constants/ModalMessage";
+
+import { BiLink } from "react-icons/bi";
+import { BsFillHeartFill } from "react-icons/bs";
+import NoneThumbnail from '../../src/assets/img/noneThumbnail.svg';
+
+import { saveComment } from "../apis/Comment/saveComment";
+import { updateComment } from "../apis/Comment/updateComment";
+import { deleteComment } from "../apis/Comment/deleteComment";
+import { useParams } from "react-router-dom";
+
+// API로부터 받아올 데이터 목(mock) 설정
+const mockPTData = {
+  title: "의사와 환자를 연결하는 원격 진료 서비스, 닥터나우",
+  description: `닥터나우는 현대인들이 언제 어디서나 쉽게 의료 서비스를 받을 수 있도록 돕기 위해 만들어졌습니다.
+                 원격 진료를 통해 의료 접근성을 높이고, 환자와 의사 간의 소통을 간편하게 만들고자 했습니다.
+                 우리 서비스는 특히 바쁜 일상 속에서 의료를 필요로 하는 많은 사람들에게 큰 도움을 주고 있습니다.
+                 앞으로도 더욱 발전하여 더 많은 분들에게 신뢰받는 헬스케어 솔루션을 제공하겠습니다.`,
+  presenter: "최재형 대표님",
+  company: "닥터 나우",
+  date: "2024.10.28",
+  optional_url:'https://www.naver.com/',
+};
 
 const PT = () => {
   const navigate = useNavigate();
+  //boardId, PT id입니다.
+  const { boardId } = useParams();
   const [isHeartFilled, setIsHeartFilled] = useState(false);
+
   const [isInvestModalOpen, setIsInvestModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [deleteMessage, setDeleteMessage] = useState("");
+
   const [comments, setComments] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [deleteMessage, setDeleteMessage] = useState("");
+  const [newComment, setNewComment] = useState("");
+
+  const [author, setAuthor] = useState("");
   const [error, setError] = useState(null);
 
-  // API로부터 받아올 데이터 목(mock) 설정
-  const mockPTData = {
-    title: "의사와 환자를 연결하는 원격 진료 서비스, 닥터나우",
-    description: `닥터나우는 현대인들이 언제 어디서나 쉽게 의료 서비스를 받을 수 있도록 돕기 위해 만들어졌습니다.
-                   원격 진료를 통해 의료 접근성을 높이고, 환자와 의사 간의 소통을 간편하게 만들고자 했습니다.
-                   우리 서비스는 특히 바쁜 일상 속에서 의료를 필요로 하는 많은 사람들에게 큰 도움을 주고 있습니다.
-                   앞으로도 더욱 발전하여 더 많은 분들에게 신뢰받는 헬스케어 솔루션을 제공하겠습니다.`,
-    presenter: "최재형 대표님",
-    company: "닥터 나우",
-    date: "2024.10.28",
+
+  // 댓글 등록 (saveComment 사용)
+  const handleRegisterComment = async (text) => {
+    try {
+      const commentData = { text }; // 등록할 댓글 데이터
+      const response = await saveComment(commentData); // API 호출
+      setComments((prevComments) => [...prevComments, response.data]); // 댓글 목록에 추가
+      setNewComment(""); // 댓글 입력 필드 초기화
+    } catch (error) {
+      console.error("댓글 등록 오류:", error);
+    }
   };
 
-  // 코멘트 데이터를 API로부터 받아오는 함수
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const mockComments = [
-          { id: 1, author: "최규리", text: "영상 잘 보고 갑니다." },
-          { id: 2, author: "이상원", text: "영상 잘 보고 갑니다. 동종업계 창업가로서 힘내봐요~" },
-        ];
-        setComments(mockComments);
-      } catch (err) {
-        setError("댓글을 불러오는 데 실패했습니다.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  // 댓글 수정
+  const handleEditComment = async (id, updatedText) => {
+    try {
+      const updatedComment = { text: updatedText };
+      const response = await updateComment(id, updatedComment); // 수정된 댓글 데이터 전송
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.id === id ? { ...comment, text: updatedText } : comment
+        )
+      );
+    } catch (error) {
+      console.error("댓글 수정 오류:", error);
+    }
+  };
 
-    fetchComments();
-  }, []); 
+  // 댓글 삭제
+  const handleDeleteComment = async (id) => {
+    try {
+      await deleteComment(id);
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.id !== id)
+      ); // 삭제 후 목록에서 제거
+    } catch (error) {
+      console.error("댓글 삭제 오류:", error);
+    }
+  };
+
+  // 댓글 목록
 
   const handleHeartClick = () => {
     setIsHeartFilled(!isHeartFilled);
@@ -64,21 +103,23 @@ const PT = () => {
     setIsInvestModalOpen(false);
   };
 
+  const descriptionSentences = mockPTData.description
+    .split(".")
+    .filter(Boolean);
 
-
-  const descriptionSentences = mockPTData.description.split(".").filter(Boolean);
-
-  const handleDeleteButtonClick = (type) => {
+   // 삭제 버튼 클릭 핸들러
+   const handleDeleteButtonClick = (type) => {
+    console.log("handleDeleteButtonClick 호출됨, type:", type); // 디버깅 추가
     if (type === "pt") {
       setDeleteMessage("등록된 PT 영상을\n삭제하시겠습니까?");
     } else if (type === "comment") {
       setDeleteMessage("등록된 댓글을\n삭제하시겠습니까?");
+    } else {
+      console.error("알 수 없는 type:", type); // undefined 문제 확인
     }
-    setIsDeleteModalOpen(true); // 삭제 모달 열기
+  
+    setIsDeleteModalOpen(true);
   };
-
-
-  // const descriptionSentences = mockPTData.description.split(".");
 
   return (
     <Container>
@@ -86,31 +127,38 @@ const PT = () => {
         <NavigationBar />
         <TitleContainer>
           <Title>{mockPTData.title}</Title>
-          <GoToModalButton
+          <EditDelete 
             color="white"
             size={36}
-            onEdit={() => navigate('/upload')}  // 수정 페이지로 이동
-            onDelete={handleDeleteButtonClick}  // 삭제 처리
-            type="pt"  // PT 타입으로 설정
+            onDelete={handleDeleteButtonClick}
+            type='pt'
           />
         </TitleContainer>
-        <Description>{descriptionSentences.map((sentence, index) => (
-            <p key={index}>{sentence.trim()}{index !== descriptionSentences.length - 1 && '.'}</p>
-          ))}</Description>
+        <Description>
+          {descriptionSentences.map((sentence, index) => (
+            <p key={index}>
+              {sentence.trim()}
+              {index !== descriptionSentences.length - 1 && "."}
+            </p>
+          ))}
+        </Description>
       </Header>
       <ContentContainer>
         <ContentSection>
           <ContentSectionLeft>
-            <VideoContainer>영상</VideoContainer>
-
-            <CommentInput>
-              <CommentInputWithSubmit />
-            </CommentInput>
+            <VideoCommentWrapper>
+              <VideoContainer
+                // TODO : api통신으로 받은 이미지 아래에 삽입.
+                src={'[]'}
+              />
+              <CommentInputWithSubmit
+                onSubmit={handleRegisterComment}
+                author={author}
+              />
+            </VideoCommentWrapper>
 
             <CommentsWrapper>
-              {isLoading ? (
-                <p>Loading comments...</p>
-              ) : error ? (
+              {error ? (
                 <p>{error}</p>
               ) : (
                 comments.map((comment) => (
@@ -123,6 +171,12 @@ const PT = () => {
                   />
                 ))
               )}
+
+              {/* CommentItem에서 수정하기 버튼을 누르면
+              CommentInputWithSubmit 창이 뜨고 버튼이 '수정'으로 바뀜 */}
+              {/* <CommentInputWithSubmit 
+                Edit={true}
+              /> */}
             </CommentsWrapper>
           </ContentSectionLeft>
 
@@ -138,6 +192,9 @@ const PT = () => {
                 <Label>소속</Label>
                 <CompanyContainer>
                   <Name>{mockPTData.company}</Name>
+                  {mockPTData.optional_url !== '' && (
+                    <StyledBiLink onClick={()=>window.open(mockPTData.optional_url)}/>
+                  )}
                 </CompanyContainer>
               </CompanyWrapper>
               <ButtonWrapper>
@@ -147,7 +204,9 @@ const PT = () => {
                     filled={isHeartFilled}
                     onClick={handleHeartClick}
                   />
-                  <InvestButton onClick={handleInvestButtonClick}>투자 제안하기</InvestButton>
+                  <InvestButton onClick={handleInvestButtonClick}>
+                    투자 제안하기
+                  </InvestButton>
                 </ButtonContainer>
               </ButtonWrapper>
             </VideoInfo>
@@ -170,7 +229,7 @@ const PT = () => {
         <Modal
           icon="exclamation"
           message={deleteMessage}
-          button="예"
+          button={ModalMessage.delete.button}
           onClose={() => setIsDeleteModalOpen(false)}
           type="yes_no"
           onClick={() => {
@@ -185,7 +244,6 @@ const PT = () => {
 
 export default PT;
 
-
 const Container = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -195,7 +253,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  background-color: ${themeGet('color.main')};
+  background-color: ${themeGet("color.main")};
   text-align: center;
   color: white;
 `;
@@ -227,9 +285,9 @@ const Description = styled.div`
 
 const ContentContainer = styled.section`
   border-top-right-radius: 200px;
-  background-color: ${themeGet('color.100')};;
+  background-color: ${themeGet("color.100")};
   width: 100%;
-`
+`;
 
 const ContentSection = styled.div`
   width: 80vw;
@@ -237,7 +295,9 @@ const ContentSection = styled.div`
   background: ${themeGet("color.white")};
   border-radius: 10px;
 
-  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1); */
+  box-shadow: 5px 5px 20px 2px #00000040;
+
   display: flex;
   flex-direction: row;
   overflow: hidden;
@@ -256,6 +316,15 @@ const ContentSectionRight = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+const VideoCommentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+`;
+
 const VideoContainer = styled.div`
   width: 100%;
   aspect-ratio: 16/9;
@@ -264,6 +333,12 @@ const VideoContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
+
+  border-radius: 5px;
+
+  /* 조건에 따른 배경 이미지 설정 */
+  background-image: ${({ src }) =>
+  src === '[]' ? `url(${NoneThumbnail})` : `url(${src})`};
 `;
 const VideoInfo = styled.div`
   display: flex;
@@ -283,7 +358,7 @@ const PresenterWrapper = styled.div`
   align-items: center;
   font-size: ${themeGet("fonts.body1.size")};
   background-color: ${themeGet("color.white")};
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1); 
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 50px;
   margin-bottom: 20px;
   position: relative;
@@ -327,8 +402,20 @@ const CompanyContainer = styled.div`
   margin-left: 93px;
 `;
 const StyledBiLink = styled(BiLink)`
+  width: 24px;
+  height: 24px;
+
   cursor: pointer;
   color: ${themeGet("color.400")};
+
+  &:active {
+    color: ${themeGet("color.500")};
+    transition: all 0.3s;
+  }
+  &:hover {
+    color: ${themeGet("color.500")};
+    transition: all 0.3s;
+  }
 `;
 const ButtonWrapper = styled.div`
   display: flex;
@@ -361,6 +448,21 @@ const InvestButton = styled.button`
   border-radius: 10px;
   font-size: ${themeGet("fonts.body1.size")};
   cursor: pointer;
+
+  &:hover {
+    color: ${themeGet("color.white")};
+    background-color: ${themeGet("color.salmon")};
+    border: none;
+    transition: all 0.3s;
+  }
+  &:active {
+    color: ${themeGet("color.white")};
+    background-color: ${themeGet("color.main")};
+
+    font-weight: 700;
+
+    transition: all 0.3s;
+  }
 `;
 const CommentInput = styled.div`
   display: flex;
