@@ -23,7 +23,7 @@ const Container=styled.button`
 
     &:hover{
         color: ${themeGet('color.white')};
-        background-color: ${themeGet('color.main_light')};
+        background-color: ${themeGet('color.salmon')};
         font-weight: 600;
         transition: all 0.3s;
     }
@@ -36,11 +36,26 @@ const Container=styled.button`
     }
 `;
 
-function GotoUpload({onClick,className}){
+function GotoUpload({
+    className,
+    summitId
+}){
+    // 추후 라우터 작업 진행하기
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        // summitId가 있을 경우 해당 summitId를 포함한 /upload 경로로 네비게이트
+        if (summitId) {
+          navigate(`/upload/${summitId}`);
+        } else {
+          navigate('/upload'); // summitId가 없으면 기본 /upload 경로로 이동
+        }
+      };
+
     return(
         <>
             <Container 
-                onClick={onClick}
+                onClick={handleClick}
                 className={className}
             >
                 PT 영상 업로드 하기
