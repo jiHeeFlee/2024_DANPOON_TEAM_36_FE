@@ -9,23 +9,28 @@ import { useNavigate } from 'react-router';
 import UplaodSuggestion from '../components/OngoingSummit/UploadSuggestion';
 import Footer from "../components/Footer";
 
-const OngoingSummit = () => {
+const OngoingSummit = (summitId) => {
   const navigate = useNavigate();
 
   const summitData = [
     {
+      id: 1,
       title: "디지털 헬스케어를 선도하는 AI 서비스",
       items: [
         { presenter: '최재형', description: '의사와 환자를 연결하는 원격 진료 서비스, 딥다이브' },
       ],
     },
     {
+      id: 2,
       title: "혁신적인 기술로 미래를 바꾸다",
       items: [],
     },
     {
+      id: 3,
       title: "지속 가능한 사회를 위한 기술",
       items: [
+        { presenter: '이윤지', description: '원격 의료 플랫폼, 닥터링크' },
+        { presenter: '오지훈', description: '헬스케어 데이터 분석 및 예측 시스템, 데이터메디' },
         { presenter: '이윤지', description: '원격 의료 플랫폼, 닥터링크' },
         { presenter: '오지훈', description: '헬스케어 데이터 분석 및 예측 시스템, 데이터메디' },
         { presenter: '이윤지', description: '원격 의료 플랫폼, 닥터링크' },
@@ -35,6 +40,15 @@ const OngoingSummit = () => {
       ],
     },
   ];
+
+  const handleSummitClick = () => {
+    // summitId가 있을 경우 해당 summitId를 포함한 /upload 경로로 네비게이트
+    if (summitId) {
+      navigate(`/summit/${summitId}`);
+    } else {
+      navigate('/summit'); // summitId가 없으면 기본 /upload 경로로 이동
+    }
+  };
 
   return (
     <MainContainer>
@@ -51,7 +65,7 @@ const OngoingSummit = () => {
       <SummitSection>
         {summitData.map((summit, index) => (
           summit.items.length > 0 ? (
-            <CarouselContainer key={index}>
+            <CarouselContainer key={index} onClick={() => handleSummitClick(summitData.id)} >
               <Carousel title={summit.title} items={summit.items} />
             </CarouselContainer>
           ) : null
@@ -62,9 +76,6 @@ const OngoingSummit = () => {
             <UplaodSuggestion 
               header={summit.title}
               caption='써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요.'
-              
-              // 추후 라우터 작업 진행하기
-              // router
               />
           )
         ))}
@@ -82,8 +93,8 @@ const MainContainer = styled.div`
   min-height: 100vh;
   background: linear-gradient(
         to top,
-        ${themeGet('color.100')} 70%,
-        ${themeGet('color.main')} 30%
+        ${themeGet('color.100')} 80%,
+        ${themeGet('color.main')} 20%
     );
   display: flex;
   justify-content: center;
@@ -103,7 +114,9 @@ const TitleSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 100px 0 80px 0;
+
+  margin: 80px 0 20px 0;
+
 `;
 
 const Title = styled.h1`
@@ -160,6 +173,9 @@ const SummitSection = styled.section`
   width: 100%;
   
   padding: 2rem 0;
+
+  cursor: pointer;
+
 `;
 
 const CarouselContainer = styled.div`
