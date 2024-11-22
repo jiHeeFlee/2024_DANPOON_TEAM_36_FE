@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
 import themeGet from "../utils/themeGet";
@@ -13,8 +13,18 @@ import Modal from '../components/Modal';
 function NavigationBar({active}){
     const [isLogin,setIsLogin]=useState(true);
 
-    // 로그 아웃 시 기능
+    // TODO : 로그 아웃 시 기능
     // const handle_logout_click=()=>{}
+
+    useEffect(() => {
+        if (localStorage.getItem('accessToken') === null) {
+            setIsLogin(false); // 상태 업데이트
+        }
+    }, []);
+        
+    useEffect(() => {
+        console.log('login state updated:', isLogin); // 상태 변경 감지 후 로그 출력
+    }, [isLogin]);
 
     return(
         <>
