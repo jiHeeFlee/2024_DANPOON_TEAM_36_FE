@@ -8,62 +8,27 @@ import Info from "../components/MyPage/Info";
 import VideoWrapper from "../components/MyPage/VideoWrapper";
 import LikePTVideo from "../components/MyPage/LikePTVideo";
 import PTList from "../components/MyPage/PTList";
-import { likePTVideosState, myVideoState, mypageInfoState } from "../state";
-import { useRecoilState } from "recoil";
-import { getMyInfo } from "../apis/Member/getMyInfo";
+
 import { MypageMockup } from "../constants/MypageMockup";
-import { getBoardLike } from "../apis/Board/getBoardLike";
 import { LikePTVideoMockup } from "../constants/LikePTVideoMockup";
-import { getMyBoard } from "../apis/Board/getMyBoard";
 
 function Mypage() {
-  const [userInfo, setUserInfo] = useRecoilState(mypageInfoState);
-  const [likePTVideos, setLikePTVideos] = useRecoilState(likePTVideosState);
-  const [myVideo, setMyVideo] = useRecoilState(myVideoState);
-
-  useEffect(() => {
-    console.log(userInfo.participant_type);
-  }, [userInfo]);
-  
-  useEffect(() => {
-    getMyInfo(1).then((response) => {
-      if (response) {
-        setUserInfo(response);
-      } else {
-        setUserInfo(MypageMockup);
-      }
-    });
-    getBoardLike(1).then((response) => {
-      if (response) {
-        setLikePTVideos(response);
-      } else {
-        setLikePTVideos(LikePTVideoMockup);
-      }
-    });
-    getMyBoard(1).then((response) => {
-      if (response) {
-        setMyVideo(response);
-      } else {
-        setMyVideo();
-      }
-    });
-  }, []);
 
   return (
     <Container>
       <NavigationBar active="mypage" />
       <Title>마이 페이지</Title>
       <Header>
-        <span>{userInfo.name}</span>님 안녕하세요
+        <span>{MypageMockup.name}</span>님 안녕하세요
       </Header>
       <Wrapper>
         <Info
-          participant_type={userInfo.userType}
+          participant_type={MypageMockup.userType}
           styled={{ margin: "40px auto 25px auto" }}
         />
         {/* TODO : 제안 PTList 에 대한 API 없기 때문에 아직 붙이지 않음*/}
-        {userInfo.userType === "ENTREPRENEUR" && <VideoWrapper />}
-        {userInfo.userType === "INVESTOR" && <PTList />}
+        {MypageMockup.userType === "ENTREPRENEUR" && <VideoWrapper />}
+        {MypageMockup.userType === "INVESTOR" && <PTList />}
 
         <LikePTVideo />
       </Wrapper>
