@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import themeGet from "../../utils/themeGet";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import SummitItem from "../Summit/SummitItem";
 
-const Carousel = ({ items, title }) => {
+const Carousel = ({ items, title, summitId }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 3; // 한 페이지에 표시할 카드 개수
 
@@ -33,10 +34,24 @@ const Carousel = ({ items, title }) => {
 
   const totalPages = Math.ceil(items.length / itemsPerPage); // 전체 페이지 수
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+      if (summitId) {
+        navigate(`/summit/${summitId}`);
+      } else {
+        navigate('/summit');
+      }
+    };
+
 
   return (
     <CarouselContainer>
-      <Title>{title}</Title>
+      <SemiContainer>
+      <MiniContainer>
+        <Title>{title}</Title>
+        <Button onClick={handleClick}>둘러보기</Button>
+      </MiniContainer>
       <CarouselWrapper
         style={{
           transform: `translateX(-${(currentIndex * 100) / totalPages}%)`, // 페이지에 맞게 이동
@@ -52,6 +67,7 @@ const Carousel = ({ items, title }) => {
           />
         ))}
       </CarouselWrapper>
+      </SemiContainer>
 
       {!items.length < 1 && (
         <>
@@ -87,47 +103,68 @@ const Carousel = ({ items, title }) => {
 
 export default Carousel;
 
-// 스타일
+
 const CarouselContainer = styled.div`
   display: flex;
   position: relative;
   width: 100%;
   max-width: 1180px;
-  height: 552px;
-
+  height: 380px;
   padding-left: 80px;
-
   overflow: hidden;
 `;
 
-const Title = styled.div`
-  position: absolute;
-  left: 80px;
-  top: 40px;
+const SemiContainer = styled.div`
+  margin: 0;
+  padding: 0;
+`
 
+const MiniContainer = styled.div`
+  display: flex;
+  align-items: center;  /* 세로 정렬 */
+  width: 100%;  
+  height: 40px;
+`;
+
+const Title = styled.div`
   color: ${themeGet('color.500')};
   font-size: ${themeGet("fonts.h3.size")};
   font-weight: bold;
+  margin-right: 20px;
+`;
+
+const Button = styled.button`
+  padding: 8px 10px;
+  color: ${themeGet("color.white")};
+  background-color: ${themeGet("color.main")};
+  border-radius: 10px;
+
+  font-family: Pretendard;
+  font-size: 18px;
+  text-align: center;
+
+  &:hover {
+    color: white;
+    background-color: ${themeGet("color.main_light")};
+    transition: all 0.3s;
+  }
+
+  &:active {
+    color: white;
+    background-color: #c43c19;
+    transition: all 0.3s;
+  }
 `;
 
 const CarouselWrapper = styled.div`
   display: flex;
   transition: transform 0.3s ease-in-out;
-  height: 560px;
+  height: 350px;
   align-items: center;
-
+  justify-content: flex-start;
   gap: 40px;
 `;
 
-const CarouselCardStyled = styled.div`
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 1px 1px 10px 1px #00000040;
-  width: 314px; // 기존 Carousel 스타일에 맞춘 너비
-  height: 342px; // 기존 Carousel 카드 높이에 맞춘 높이
-  overflow: hidden;
-  margin-right: 20px;
-`;
 
 const CarouselButton = styled.button`
   position: absolute;
@@ -171,7 +208,7 @@ const RightButton = styled(CarouselButton)`
 
 const CarouselNav = styled.div`
   position: absolute;
-  bottom: 30px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   display: flex;

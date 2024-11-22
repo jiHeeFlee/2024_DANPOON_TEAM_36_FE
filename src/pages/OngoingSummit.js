@@ -3,14 +3,12 @@ import styled from 'styled-components';
 import themeGet from '../utils/themeGet';
 import NavigationBar from "../components/NavigationBar";
 import Carousel from '../components/OngoingSummit/Carousel';
-import GotoUpload from '../components/Summit/GotoUpload';
 import { useNavigate } from 'react-router';
 
 import UplaodSuggestion from '../components/OngoingSummit/UploadSuggestion';
 import Footer from "../components/Footer";
 
-const OngoingSummit = (summitId) => {
-  const navigate = useNavigate();
+const OngoingSummit = () => {
 
   const summitData = [
     {
@@ -41,15 +39,6 @@ const OngoingSummit = (summitId) => {
     },
   ];
 
-  const handleSummitClick = () => {
-    // summitId가 있을 경우 해당 summitId를 포함한 /upload 경로로 네비게이트
-    if (summitId) {
-      navigate(`/summit/${summitId}`);
-    } else {
-      navigate('/summit'); // summitId가 없으면 기본 /upload 경로로 이동
-    }
-  };
-
   return (
     <MainContainer>
       <Header>
@@ -65,8 +54,8 @@ const OngoingSummit = (summitId) => {
       <SummitSection>
         {summitData.map((summit, index) => (
           summit.items.length > 0 ? (
-            <CarouselContainer key={index} onClick={() => handleSummitClick(summitData.id)} >
-              <Carousel title={summit.title} items={summit.items} />
+            <CarouselContainer key={index}>
+              <Carousel title={summit.title} items={summit.items} summitId={summit.id} />
             </CarouselContainer>
           ) : null
         ))}
@@ -170,9 +159,8 @@ const SummitSection = styled.section`
 
   width: 100%;
   
-  padding: 2rem 0;
+  padding: 1rem 0;
 
-  cursor: pointer;
 `;
 
 const CarouselContainer = styled.div`
@@ -183,7 +171,7 @@ const CarouselContainer = styled.div`
   margin-bottom: 40px;
 
   width: 1140px;
-  height: 552px;
+  height: 460px;
   
   border-radius: 10px;
   box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
