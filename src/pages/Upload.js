@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import styled from "styled-components";
 import themeGet from "../utils/themeGet";
 
@@ -12,6 +12,17 @@ import Footer from "../components/Footer";
 
 import { ModalMessage } from "../constants/ModalMessage";
 
+import { myVideoState } from "../state";
+
+import {useRecoilState} from 'recoil'
+// api - POST
+import { saveBoard } from '../apis/Board/saveBoard';
+//api - GET
+import { getMyBoard } from "../apis/Board/getMyBoard";
+// api - POST
+import { updateBoard } from "../apis/Board/updateBoard";
+import MyPTVideo from "../components/MyPage/MyPTVideo";
+
 function Upload() {
     const [isModal, setIsModal] = useState(false);
     const [modalContent, setModalContent] = useState(null); // 모달 내용을 동적으로 관리
@@ -22,6 +33,10 @@ function Upload() {
         video_url: "",
         thumbnail: null,
     });
+
+    // myVideoState - recoil
+    const [ismyVideoState,setIsMyVideoState]=useRecoilState(myVideoState);
+    
 
     // 필수 데이터가 비어 있는지 확인
     const isRequiredFormDataInvalid = () => {
@@ -85,6 +100,31 @@ function Upload() {
             [field]: value,
         }));
     };
+
+
+    useEffect(()=>{
+        saveBoard(ismyVideoState).then((response)=>{
+            if (response){
+                setIsMyVideoState(response);
+            }else{
+                setIsMyVideoState(myVideoState);
+            }
+        });
+        getMyBoard(ismyVideoState).then((response)=>{
+            if(response){
+                setIsMyVideoState(response);
+            }else{
+                setIsMyVideoState(myVideoState);
+            }
+        });
+        updateBoard(ismyVideoState).then((response)=>{
+            if(response){
+                setIsMyVideoState(response);
+            }else{
+                setIsMyVideoState(myVideoState);
+            }
+        });
+    })
 
     return (
         <>
