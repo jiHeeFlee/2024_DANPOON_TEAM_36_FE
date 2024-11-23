@@ -2,6 +2,92 @@ import styled from "styled-components";
 import themeGet from "../../utils/themeGet";
 
 import MyInfoComponent from "./MyInfo";
+import { mypageInfoState } from "../../state";
+import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router";
+
+function Info({ participant_type }) {
+  const [userInfo, setUserInfo] = useRecoilState(mypageInfoState);
+  const navigate = useNavigate();
+  const onEditClickHandler = () => {
+    console.log("ddd");
+    navigate("/signup");
+  };
+  return (
+    <>
+      {participant_type === "ENTREPRENEUR" && (
+        <Container>
+          <Header>내 정보</Header>
+          <Wrapper>
+            <WrapperContents>
+              <MyInfoComponent title="구분" content={userInfo.userType} />
+              <MyInfoComponent title="연락처" content={userInfo.phoneNumber} />
+              <MyInfoComponent title="이메일" content={userInfo.email} />
+              <MyInfoComponent
+                title="알림톡"
+                content={
+                  userInfo.consentSummitAlerts ? "수신 동의" : "수신 미동의"
+                }
+              />
+            </WrapperContents>
+            <WrapperContents>
+              <MyInfoComponent
+                title="소속 회사 및 직책"
+                content={userInfo.company + " / " + userInfo.position}
+              />
+              <MyInfoComponent
+                title="사업자 등록 번호"
+                content={userInfo.businessRegistrationNumber}
+              />
+              <MyInfoComponent
+                title="사업 아이디어 및 분야"
+                content={userInfo.businessIdeaField}
+              />
+            </WrapperContents>
+          </Wrapper>
+          <ButtonWrapper>
+            <Button onClick={onEditClickHandler}>회원 정보 수정하기</Button>
+            <Button>회원 탈퇴 하기</Button>
+          </ButtonWrapper>
+        </Container>
+      )}
+      {participant_type === "INVESTOR" && (
+        <Container>
+          <Header>내 정보</Header>
+          <Wrapper>
+            <WrapperContents>
+              <MyInfoComponent title="구분" content={userInfo.userType} />
+              <MyInfoComponent title="연락처" content={userInfo.phoneNumber} />
+              <MyInfoComponent title="이메일" content={userInfo.email} />
+              <MyInfoComponent
+                title="알림톡"
+                content={
+                  userInfo.consentSummitAlerts ? "수신 동의" : "수신 미동의"
+                }
+              />
+            </WrapperContents>
+            <WrapperContents>
+              <MyInfoComponent
+                title="소속 회사 및 직책"
+                content={userInfo.company + " / " + userInfo.position}
+              />
+              <MyInfoComponent
+                title="사업 아이디어 및 분야"
+                content={userInfo.businessIdeaField}
+              />
+            </WrapperContents>
+          </Wrapper>
+          <ButtonWrapper>
+            <Button onClick={onEditClickHandler}>회원 정보 수정하기</Button>
+            <Button>회원 탈퇴 하기</Button>
+          </ButtonWrapper>
+        </Container>
+      )}
+    </>
+  );
+}
+
+export default Info;
 
 const Container = styled.div`
   display: flex;
@@ -30,9 +116,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 
-  /* gap:20px; */
   padding: 40px 88px;
 
   width: 100%;
@@ -40,18 +125,18 @@ const Wrapper = styled.div`
 
   background-color: ${themeGet("color.100")};
   border: 3px solid ${themeGet("color.200")};
-
-  div {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    /* align-items: flex-start; */
-    /* align-items: first baseline; */
-    gap: 20px;
-  }
+  border-radius: 10px;
 `;
+
+const WrapperContents = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
+`;
+
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -69,7 +154,6 @@ const Button = styled.button`
   background-color: ${themeGet("color.main")};
   border-radius: 10px;
 
-  //styleName: Body1;
   font-family: Pretendard;
   font-size: 18px;
   font-weight: 400;
@@ -91,62 +175,3 @@ const Button = styled.button`
     transition: all 0.3s;
   }
 `;
-
-function Info({ participant_type }) {
-  return (
-    <>
-      {participant_type === "ENTREPRENEUR" && (
-        <Container>
-          <Header>내 정보</Header>
-          <Wrapper>
-            <div>
-              <MyInfoComponent title="구분" content="(예비) 청년 창업가" />
-              <MyInfoComponent title="연락처" content="01012345678" />
-              <MyInfoComponent title="이메일" content="goorm@gmail.com" />
-              <MyInfoComponent title="알림톡" content="수신" />
-            </div>
-            <div>
-              <MyInfoComponent
-                title="소속 회사 및 직책"
-                content="구름 / 인턴"
-              />
-              <MyInfoComponent title="사업자 등록 번호" content="n12345" />
-              <MyInfoComponent title="사업 아이디어 및 분야" content="IT" />
-            </div>
-          </Wrapper>
-          <ButtonWrapper>
-            <Button>회원 정보 수정하기</Button>
-            <Button>회원 탈퇴 하기</Button>
-          </ButtonWrapper>
-        </Container>
-      )}
-       {participant_type === "INVESTOR" && (
-        <Container>
-          <Header>내 정보</Header>
-          <Wrapper>
-            <div>
-              <MyInfoComponent title="구분" content="예비 창업자" />
-              <MyInfoComponent title="연락처" content="01012345678" />
-              <MyInfoComponent title="이메일" content="goorm@gmail.com" />
-              <MyInfoComponent title="알림톡" content="수신" />
-            </div>
-            <div>
-              <MyInfoComponent
-                title="소속 회사 및 직책"
-                content="구름 / 인턴"
-              />
-              
-              <MyInfoComponent title="투자 관심 분야" content="IT" />
-            </div>
-          </Wrapper>
-          <ButtonWrapper>
-            <Button>회원 정보 수정하기</Button>
-            <Button>회원 탈퇴 하기</Button>
-          </ButtonWrapper>
-        </Container>
-      )}
-    </>
-  );
-}
-
-export default Info;

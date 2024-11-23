@@ -170,14 +170,14 @@ function SignUp() {
               onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
             />
 
-            {/* 이메일  */}
+            {/* 이메일 
             <Inputs
               header={InputMessage.signup.email.header}
               placeholder={InputMessage.signup.email.placeholder}
               star={InputMessage.signup.email.star}
               caption={InputMessage.signup.email.caption}
               onChange={(e) => handleInputChange("email", e.target.value)}
-            />
+            /> */}
 
             {/* Radio Group : 참여자 구분 */}
             <Inputs
@@ -216,25 +216,37 @@ function SignUp() {
               />
             </CompanyWrapper>
 
-            {/* 사업자 등록 번호  */}
-            <Inputs
-              header={InputMessage.signup.registration_number.header}
-              placeholder={InputMessage.signup.registration_number.placeholder}
-              star={InputMessage.signup.registration_number.star}
-              caption={InputMessage.signup.registration_number.caption}
-              onChange={(e) =>
-                handleInputChange("businessRegistrationNumber", e.target.value)
-              }
-            />
-            {/* 투자 관심 분야  */}
-            <Inputs
-              header={InputMessage.signup.idea_sector.header}
-              placeholder={InputMessage.signup.idea_sector.placeholder}
-              star={InputMessage.signup.idea_sector.star}
-              onChange={(e) =>
-                handleInputChange("businessIdeaField", e.target.value)
-              }
-            />
+ {/* 'YOUTH'일 경우만 사업자 등록 번호와 사업 아이디어 필드 보이게 하기 */}
+ {participant_type === 'ENTREPRENEUR' && (
+              <>
+                {/* 사업자 등록 번호 */}
+                <Inputs 
+                  header={InputMessage.signup.registration_number.header} 
+                  placeholder={InputMessage.signup.registration_number.placeholder} 
+                  star={InputMessage.signup.registration_number.star}
+                  caption={InputMessage.signup.registration_number.caption}
+                  onChange={(e) => handleInputChange("businessRegistrationNumber", e.target.value)} // onChange 제대로 전달
+                />
+
+                {/* 사업 아이디어 및 분야 */}
+                <Inputs 
+                  header={'사업 아이디어 및 분야'}
+                  placeholder={'사업 아이디어 및 분야를 입력하세요'} 
+                  star={InputMessage.signup.idea_sector.star}
+                  onChange={(e) => handleInputChange("businessIdeaField", e.target.value)} // onChange 제대로 전달
+                />
+              </>
+            )}
+
+            {/* 'INVESTOR'일 경우에만 투자 관심 분야 보이게 하기 */}
+            {participant_type === 'INVESTOR' && (
+              <Inputs 
+                header={InputMessage.signup.idea_sector.header} // 투자 관심 분야 추가
+                placeholder={InputMessage.signup.idea_sector.placeholder} 
+                star={InputMessage.signup.idea_sector.star}
+                onChange={(e) => handleInputChange("businessIdeaField", e.target.value)} // 투자 관심 분야
+              />
+            )}
 
             {/* Radio Group : 써밋 알림톡 수신 */}
             <Inputs

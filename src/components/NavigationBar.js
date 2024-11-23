@@ -34,6 +34,12 @@ function NavigationBar() {
         setIsModal(false); // 모달 닫기
     };
 
+    const handle_clear_localStorage = () => {
+        localStorage.clear();
+        setIsLogin(false); // isLogin 상태 업데이트
+        navigate('/'); // 홈 경로로 이동
+    };
+
     return (
         <>
             <Container>
@@ -52,19 +58,17 @@ function NavigationBar() {
                         <BsPersonFill size={25} />
                         마이페이지
                     </Nav_item>
-                    <StyledLink to={'/login'}>
-                        {isLogin ? (
-                            <Nav_item>
+                    {isLogin ? (
+                            <Nav_item onClick={handle_clear_localStorage}>
                                 <BsFillArrowLeftSquareFill size={25} />
                                 로그아웃
                             </Nav_item>
                         ) : (
-                            <Nav_item>
+                            <Nav_item onClick={()=>navigate('/login')}>
                                 <BsArrowRightSquareFill size={25} />
                                 로그인
                             </Nav_item>
                         )}
-                    </StyledLink>
                 </Nav_container>
             </Container>
 

@@ -19,7 +19,7 @@ function UploadSuggestion({ header, caption, summitId }) {
       <Container>
         <Header onClick={handleClick}>
           {" "}
-          '{header}'을 선도하는 청년 창업가가 되고 싶으신가요?
+          ' {header} '을 선도하는 청년 창업가가 되고 싶으신가요?
         </Header>
         <Caption>{caption}</Caption>
         <GotoUpload />
@@ -46,7 +46,7 @@ const Container = styled.div`
   border-radius: 10px;
 
   box-shadow: 5px 5px 20px 2px #00000040;
-  margin-top: 40px;
+  margin: 40px 0;
 `;
 
 const Header = styled.p`

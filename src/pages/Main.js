@@ -264,14 +264,14 @@ const ContentSubDescription1 = styled.p`
   text-align: center;
   padding-left: 0;
   font-size: 32px;
-  color: ${themeGet("color.white")};
+  color: ${themeGet("color.500")};
   line-height: 1.4;
   margin-top: 10px;
 
   div {
     display: inline;
 
-    color: ${themeGet("color.white")};
+    color: ${themeGet("color.500")};
     font-weight: 500;
 
     letter-spacing: -0.015em;

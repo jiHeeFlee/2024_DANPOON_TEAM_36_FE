@@ -31,11 +31,10 @@ const PT = () => {
   const { boardId } = useParams(); // URL 파라미터로부터 boardId를 가져옵니다.
 
   const currentPtInfo =
-    SummitMapTest[boardId % 3] && SummitMapTest[boardId % 3].length > 0
-      ? SummitMapTest[boardId % 3][0] // 첫 번째 PT 정보 가져오기
+    SummitMapTest[boardId] && SummitMapTest[boardId].length > 0
+      ? SummitMapTest[boardId][0] // 첫 번째 PT 정보 가져오기
       : null;
 
-  const [ptData, setPTData] = useState();
   const [isHeartFilled, setIsHeartFilled] = useState(false);
 
   const [isInvestModalOpen, setIsInvestModalOpen] = useState(false);
@@ -165,24 +164,39 @@ const PT = () => {
     <Container>
       <Header>
         <NavigationBar />
-        <TitleContainer>
-          <Title>{mock ? currentPtInfo.service_info : ptData}</Title>
-          <EditDelete
-            color="white"
-            size={36}
-            onDelete={handleDeleteButtonClick}
-            type="pt"
-            id={boardId}
-          />
-        </TitleContainer>
-        <Description>
+        {currentPtInfo ? (
+          <TitleContainer>
+            <Title>{currentPtInfo.service_info}</Title>
+            <EditDelete
+              color="white"
+              size={36}
+              onDelete={handleDeleteButtonClick}
+              type="pt"
+            />
+          </TitleContainer>
+        ) : (
+          <p>PT 정보를 찾을 수 없습니다.</p>
+        )}
+        {/* <Description>
           {descriptionSentences.map((sentence, index) => (
             <p key={index}>
               {sentence.trim()}
               {index !== descriptionSentences.length - 1 && "."}
             </p>
           ))}
-        </Description>
+        </Description> */}
+        {currentPtInfo ? (
+          <Description>
+            {descriptionSentences.map((sentence, index) => (
+              <p key={index}>
+                {sentence.trim()}
+                {index !== descriptionSentences.length - 1 && "."}
+              </p>
+            ))}
+          </Description>
+        ) : (
+          <p>PT 정보를 찾을 수 없습니다.</p>
+        )}
       </Header>
       <ContentContainer>
         <ContentSection>
@@ -225,17 +239,23 @@ const PT = () => {
             <VideoInfo>
               <DateText>{currentPtInfo.date}</DateText>
 
-              <PresenterWrapper>
-                <Label>발표자</Label>
-                <Name>{currentPtInfo.name}</Name>
-              </PresenterWrapper>
+              {currentPtInfo ? (
+                <>
+                  <PresenterWrapper>
+                    <Label>발표자</Label>
+                    <Name>{currentPtInfo.name}</Name>
+                  </PresenterWrapper>
+                </>
+              ) : (
+                <p>PT 정보를 찾을 수 없습니다.</p>
+              )}
               <CompanyWrapper>
                 <Label>소속</Label>
                 <CompanyContainer>
                   <Name>{currentPtInfo.company}</Name>
-                  {currentPtInfo.optional_url !== "" && (
+                  {currentPtInfo.pturl !== "" && (
                     <StyledBiLink
-                      onClick={() => window.open(currentPtInfo.optional_url)}
+                      onClick={() => window.open(currentPtInfo.pturl)}
                     />
                   )}
                 </CompanyContainer>
