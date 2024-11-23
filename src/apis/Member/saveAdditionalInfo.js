@@ -7,6 +7,6 @@ export const saveAdditionalInfo = async (data) => {
       data
     );
   } catch (error) {
-    throw new Error("saveAdditionalInfo 에러");
+    console.error("saveAdditionalInfo 에러");
   }
 };
