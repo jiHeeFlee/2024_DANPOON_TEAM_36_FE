@@ -63,6 +63,8 @@ const OngoingSummit = () => {
         {summitData.map((summit, index)=>(
           summit.items.length === 0 && (
             <UplaodSuggestion 
+              key={index}
+              summitId={summit.id}
               header={summit.title}
               caption='써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요.'
               />
@@ -159,7 +161,7 @@ const SummitSection = styled.section`
 
   width: 100%;
   
-  padding: 1rem 0;
+  padding: 5px 0;
 
 `;
 
@@ -171,7 +173,7 @@ const CarouselContainer = styled.div`
   margin-bottom: 40px;
 
   width: 1140px;
-  height: 460px;
+  height: 470px;
   
   border-radius: 10px;
   box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);

@@ -37,66 +37,67 @@ const Carousel = ({ items, title, summitId }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-      if (summitId) {
-        navigate(`/summit/${summitId}`);
-      } else {
-        navigate('/summit');
-      }
-    };
+    if (summitId) {
+      navigate(`/summit/${summitId}`);
+    } else {
+      navigate('/summit');
+    }
+  };
 
 
   return (
     <CarouselContainer>
-      <SemiContainer>
-      <MiniContainer>
-        <Title>{title}</Title>
-        <Button onClick={handleClick}>둘러보기</Button>
-      </MiniContainer>
-      <CarouselWrapper
-        style={{
-          transform: `translateX(-${(currentIndex * 100) / totalPages}%)`, // 페이지에 맞게 이동
-        }}
-      >
-        {items.map((item, index) => (
-          <SummitItem
-            key={index}
-            thumbnail={item.thumbnail}
-            service_info={item.description}
-            name={item.presenter}
-            router={item.router}
-          />
-        ))}
-      </CarouselWrapper>
-      </SemiContainer>
-
-      {!items.length < 1 && (
-        <>
-          <LeftButton onClick={handlePrev} active={currentIndex > 0}>
-            <BsChevronLeft size={32} />
-          </LeftButton>
-          <RightButton
-            onClick={handleNext}
-            active={currentIndex < totalPages - 1}
+        <SemiContainer>
+          <MiniContainer>
+            <Title>{title}</Title>
+            <Button onClick={handleClick}>써밋 둘러보기</Button>
+          </MiniContainer>
+          <CarouselWrapper
+            style={{
+              transform: `translateX(-${(currentIndex * 100) / totalPages}%)`, // 페이지에 맞게 이동
+            }}
           >
-            <BsChevronRight size={32} />
-          </RightButton>
-        </>
-      )}
+            {items.map((item, index) => (
+              <SummitItem
+                key={index}
+                thumbnail={item.thumbnail}
+                service_info={item.description}
+                name={item.presenter}
+                router={item.router}
+              />
+            ))}
+          </CarouselWrapper>
+        </SemiContainer>
 
-      {/* 3개 이하일 때는 1개의 dot만 보여주고 active 상태로 표시 */}
-      <CarouselNav>
-        {items.length <= 3 ? (
-          <CarouselDot active={true} />
-        ) : (
-          Array.from({ length: totalPages }).map((_, index) => (
-            <CarouselDot
-              key={index}
-              active={index === currentIndex}
-              onClick={() => handleDotClick(index)}
-            />
-          ))
+        {!items.length < 1 && (
+          <>
+            <LeftButton onClick={handlePrev} active={currentIndex > 0}>
+              <BsChevronLeft size={32} />
+            </LeftButton>
+            <RightButton
+              onClick={handleNext}
+              active={currentIndex < totalPages - 1}
+            >
+              <BsChevronRight size={32} />
+            </RightButton>
+          </>
         )}
-      </CarouselNav>
+
+        {/* 3개 이하일 때는 1개의 dot만 보여주고 active 상태로 표시 */}
+        <CarouselNav>
+          {items.length <= 3 ? (
+            <CarouselDot active={true} />
+          ) : (
+            Array.from({ length: totalPages }).map((_, index) => (
+              <CarouselDot
+                key={index}
+                active={index === currentIndex}
+                onClick={() => handleDotClick(index)}
+              />
+            ))
+          )}
+        </CarouselNav>
+      
     </CarouselContainer>
   );
 };
@@ -109,7 +110,7 @@ const CarouselContainer = styled.div`
   position: relative;
   width: 100%;
   max-width: 1180px;
-  height: 380px;
+  height: 420px;
   padding-left: 80px;
   overflow: hidden;
 `;
@@ -159,7 +160,7 @@ const Button = styled.button`
 const CarouselWrapper = styled.div`
   display: flex;
   transition: transform 0.3s ease-in-out;
-  height: 350px;
+  height: 370px;
   align-items: center;
   justify-content: flex-start;
   gap: 40px;

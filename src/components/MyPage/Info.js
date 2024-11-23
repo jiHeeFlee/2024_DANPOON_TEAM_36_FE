@@ -95,12 +95,12 @@ const Button = styled.button`
 function Info({ participant_type }) {
   return (
     <>
-      {participant_type === "YOUTH" && (
+      {participant_type === "ENTREPRENEUR" && (
         <Container>
           <Header>내 정보</Header>
           <Wrapper>
             <div>
-              <MyInfoComponent title="구분" content="예비 창업자" />
+              <MyInfoComponent title="구분" content="(예비) 청년 창업가" />
               <MyInfoComponent title="연락처" content="01012345678" />
               <MyInfoComponent title="이메일" content="goorm@gmail.com" />
               <MyInfoComponent title="알림톡" content="수신" />

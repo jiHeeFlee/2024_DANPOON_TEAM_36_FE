@@ -4,46 +4,23 @@ import themeGet from "../../utils/themeGet";
 import SummitItem from "../Summit/SummitItem";
 
 import { SummitMapTest } from "../../constants/SummitMapTest";
-import TestImg01 from "../../assets/img/test_img6.jpg";
+// import TestImg01 from "../../assets/img/test_img6.jpg";
 
-function LikePTVideo() {
+function LikePTVideo({ type, data }) {
+
+
+  const headerText =
+  type === 'like' ? '좋아요 누른 PT 영상 둘러 보기' : '투자 제안 보낸 PT 영상';
+const emptyText =
+  type === 'like'
+    ? '아직 좋아요 버튼을 누른 영상이 없습니다!'
+    : '아직 투자 제안을 보낸 PT 영상이 없습니다!';
+
+
   return (
     <Container>
-      <Header>좋아요 누른 PT 영상 둘러 보기</Header>
+      <Header>{headerText}</Header>
       <SummitItemContainer>
-        {/* <SummitItem 
-                    thumbnail={TestImg01}
-                    service_info='의사와 환자를 연결하는 
-원격 진료 서비스, 닥터나우'
-                    // router main으로 임시 설정
-                    router={'/'}
-                    name='최재형'
-                /> */}
-        {/* <ItemGrid>
-                    {SummitMapTest.slice(0,5).map((item, index) => (
-                        <SummitItem
-                            key={index}
-                            thumbnail={item.thumbnail}
-                            service_info={item.service_info}
-                            name={item.name}
-                            router={item.url}
-                        />
-                    ))}
-                    {SummitMapTest.length > 0 ? (
-                        SummitMapTest.slice(0, 5).map((item, index) => (
-                            <SummitItemWrapper key={index}> 
-                                <SummitItem
-                                    thumbnail={item.thumbnail}
-                                    service_info={item.service_info}
-                                    name={item.name}
-                                    router={item.url}
-                                />
-                            </SummitItemWrapper>
-                        ))
-                    ) : (
-                        <div>아직 좋아요 버튼을 누른 영상이 없습니다!</div>
-                    )}
-                </ItemGrid> */}
         {SummitMapTest.length > 0 ? (
           <ItemGrid>
             {SummitMapTest.map((item, index) => (
@@ -58,7 +35,7 @@ function LikePTVideo() {
             ))}
           </ItemGrid>
         ) : (
-          <div>아직 좋아요 버튼을 누른 영상이 없습니다!</div>
+          <div>{emptyText}</div>
         )}
       </SummitItemContainer>
     </Container>
@@ -74,8 +51,8 @@ const Container = styled.div`
   align-items: start;
 
   gap: 17px;
-
   width: 100%;
+  height: 350px;
 `;
 const Header = styled.p`
   font-family: Pretendard;
@@ -103,14 +80,8 @@ const ItemGrid = styled.div`
   overflow-x: auto;
   padding-bottom: 15px;
 
+
   &::-webkit-scrollbar {
-    height: 8px; /* 스크롤바 높이 */
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: ${themeGet("color.300")}; /* 스크롤바 색상 */
-    border-radius: 4px;
-  }
-  &::-webkit-scrollbar-track {
-    background: ${themeGet("color.100")}; /* 스크롤바 트랙 색상 */
+    display: none;
   }
 `;
