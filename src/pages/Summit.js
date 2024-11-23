@@ -72,9 +72,9 @@ function Summit() {
   const [isModal, setIsModal] = useState(false);
   const [gotoUpload, setGotoUpload] = useState(false);
 
-  const { summitId } = useParams(); 
-  const summitData = SummitMapTest[summitId] || [];  
-  const currentSummitInfo = SummitInfoContents[summitId] || SummitInfoContents["1"];
+  const summitData = SummitMapTest[summitId] || [];
+  const currentSummitInfo =
+    SummitInfoContents[summitId] || SummitInfoContents["1"];
 
   const handle_button_click = () => {
     setIsModal(true);
