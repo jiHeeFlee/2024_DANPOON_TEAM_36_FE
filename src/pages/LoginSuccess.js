@@ -2,15 +2,15 @@ import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getLogin } from "../apis/Auth/getLogin";
 import { userIdState } from "../state";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 const LoginSuccess = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [userId, setUserId] = useRecoilState(userIdState);
+
   useEffect(() => {
-    const id = Number(searchParams.get("userId"));
-    setUserId(id);
+    const id = searchParams.get("userId");
+    localStorage.setItem("userId", id);
     getLogin(id).then((res) => {
       const response = res.data;
       localStorage.setItem("accessToken", response.accessToken);

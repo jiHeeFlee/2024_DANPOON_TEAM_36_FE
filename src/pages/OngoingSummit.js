@@ -1,37 +1,53 @@
-import React from 'react';
-import styled from 'styled-components';
-import themeGet from '../utils/themeGet';
+import React from "react";
+import styled from "styled-components";
+import themeGet from "../utils/themeGet";
 import NavigationBar from "../components/NavigationBar";
-import Carousel from '../components/OngoingSummit/Carousel';
+import Carousel from "../components/OngoingSummit/Carousel";
+
 
 import UploadSuggestion from '../components/OngoingSummit/UploadSugeestion';
+
 import Footer from "../components/Footer";
+import { getAllSummit } from "../apis/Summit/getAllSummit";
+import { useEffect, useState } from "react";
 
 import { SummitInfoContents } from '../constants/SummitMockup';
 import { SummitMapTest } from '../constants/SummitMapTest';
 
 const OngoingSummit = () => {
-
-  const summitData = [
+  const summitMockData = [
     {
       id: "1",
       title: "청년 문제 해결을 위한 솔루션",
+
       items: SummitMapTest["1"],
       info: SummitInfoContents["1"],
+
     },
     {
       id: "2",
       title: "소외계층의 문제 해결을 위한 솔루션",
+
       items: SummitMapTest["2"],
       info: SummitInfoContents["2"],
+
     },
     {
       id: "3",
       title: "지역 불균형 문제 해결을 위한 솔루션",
+
       items: SummitMapTest["3"],
       info: SummitInfoContents["3"],
+
     },
   ];
+
+  const [summitData, setSummitData] = useState([{}]);
+  useEffect(() => {
+    getAllSummit().then((res) => {
+      setSummitData(res.data.data);
+    });
+  }, []);
 
   return (
     <MainContainer>
@@ -41,11 +57,12 @@ const OngoingSummit = () => {
           <Title>현재 진행 중인 써밋에서 다양한 피칭을 둘러보세요</Title>
           <Description>
             <span>YE;Summit</span>에서는 매주 두 개의 써밋이 열립니다.
-            </Description>
+          </Description>
         </TitleSection>
       </Header>
 
       <SummitSection>
+
         {summitData.map((summit) => (
           summit.items.length > 0 ? (
             <CarouselContainer  key={summit.id}>
@@ -77,10 +94,10 @@ const MainContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   background: linear-gradient(
-        to top,
-        ${themeGet('color.100')} 80%,
-        ${themeGet('color.main')} 20%
-    );
+    to top,
+    ${themeGet("color.100")} 80%,
+    ${themeGet("color.main")} 20%
+  );
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,7 +105,7 @@ const MainContainer = styled.div`
 `;
 
 const Header = styled.header`
-  background-color: ${themeGet('color.main')};
+  background-color: ${themeGet("color.main")};
   width: 100%;
   text-align: center;
   color: white;
@@ -131,10 +148,10 @@ const Description = styled.p`
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
 
-  span{
+  span {
     display: inline;
 
-    margin-right:5px ;
+    margin-right: 5px;
 
     font-family: Pretendard;
     font-size: 40px;
@@ -154,9 +171,8 @@ const SummitSection = styled.section`
   align-items: center;
 
   width: 100%;
-  
-  padding: 5px 0;
 
+  padding: 5px 0;
 `;
 
 const CarouselContainer = styled.div`
@@ -168,8 +184,8 @@ const CarouselContainer = styled.div`
 
   width: 1140px;
   height: 470px;
-  
+
   border-radius: 10px;
   box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
-  background-color: ${themeGet('color.white')};
+  background-color: ${themeGet("color.white")};
 `;
