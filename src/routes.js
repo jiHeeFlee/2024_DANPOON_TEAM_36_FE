@@ -59,6 +59,11 @@ const routes=[
         element:<Mypage />,
         name:"회원 마이 페이지"
     },
+    {
+        path: "/login-success",
+        element: <LoginSuccess />,
+        name: "test",
+      },
 ]
 
 export default routes;
