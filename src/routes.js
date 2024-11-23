@@ -55,6 +55,11 @@ const routes=[
         name:"주제별 써밋 개인 PT 페이지"
     },
     {
+        path:"/pt/:boardId",
+        element:<PT />,
+        name:"주제별 써밋 개인 PT 페이지"
+    },
+    {
         path:"/mypage",
         element:<Mypage />,
         name:"회원 마이 페이지"
