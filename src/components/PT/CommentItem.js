@@ -3,11 +3,11 @@ import styled from "styled-components";
 import GoToModalButton from "../PT/GoToModalButton";
 import themeGet from "../../utils/themeGet";
 
-const CommentItem = ({ author, text, onEdit, onDelete }) => {
+const CommentItem = ({ name, text, onEdit, onDelete }) => {
   return (
     <Comment>
       <AurthorContainer>
-        <CommentAuthor>{author}</CommentAuthor>
+        <CommentAuthor>{name}</CommentAuthor>
         <GoToModalButton color="#000000" size={24} onEdit={onEdit} onDelete={onDelete} />
       </AurthorContainer>
       <CommentText>{text}</CommentText>
