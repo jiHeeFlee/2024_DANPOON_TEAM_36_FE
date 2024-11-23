@@ -5,6 +5,8 @@ import SummitItem from "../Summit/SummitItem";
 import TestImg01 from "../../assets/img/test_img5.jpg";
 import { useRecoilValue } from "recoil";
 import { myVideoState } from "../../state";
+import { SummitMapTest } from "../../constants/SummitMapTest";
+import noneThumbnail from "../../assets/img/noneThumbnail.svg";
 
 function MyPTVideo() {
   const myVideo = useRecoilValue(myVideoState);
@@ -15,19 +17,18 @@ function MyPTVideo() {
         <Button>바로가기</Button>
       </TitleWrapper>
       <Wrapper>
-        <Caption>디지털 헬스케어를 선도하는 AI 서비스</Caption>
+        <Caption>{SummitMapTest[1][0].header}</Caption>
         {myVideo ? (
           <SummitItem
-            thumbnail={myVideo.imageUrl}
+            thumbnail={noneThumbnail}
             service_info={myVideo.title}
             // router main으로 임시 설정
             router={"/"}
           />
         ) : (
           <SummitItem
-            thumbnail={TestImg01}
-            service_info="의사와 환자를 연결하는 
-원격 진료 서비스, 닥터나우"
+            thumbnail={noneThumbnail}
+            service_info={SummitMapTest[1][0].service_info}
             // router main으로 임시 설정
             router={"/"}
           />

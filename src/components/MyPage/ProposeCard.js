@@ -29,7 +29,7 @@
 //                             </Card_Contact_Email>
 //                         </div>
 //                     </Card>
-//                     <CircleArrow direction='right'/>                    
+//                     <CircleArrow direction='right'/>
 //                 </Card_Arrow_Area>
 //                 {/* <Carousel /> */}
 //             </Wrapper>
@@ -62,7 +62,7 @@
 
 //     min-width: 516px;
 //     min-height: 378px;
-  
+
 //     gap: 20px;
 
 //     background-color: ${themeGet('color.100')};
@@ -78,7 +78,7 @@
 //     justify-content: space-around;
 //     align-items: center;
 //     gap: 20px;
-    
+
 // `;
 // const Card=styled.div`
 //     display: flex;
@@ -114,7 +114,7 @@
 //     margin-bottom: 12px;
 
 //     color: ${themeGet('color.white')};
-    
+
 //     font-family: Pretendard;
 //     font-size: 24px;
 //     font-weight: 700;
@@ -156,20 +156,19 @@
 //     text-decoration-skip-ink: none;
 // `;
 
-
 import React, { useState } from "react";
 import styled from "styled-components";
 import themeGet from "../../utils/themeGet";
 import CircleArrow from "../CircleArrow";
 import { AiOutlineMail } from "react-icons/ai";
 import { IoIosCall } from "react-icons/io";
+import { ProposeCardMockup } from "../../constants/ProposeCardMockup";
 
-import ProposeCardMockup from "../../constants/ProposeCardMockup";
-
-function ProposeCard({ summitData }) {
+function ProposeCard() {
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 인덱스를 관리
-
+  const summitData = ProposeCardMockup;
   const itemsPerPage = 1; // 한 페이지에 표시할 카드 개수
+  console.log(summitData);
   const totalPages = Math.ceil(summitData.length / itemsPerPage); // 전체 페이지 수
 
   const handlePrev = () => {
