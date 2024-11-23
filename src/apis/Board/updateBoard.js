@@ -5,6 +5,6 @@ export const updateBoard = async (id, data) => {
     return await axiosAuthClient.put(`/v1/api/board/${id}`, data);
 
   } catch (error) {
-    throw new Error("updateBoard 에러");
+    console.log("updateBoard 에러");
   }
 };

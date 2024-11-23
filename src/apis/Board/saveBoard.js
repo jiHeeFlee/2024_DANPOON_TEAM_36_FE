@@ -8,10 +8,10 @@ import { axiosAuthClient } from "../axios";
     String PTUrl
 */
 
-export const saveBooth = async (data) => {
+export const saveBoard = async (data) => {
   try {
     return await axiosAuthClient.post(`/v1/api/board`, data);
   } catch (error) {
-    throw new Error("saveBoard 에러");
+    console.log("saveBoard 에러");
   }
 };
