@@ -15,6 +15,90 @@ import { SummitMapTest } from "../constants/SummitMapTest";
 
 import { useParams } from 'react-router-dom';
 
+function Summit() {
+  const [isModal, setIsModal] = useState(false);
+  const [gotoUpload, setGotoUpload] = useState(false);
+
+  const { summitId } = useParams(); 
+  const summitData = SummitMapTest[summitId] || [];  
+  const currentSummitInfo = SummitInfoContents[summitId] || SummitInfoContents["1"];
+
+  const handle_button_click = () => {
+    // setIsModal(true);
+    setIsModal((prev)=>!prev);
+    console.log('handle butto click');
+  };
+
+  const handle_close_modal = () => {
+    setIsModal(false);
+  };
+
+  const handle_gotoUpload_button = () => {
+    setGotoUpload((prev) => !prev);
+  };
+
+  const info_lines = currentSummitInfo.info
+  ? currentSummitInfo.info.split(".").map((line) => line.trim()).filter((line) => line.length > 0)
+  : []; 
+
+
+  return (
+    <>
+      <Container>
+        <NavigationBar />
+        <InfoContainer>
+          <InfoContent>
+            <p className="header">{currentSummitInfo.header}</p>
+            <div>
+              {info_lines.map((line, index) => {
+                return <p key={index}>{line}.</p>;
+              })}
+            </div>
+          </InfoContent>
+
+          {/* 로그인 유무에 따라
+                    로그인 O : Upload 페이지로 이동
+                    로그인 X : 로그인 모달 창 띄운 후 로그인 페이지로 이동 */}
+          <GotoUpload
+            onClick={() => {
+              setIsModal(true); // 모달을 열도록 상태 업데이트
+            }}
+            route={ModalMessage.login.router}
+          />
+        </InfoContainer>
+
+        {/* 백그라운드 라운드 props 입력 후 캐러샐 컴포넌트 안에 넣어주면 됨 */}
+        <Background round="left">
+          <ItemGrid>
+            {summitData.map((item, index) => (
+              <SummitItem
+                key={index}
+                thumbnail={item.thumbnail}
+                service_info={item.service_info}
+                name={item.name}
+                router={item.url}
+              />
+            ))}
+          </ItemGrid>
+        </Background>
+        <Footer />
+
+        {/* 모달창 코드 */}
+        {isModal && (
+          <Modal
+            icon={ModalMessage.login.icon}
+            message={ModalMessage.login.message}
+            button={ModalMessage.login.button}
+            onClose={handle_close_modal}
+            router={ModalMessage.login.router}
+          />
+        )}
+      </Container>
+    </>
+  );
+}
+
+export default Summit;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,84 +150,3 @@ const ItemGrid = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
 `;
-
-function Summit() {
-  const [isModal, setIsModal] = useState(false);
-  const [gotoUpload, setGotoUpload] = useState(false);
-
-  const { summitId } = useParams(); 
-  const summitData = SummitMapTest[summitId] || [];  
-  const currentSummitInfo = SummitInfoContents[summitId] || SummitInfoContents["1"];
-
-  const handle_button_click = () => {
-    setIsModal(true);
-  };
-
-  const handle_close_modal = () => {
-    setIsModal(false);
-  };
-
-  const handle_gotoUpload_button = () => {
-    setGotoUpload((prev) => !prev);
-  };
-
-  const info_lines = currentSummitInfo.info
-  ? currentSummitInfo.info.split(".").map((line) => line.trim()).filter((line) => line.length > 0)
-  : []; 
-
-
-  return (
-    <>
-      <Container>
-        <NavigationBar />
-        <InfoContainer>
-          <InfoContent>
-            <p className="header">{currentSummitInfo.header}</p>
-            <div>
-              {info_lines.map((line, index) => {
-                return <p key={index}>{line}.</p>;
-              })}
-            </div>
-          </InfoContent>
-
-          {/* 로그인 유무에 따라
-                    로그인 O : Upload 페이지로 이동
-                    로그인 X : 로그인 모달 창 띄운 후 로그인 페이지로 이동 */}
-          <GotoUpload
-            onClick={handle_button_click}
-            route={ModalMessage.login.router}
-          />
-        </InfoContainer>
-
-        {/* 백그라운드 라운드 props 입력 후 캐러샐 컴포넌트 안에 넣어주면 됨 */}
-        <Background round="left">
-          <ItemGrid>
-            {summitData.map((item, index) => (
-              <SummitItem
-                key={index}
-                thumbnail={item.thumbnail}
-                service_info={item.service_info}
-                name={item.name}
-                router={item.url}
-              />
-            ))}
-          </ItemGrid>
-        </Background>
-        <Footer />
-
-        {/* 모달창 코드 */}
-        {isModal && (
-          <Modal
-            icon={ModalMessage.login.icon}
-            message={ModalMessage.login.message}
-            button={ModalMessage.login.button}
-            onClose={handle_close_modal}
-            router={ModalMessage.login.router}
-          />
-        )}
-      </Container>
-    </>
-  );
-}
-
-export default Summit;
