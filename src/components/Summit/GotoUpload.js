@@ -3,6 +3,42 @@ import styled from "styled-components";
 import themeGet from "../../utils/themeGet";
 import { BsArrowRight } from "react-icons/bs";
 
+
+function GotoUpload({
+    className,
+    summitId,
+    onClick
+}){
+    // 추후 라우터 작업 진행하기
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        if (summitId) {
+            navigate(`/upload/${summitId}`);
+        } else if (!localStorage.getItem('accessToken')) {
+            if (onClick) {
+                onClick(); // 부모에서 전달된 onClick 호출 (모달 열기)
+            }
+        } else {
+            navigate('/upload'); // summitId가 없으면 기본 /upload 경로로 이동
+          }
+      };
+
+    return(
+        <>
+            <Container 
+                onClick={handleClick}
+                className={className}
+            >
+                PT 영상 업로드 하기
+                <BsArrowRight size={16}/>
+            </Container>
+        </>
+    )
+}
+
+export default GotoUpload;
+
 const Container=styled.button`
     display: flex;
     flex-direction: row;
@@ -35,34 +71,3 @@ const Container=styled.button`
         transition: all 0.3s;
     }
 `;
-
-function GotoUpload({
-    className,
-    summitId
-}){
-    // 추후 라우터 작업 진행하기
-    const navigate = useNavigate();
-
-    const handleClick = () => {
-        // summitId가 있을 경우 해당 summitId를 포함한 /upload 경로로 네비게이트
-        if (summitId) {
-          navigate(`/upload/${summitId}`);
-        } else {
-          navigate('/upload'); // summitId가 없으면 기본 /upload 경로로 이동
-        }
-      };
-
-    return(
-        <>
-            <Container 
-                onClick={handleClick}
-                className={className}
-            >
-                PT 영상 업로드 하기
-                <BsArrowRight size={16}/>
-            </Container>
-        </>
-    )
-}
-
-export default GotoUpload;
