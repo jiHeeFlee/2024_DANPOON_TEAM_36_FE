@@ -41,19 +41,42 @@ const OngoingSummit = () => {
   ];
 
   const [isMock, setIsMock] = useState(true);
-  const [summitData, setSummitData] = useState(summitMockData);
-  const [boardData, setBoardData] = useState([{}]);
+  const [summitData, setSummitData] = useState([]);
+  const [boardData, setBoardData] = useState({});
+  const addBoardData = (summitId, data) => {
+    console.log(summitId, data);
+    let temp = boardData[summitId];
+    if (temp !== undefined) {
+      temp.push(data);
+    } else {
+      temp = [];
+      temp.push(data);
+    }
+    setBoardData((prev) => ({ ...prev, [summitId]: temp }));
+  };
+  const findBoardData = (index) => {};
+  // useEffect(() => {
+  // for (let key in boardData) {
+  //   console.log("key : " + key + ", value : " + boardData[key]);
+  // }
+  //   console.log("B", boardData);
+  // }, [boardData]);
   useEffect(() => {
-    summitData.forEach((value) => {
-      getBoardsBySummit(value.id).then((res) => {
-        setBoardData(res.data);
-        setIsMock(false);
+    try {
+      summitData.forEach((value) => {
+        getBoardsBySummit(value.id).then((res) => {
+          addBoardData(value.id, res.data);
+        });
       });
-    });
+    } catch {
+      setSummitData(summitMockData);
+    }
   }, [summitData]);
   useEffect(() => {
     getAllSummit().then((res) => {
-      if (res.status === 200) setSummitData(res.data.data.slice(-3));
+      if (res.status === 200) {
+        setSummitData(res.data.data.slice(-3));
+      }
     });
   }, []);
 
@@ -99,7 +122,23 @@ const OngoingSummit = () => {
       </SummitSection> */}
 
       <SummitSection>
-        {summitData.map((summit) =>
+        {summitData.map((summit) => {
+          <CarouselContainer key={summit.id}>
+            <Carousel
+              title={summit.title}
+              items={boardData[summit.id]}
+              summitId={summit.id}
+            />
+          </CarouselContainer>;
+        })}
+        {/* <CarouselContainer key={summit.id}>
+          <Carousel
+            title={summit.title}
+            items={summit.items}
+            summitId={summit.id}
+          />
+        </CarouselContainer> */}
+        {/* {summitData.map((summit) =>
           // summit.items가 배열일 때만 length를 사용할 수 있도록 조건 추가
           Array.isArray(summit.items) && summit.items.length > 0 ? (
             <CarouselContainer key={summit.id}>
@@ -109,21 +148,24 @@ const OngoingSummit = () => {
                 summitId={summit.id}
               />
             </CarouselContainer>
-          ) : null
+          ) : (
+            <></>
+          )
         )}
 
-        {summitData.map(
-          (summit, index) =>
-            // summit.items가 비어있거나 undefined일 경우 UploadSuggestion을 렌더링
-            (!Array.isArray(summit.items) || summit.items.length === 0) && (
-              <UploadSuggestion
-                key={index}
-                summitId={summit.id}
-                header={summit.title}
-                caption="써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요."
-              />
-            )
-        )}
+        {summitData.map((summit, index) =>
+          // summit.items가 비어있거나 undefined일 경우 UploadSuggestion을 렌더링
+          !Array.isArray(boardData) || boardData.length === 0 ? (
+            <UploadSuggestion
+              key={index}
+              summitId={summit.id[summit.id]}
+              header={summit.title}
+              caption="써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요."
+            />
+          ) : (
+            <></>
+          )
+        )} */}
       </SummitSection>
 
       <Footer />
