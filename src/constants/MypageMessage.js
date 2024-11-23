@@ -1,5 +1,5 @@
 const MypageText = {
-  YOUTH: {
+  ENTREPRENEUR: {
     myinfo: {
       participant_type: "구분",
       contact: "연락처",
