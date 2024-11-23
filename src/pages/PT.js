@@ -141,8 +141,8 @@ const PT = () => {
   //   .filter(Boolean);
 
   const descriptionSentences =
-    boardInfo && boardInfo.description
-      ? boardInfo.description.split(".").filter(Boolean)
+    boardInfo && boardInfo.content
+      ? boardInfo.content.split(".").filter(Boolean)
       : [];
 
   // 삭제 버튼 클릭 핸들러
@@ -213,7 +213,7 @@ const PT = () => {
             <VideoCommentWrapper>
               <VideoContainer
                 // TODO : api통신으로 받은 이미지 아래에 삽입.
-                src={"[]"}
+                src={""}
               />
               <CommentInputWithSubmit
                 onSubmit={handleRegisterComment}
