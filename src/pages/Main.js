@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { BsChevronCompactDown } from "react-icons/bs";
@@ -12,14 +13,23 @@ import Features from "../components/Main/Features";
 import Footer from "../components/Footer";
 
 const Main = () => {
+  // const [isLogin,setIsLogin] = useState(false);
   const navigate = useNavigate();
+  
+  // useEffect(()=>{
+  //   if(localStorage.getItem('accessToken')){
+  //     setIsLogin(true);
+  //   }
+  // },[])
 
   return (
     <>
       <Container>
         <InfoContainer>
           <InfoSemiContainer>
-            <NavigationBar />
+            <NavigationBar 
+            // isLogin={isLogin}
+            />
           </InfoSemiContainer>
 
           <TitleContainer>
