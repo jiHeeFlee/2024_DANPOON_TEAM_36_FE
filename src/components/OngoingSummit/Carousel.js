@@ -62,8 +62,8 @@ const Carousel = ({ items, title, summitId }) => {
                 key={index}
                 thumbnail={item.thumbnail}
                 service_info={item.service_info} 
-                name={item.presenter}
-                router={item.router}
+                name={item.name}
+                router={item.url}
               />
             ))}
           </CarouselWrapper>
