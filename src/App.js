@@ -1,7 +1,7 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import routes from './routes';
-import { ThemeProvider } from 'styled-components';
-import theme from './theme';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import routes from "./routes";
+import { ThemeProvider } from "styled-components";
+import theme from "./theme";
 import { RecoilRoot } from "recoil";
 
 function App() {

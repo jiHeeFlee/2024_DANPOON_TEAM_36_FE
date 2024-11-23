@@ -54,7 +54,23 @@ export const myVideoState = atom({
   },
 });
 
+export const myInvestState = atom({
+  key: "myInvestState",
+  default: [
+    {
+      myMemberId: 0,
+      username: "string",
+      position: "string",
+      phoneNumber: "string",
+      email: "string",
+      boardId: 0,
+    },
+  ],
+});
+
 export const userIdState = atom({
   key: "userId",
-  default: 0,
+  default: {
+    id: 0,
+  },
 });

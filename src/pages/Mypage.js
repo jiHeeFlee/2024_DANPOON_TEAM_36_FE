@@ -12,40 +12,47 @@ import {
   likePTVideosState,
   myVideoState,
   mypageInfoState,
-  userIdState,
+  myInvestState,
 } from "../state";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { getMyInfo } from "../apis/Member/getMyInfo";
 import { MypageMockup } from "../constants/MypageMockup";
 import { getBoardLike } from "../apis/Board/getBoardLike";
 import { LikePTVideoMockup } from "../constants/LikePTVideoMockup";
 import { getMyBoard } from "../apis/Board/getMyBoard";
+import { getMyInvest } from "../apis/Investment/getMyInvest";
 function Mypage() {
   const [userInfo, setUserInfo] = useRecoilState(mypageInfoState);
   const [likePTVideos, setLikePTVideos] = useRecoilState(likePTVideosState);
   const [myVideo, setMyVideo] = useRecoilState(myVideoState);
-  const [userId, setUserId] = useRecoilState(userIdState);
-  useEffect(() => {
-    console.log(userInfo.participant_type);
-  }, [userInfo]);
+  const [myInvest, setMyInvest] = useRecoilState(myInvestState);
+  const userId = localStorage.getItem("userId");
   useEffect(() => {
     getMyInfo(userId).then((response) => {
       if (response) {
-        setUserInfo(response);
+        console.log(response);
+        setUserInfo(response.data);
       } else {
         setUserInfo(MypageMockup);
       }
     });
     getBoardLike(userId).then((response) => {
       if (response) {
-        setLikePTVideos(response);
+        setLikePTVideos(response.data);
       } else {
         setLikePTVideos(LikePTVideoMockup);
       }
     });
     getMyBoard(userId).then((response) => {
       if (response) {
-        setMyVideo(response);
+        setMyVideo(response.data.data);
+      } else {
+        setMyVideo();
+      }
+    });
+    getMyInvest(userId, 0).then((response) => {
+      if (response) {
+        setMyVideo(response.data.data);
       } else {
         setMyVideo();
       }
