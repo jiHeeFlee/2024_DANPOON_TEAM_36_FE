@@ -20,6 +20,8 @@ import { updateComment } from "../apis/Comment/updateComment";
 import { deleteComment } from "../apis/Comment/deleteComment";
 import { useParams } from "react-router-dom";
 
+import { SummitMapTest } from "../constants/SummitMapTest";
+
 // API로부터 받아올 데이터 목(mock) 설정
 const mockPTData = {
   title: "의사와 환자를 연결하는 원격 진료 서비스, 닥터나우",
@@ -35,7 +37,7 @@ const mockPTData = {
 
 const PT = () => {
   const navigate = useNavigate();
-  //boardId, PT id입니다.
+
   const { boardId } = useParams();
   const [isHeartFilled, setIsHeartFilled] = useState(false);
 
@@ -121,12 +123,15 @@ const PT = () => {
     setIsDeleteModalOpen(true);
   };
 
+
+  const ptData = SummitMapTest[boardId]; 
+
   return (
     <Container>
       <Header>
         <NavigationBar />
         <TitleContainer>
-          <Title>{mockPTData.title}</Title>
+          <Title>{ptData.title}</Title>
           <EditDelete 
             color="white"
             size={36}

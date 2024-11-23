@@ -71,6 +71,10 @@ function Summit() {
   const [isModal, setIsModal] = useState(false);
   const [gotoUpload, setGotoUpload] = useState(false);
 
+  const { summitId } = useParams(); 
+  const summitData = SummitMapTest[summitId] || [];  
+  const currentSummitInfo = SummitInfoContents[summitId] || SummitInfoContents["1"];
+
   const handle_button_click = () => {
     setIsModal(true);
   };
@@ -83,13 +87,9 @@ function Summit() {
     setGotoUpload((prev) => !prev);
   };
 
-  // InfoContents split 작업 코드
-  const info_lines = SummitInfoContents.info
-    .split(".")
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0);
-
-
+  const info_lines = currentSummitInfo.info
+  ? currentSummitInfo.info.split(".").map((line) => line.trim()).filter((line) => line.length > 0)
+  : []; 
 
 
   return (
@@ -98,7 +98,7 @@ function Summit() {
         <NavigationBar />
         <InfoContainer>
           <InfoContent>
-            <p className="header">{SummitInfoContents.header}</p>
+            <p className="header">{currentSummitInfo.header}</p>
             <div>
               {info_lines.map((line, index) => {
                 return <p key={index}>{line}.</p>;
@@ -118,7 +118,7 @@ function Summit() {
         {/* 백그라운드 라운드 props 입력 후 캐러샐 컴포넌트 안에 넣어주면 됨 */}
         <Background round="left">
           <ItemGrid>
-            {SummitMapTest.map((item, index) => (
+            {summitData.map((item, index) => (
               <SummitItem
                 key={index}
                 thumbnail={item.thumbnail}

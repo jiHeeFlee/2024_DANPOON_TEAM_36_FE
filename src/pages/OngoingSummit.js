@@ -4,36 +4,32 @@ import themeGet from '../utils/themeGet';
 import NavigationBar from "../components/NavigationBar";
 import Carousel from '../components/OngoingSummit/Carousel';
 
-import UplaodSuggestion from '../components/OngoingSummit/UplaodSuggestion';
+import UploadSuggestion from '../components/OngoingSummit/UploadSugeestion';
 import Footer from "../components/Footer";
+
+import { SummitInfoContents } from '../constants/SummitMockup';
+import { SummitMapTest } from '../constants/SummitMapTest';
 
 const OngoingSummit = () => {
 
   const summitData = [
     {
-      id: 1,
+      id: "1",
       title: "청년 문제 해결을 위한 솔루션",
-      items: [
-        { presenter: '최규리', description: '청년 창업가들을 위한 PT 및 투자 연결 플랫폼, YE;Summit' },
-        { presenter: '이수혁', description: '스포츠 게임 참여를 통한 건강한 도파민, Run With Mate' },
-        { presenter: '김현아', description: '당뇨를 겪고 있는 청년들에게 바칩니다, 식단과 밀당하는 meal당' },
-        { presenter: '정재웅', description: '이제는 진짜 졸업을 해야할 시간, 대학생들의 필수 웹 졸업할 결심' },
-      ],
+      items: SummitMapTest["1"],
+      info: SummitInfoContents["1"],
     },
     {
-      id: 2,
+      id: "2",
       title: "소외계층의 문제 해결을 위한 솔루션",
-      items: [
-
-
-      ],
+      items: SummitMapTest["2"],
+      info: SummitInfoContents["2"],
     },
     {
-      id: 3,
+      id: "3",
       title: "지역 불균형 문제 해결을 위한 솔루션",
-      items: [
-        { presenter: '유지희', description: '상권, 유동인구를 분석하여 소상공인의 가게 입지 추천 서비스. 별자리' },
-      ],
+      items: SummitMapTest["3"],
+      info: SummitInfoContents["3"],
     },
   ];
 
@@ -50,9 +46,9 @@ const OngoingSummit = () => {
       </Header>
 
       <SummitSection>
-        {summitData.map((summit, index) => (
+        {summitData.map((summit) => (
           summit.items.length > 0 ? (
-            <CarouselContainer key={index}>
+            <CarouselContainer  key={summit.id}>
               <Carousel title={summit.title} items={summit.items} summitId={summit.id} />
             </CarouselContainer>
           ) : null
@@ -60,7 +56,7 @@ const OngoingSummit = () => {
 
         {summitData.map((summit, index)=>(
           summit.items.length === 0 && (
-            <UplaodSuggestion 
+            <UploadSuggestion 
               key={index}
               summitId={summit.id}
               header={summit.title}
