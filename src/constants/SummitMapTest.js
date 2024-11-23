@@ -59,8 +59,7 @@ export const SummitMapTest = {
         pturl:'https://cake-tumble-2da.notion.site/eb7555209e88496f9727465e03b644ba?pvs=4'
       }
     ],
-    "2": [],
-    "3": [
+    "2": [
       {
         thumbnail: pt4,
         service_info: '상권, 유동인구를 분석하여 소상공인의 가게 입지 추천 서비스. 별자리',
@@ -74,5 +73,6 @@ export const SummitMapTest = {
         info: SummitInfoContents["3"].info,
         pturl:'https://cake-tumble-2da.notion.site/a74019d7992f4b2eab82178077d906f6?pvs=4'
       }
-    ]
+    ],
+    "3": [],
   };
