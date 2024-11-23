@@ -38,7 +38,7 @@ const Container = styled.div`
 
   padding: 40px;
 
-  max-width: 1020px;
+  min-width: 1020px;
   max-height: 260px;
 
   background-color: ${themeGet("color.main_light")};
@@ -46,6 +46,7 @@ const Container = styled.div`
   border-radius: 10px;
 
   box-shadow: 5px 5px 20px 2px #00000040;
+  margin-top: 40px;
 `;
 
 const Header = styled.p`
