@@ -8,74 +8,26 @@ import TestImg6 from '../assets/img/test_img6.jpg';
 export const SummitMapTest=[
     {
         thumbnail:TestImg,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재형',
+        service_info:'청년 창업가들을 위한 PT 및 투자 연결 플랫폼, YE;Summit',
+        name:'최규리',
         url:'/pt'
     },
     {
-        thumbnail:TestImg2,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재나',
-        url:'/test'
-    },
-    {
-        thumbnail:TestImg3,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재동생',
-        url:'/test'
-    },
-    {
-        thumbnail:TestImg4,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재형2',
-        url:'/test'
-    },
-    {
-        thumbnail:TestImg5,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재나2',
-        url:'/test'
-    },
-    {
-        thumbnail:TestImg6,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재동생2',
-        url:'/test'
+        thumbnail:TestImg,
+        service_info:'스포츠 게임 참여를 통한 건강한 도파민, Run With Mate',
+        name:'이수혁',
+        url:'/pt'
     },
     {
         thumbnail:TestImg,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재형3',
-        url:'/test'
+        service_info:'당뇨를 겪고 있는 청년들에게 바칩니다, 식단과 밀당하는 meal당',
+        name:'김현아',
+        url:'/pt'
     },
     {
         thumbnail:TestImg,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재나3',
-        url:'/test'
+        service_info:'이제는 진짜 졸업을 해야할 시간, 대학생들의 필수 웹 졸업할 결심',
+        name:'정재웅',
+        url:'/pt'
     },
-    {
-        thumbnail:TestImg,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재동생3',
-        url:'/test'
-    },
-    {
-        thumbnail:TestImg,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재형4',
-        url:'/test'
-    },
-    {
-        thumbnail:TestImg,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재나4',
-        url:'/test'
-    },
-    {
-        thumbnail:TestImg,
-        service_info:'의사와 환자를 연결하는 원격 진료 서비스, 닥터나우',
-        name:'최재동생4',
-        url:'/test'
-    }
 ];

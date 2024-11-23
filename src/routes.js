@@ -35,7 +35,17 @@ const routes=[
         name:"주제별 써밋 페이지"
     },
     {
+        path:"/summit/:summitId",
+        element:<Summit />,
+        name:"주제별 써밋 페이지"
+    },
+    {
         path:"/upload",
+        element:<Upload />,
+        name:"PT 업로드 페이지"
+    },
+    {
+        path:"/upload/:boardId",
         element:<Upload />,
         name:"PT 업로드 페이지"
     },

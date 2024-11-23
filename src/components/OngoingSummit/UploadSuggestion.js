@@ -23,7 +23,7 @@ const handleClick = () => {
     return(
         <>
             <Container>
-                <Header onClick={handleClick}> '{header}'를 선도하는 청년 창업가가 되고 싶으신가요?</Header>
+                <Header onClick={handleClick}> '{header}'을 선도하는 청년 창업가가 되고 싶으신가요?</Header>
                 <Caption>{caption}</Caption>
                 <GotoUpload />
 
