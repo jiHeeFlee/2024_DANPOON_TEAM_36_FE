@@ -1,4 +1,5 @@
-# 청년 창업가들을 위한 PT 및 투자 연결 플랫폼, YE;Summit
+# 🔥 청년 창업가들을 위한 PT 및 투자 연결 플랫폼, YE;Summit
+<img width="1920" alt="YESER_READNE" src="https://github.com/user-attachments/assets/558c4ad4-cba7-4489-9d3f-b7c6e2a0f218">
 
 ## YE:Summit - FE
 ### Commit Convention
