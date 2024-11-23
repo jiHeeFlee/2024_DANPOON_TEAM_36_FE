@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import themeGet from "../../utils/themeGet";
 
-const CommentInputWithSubmit = ({ onSubmit, author }) => {
+const CommentInputWithSubmit = ({ onSubmit, name }) => {
   const [comment, setComment] = useState("");
 
   const handleChange = (event) => {
@@ -11,7 +11,7 @@ const CommentInputWithSubmit = ({ onSubmit, author }) => {
 
   const handleSubmit = () => {
     if (comment.trim()) {
-      onSubmit(comment, author); // 댓글과 작성자 정보 전달
+      onSubmit(comment, name); // 댓글과 작성자 정보 전달
       setComment(""); // 댓글 입력창 초기화
     }
   };
@@ -29,6 +29,7 @@ const CommentInputWithSubmit = ({ onSubmit, author }) => {
 };
 
 export default CommentInputWithSubmit;
+
 
 const CommentInput = styled.div`
   display: flex;
