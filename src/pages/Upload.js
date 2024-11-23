@@ -73,9 +73,11 @@ function Upload({ summit }) {
       });
     } else {
       // 정상 처리 로직
-      uploadImage(formData.thumbnail).then((res) => {
-        saveBoard(formData, summitId, res.data.data.imageUrls);
-      });
+      if (formData.thumbnail !== null && formData.thumbnail !== undefined) {
+        uploadImage(formData.thumbnail).then((res) => {
+          saveBoard(formData, summitId, res.data.data.imageUrls);
+        });
+      }
 
       handleOpenModal({
         icon: ModalMessage.pt.icon,

@@ -68,7 +68,7 @@ function Mypage() {
       />
       <Title>마이 페이지</Title>
       <Header>
-        <span>{userInfo.name}</span>님 안녕하세요
+        <span>최규리</span>님 안녕하세요
       </Header>
       {/* TODO : 제안 PTList 에 대한 API 없기 때문에 아직 붙이지 않음*/}
       {userInfo.userType === "ENTREPRENEUR" && (

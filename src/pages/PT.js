@@ -30,6 +30,9 @@ const PT = () => {
 
   const { boardId } = useParams(); // URL 파라미터로부터 boardId를 가져옵니다.
 
+  const [boardInfo, setBoardInfo] = useState(
+    SummitMapTest[1][0] // 첫 번째 PT 정보 가져오기
+  );
   const currentPtInfo =
     SummitMapTest[boardId] && SummitMapTest[boardId].length > 0
       ? SummitMapTest[boardId][0] // 첫 번째 PT 정보 가져오기
@@ -51,6 +54,12 @@ const PT = () => {
   //   "comment": "string"
   // }
 
+  useEffect(() => {
+    getBoard(boardId).then((res) => {
+      setBoardInfo(res.data);
+      console.log(res.data);
+    });
+  }, []);
   const recallComment = () => {
     getBoard(boardId).then((res) => {
       //comments 변경
@@ -132,8 +141,8 @@ const PT = () => {
   //   .filter(Boolean);
 
   const descriptionSentences =
-    currentPtInfo && currentPtInfo.description
-      ? currentPtInfo.description.split(".").filter(Boolean)
+    boardInfo && boardInfo.content
+      ? boardInfo.content.split(".").filter(Boolean)
       : [];
 
   // 삭제 버튼 클릭 핸들러
@@ -164,9 +173,9 @@ const PT = () => {
     <Container>
       <Header>
         <NavigationBar />
-        {currentPtInfo ? (
+        {boardInfo ? (
           <TitleContainer>
-            <Title>{currentPtInfo.service_info}</Title>
+            <Title>{boardInfo.title}</Title>
             <EditDelete
               color="white"
               size={36}
@@ -185,7 +194,7 @@ const PT = () => {
             </p>
           ))}
         </Description> */}
-        {currentPtInfo ? (
+        {boardInfo ? (
           <Description>
             {descriptionSentences.map((sentence, index) => (
               <p key={index}>
@@ -204,28 +213,24 @@ const PT = () => {
             <VideoCommentWrapper>
               <VideoContainer
                 // TODO : api통신으로 받은 이미지 아래에 삽입.
-                src={"[]"}
+                src={""}
               />
               <CommentInputWithSubmit
                 onSubmit={handleRegisterComment}
-                name={currentPtInfo.name}
+                name={"최규리"}
               />
             </VideoCommentWrapper>
 
             <CommentsWrapper>
-              {!mock ? (
-                <p>error!</p>
-              ) : (
-                comments.map((comment) => (
-                  <CommentItem
-                    key={comment.id}
-                    name={comment.name}
-                    text={comment.text}
-                    onEdit={() => {}}
-                    onDelete={() => {}}
-                  />
-                ))
-              )}
+              {comments.map((comment) => (
+                <CommentItem
+                  key={comment.id}
+                  name={comment.name}
+                  text={comment.text}
+                  onEdit={() => {}}
+                  onDelete={() => {}}
+                />
+              ))}
 
               {/* CommentItem에서 수정하기 버튼을 누르면
               CommentInputWithSubmit 창이 뜨고 버튼이 '수정'으로 바뀜 */}
@@ -237,13 +242,13 @@ const PT = () => {
 
           <ContentSectionRight>
             <VideoInfo>
-              <DateText>{currentPtInfo.date}</DateText>
+              <DateText>{boardInfo.date}</DateText>
 
-              {currentPtInfo ? (
+              {boardInfo ? (
                 <>
                   <PresenterWrapper>
                     <Label>발표자</Label>
-                    <Name>{currentPtInfo.name}</Name>
+                    <Name>{boardInfo.writerMemberName}</Name>
                   </PresenterWrapper>
                 </>
               ) : (
@@ -252,10 +257,10 @@ const PT = () => {
               <CompanyWrapper>
                 <Label>소속</Label>
                 <CompanyContainer>
-                  <Name>{currentPtInfo.company}</Name>
-                  {currentPtInfo.pturl !== "" && (
+                  <Name>{"YE:SER"}</Name>
+                  {boardInfo.pturl !== "" && (
                     <StyledBiLink
-                      onClick={() => window.open(currentPtInfo.pturl)}
+                      onClick={() => window.open(boardInfo.pturl)}
                     />
                   )}
                 </CompanyContainer>
