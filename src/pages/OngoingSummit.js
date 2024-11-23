@@ -44,10 +44,8 @@ const OngoingSummit = () => {
 
   const [summitData, setSummitData] = useState([{}]);
   useEffect(() => {
-    console.log("aa");
     getAllSummit().then((res) => {
       setSummitData(res.data.data);
-      summitData.forEach((value) => {});
     });
   }, []);
 
@@ -62,6 +60,7 @@ const OngoingSummit = () => {
           </Description>
         </TitleSection>
       </Header>
+
       <SummitSection>
 
         {summitData.map((summit) => (
@@ -71,15 +70,19 @@ const OngoingSummit = () => {
             </CarouselContainer>
           ) : null
         ))}
-        {summitData.map((summit, index) => (
-          <UplaodSuggestion
-            key={index}
-            summitId={summit.id}
-            header={summit.title}
-            caption="써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요."
-          />
+
+        {summitData.map((summit, index)=>(
+          summit.items.length === 0 && (
+            <UploadSuggestion 
+              key={index}
+              summitId={summit.id}
+              header={summit.title}
+              caption='써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요.'
+              />
+          )
         ))}
       </SummitSection>
+
       <Footer />
     </MainContainer>
   );
