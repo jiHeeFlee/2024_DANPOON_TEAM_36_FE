@@ -6,7 +6,7 @@ import Summit from './pages/Summit';
 import Upload from './pages/Upload';
 import PT from './pages/PT';
 import Mypage from './pages/Mypage';
-import LoginSuccess from './pages/LoginSuccess';
+
 
 const routes=[
     {
@@ -35,17 +35,7 @@ const routes=[
         name:"주제별 써밋 페이지"
     },
     {
-        path:"/summit/:summitId",
-        element:<Summit />,
-        name:"주제별 써밋 페이지"
-    },
-    {
         path:"/upload",
-        element:<Upload />,
-        name:"PT 업로드 페이지"
-    },
-    {
-        path:"/upload/:boardId",
         element:<Upload />,
         name:"PT 업로드 페이지"
     },
@@ -59,11 +49,6 @@ const routes=[
         element:<Mypage />,
         name:"회원 마이 페이지"
     },
-    {
-        path: "/login-success",
-        element: <LoginSuccess />,
-        name: "test",
-      },
 ]
 
 export default routes;
