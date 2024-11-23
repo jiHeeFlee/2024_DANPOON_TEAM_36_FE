@@ -93,7 +93,7 @@ function SignUp() {
   };
 
   const handleAllCheckbox = (e) => {
-    const checked = e.target.checked;
+    const checked = e.target.checked ? true : false;
     setIsFullAgreement(checked);
     setIsRequiredChecked(checked);
     setIsOptionalChecked(checked);
@@ -273,7 +273,7 @@ function SignUp() {
                   <p style={{ textAlign: "center" }}>
                     <span style={{ color: "#FF582D", fontSize: "14px" }}>
                       *
-                    </span>{" "}
+                    </span>
                     필수 입력 항목입니다.
                   </p>
                 }
