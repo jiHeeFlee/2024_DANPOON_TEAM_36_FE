@@ -40,7 +40,14 @@ const OngoingSummit = () => {
     },
   ];
 
-  const [summitData, setSummitData] = useState([{}]);
+
+  const [summitData, setSummitData] = useState(summitMockData);
+  useEffect(() => {
+    getAllSummit().then((res) => {
+      setSummitData(res.data.data);
+    });
+  }, []);
+
   const [boardData, setBoardData] = useState([{}]);
   // useEffect(() => {
   //   summitData.forEach((value) => {
@@ -56,6 +63,7 @@ const OngoingSummit = () => {
   //   });
   // }, []);
 
+
   return (
     <MainContainer>
       <Header>
@@ -68,25 +76,52 @@ const OngoingSummit = () => {
         </TitleSection>
       </Header>
 
-      <SummitSection>
-        {/* {summitData.map((summit) => (
-          <CarouselContainer key={summit.id}>
-            <Carousel
-              title={summit.title}
-              items={summit.items}
+
+      {/* <SummitSection>
+
+        {summitData.map((summit) => (
+          summit.items.length > 0 ? (
+            <CarouselContainer  key={summit.id}>
+              <Carousel title={summit.title} items={summit.items} summitId={summit.id} />
+            </CarouselContainer>
+          ) : null
+        ))}
+
+        {summitData.map((summit, index)=>(
+          summit.items.length === 0 && (
+            <UploadSuggestion 
+              key={index}
+
               summitId={summit.id}
             />
           </CarouselContainer>
         ))}
-        {summitData.map((summit, index) => (
-          <UploadSuggestion
-            key={index}
-            summitId={summit.id}
-            header={summit.title}
-            caption="써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요."
-          />
-        ))} */}
-      </SummitSection>
+
+      </SummitSection> */}
+
+<SummitSection>
+    {summitData.map((summit) => (
+      // summit.items가 배열일 때만 length를 사용할 수 있도록 조건 추가
+      Array.isArray(summit.items) && summit.items.length > 0 ? (
+        <CarouselContainer key={summit.id}>
+          <Carousel title={summit.title} items={summit.items} summitId={summit.id} />
+        </CarouselContainer>
+      ) : null
+    ))}
+
+    {summitData.map((summit, index) => (
+      // summit.items가 비어있거나 undefined일 경우 UploadSuggestion을 렌더링
+      (!Array.isArray(summit.items) || summit.items.length === 0) && (
+        <UploadSuggestion 
+          key={index}
+          summitId={summit.id}
+          header={summit.title}
+          caption="써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요."
+        />
+      )
+    ))}
+  </SummitSection>
+
 
       <Footer />
     </MainContainer>
