@@ -58,26 +58,15 @@ const OngoingSummit = () => {
             console.error('Invalid API response:', res);
           }
           setIsMock(false);
+
         })
         .catch((error) => {
           console.error('Error fetching boards:', error);
           setIsMock(false);
+ 
         });
     });
   }, [summitData]);
-
-  useEffect(() => {
-    getAllSummit().then((res) => {
-      if (res.status === 200) setSummitData(res.data.data.slice(-3));
-    });
-  }, []);
-
-  // useEffect(() => {
-  //   getAllSummit().then((res) => {
-  //     const _summitData = res.data.data;
-  //     setSummitData(_summitData);
-  //   });
-  // }, []);
 
   return (
     <MainContainer>
@@ -114,7 +103,7 @@ const OngoingSummit = () => {
       </SummitSection> */}
 
       <SummitSection>
-        {summitData.map((summit) =>
+        {/* {summitData.map((summit) =>
           // summit.items가 배열일 때만 length를 사용할 수 있도록 조건 추가
           Array.isArray(summit.items) && summit.items.length > 0 ? (
             <CarouselContainer key={summit.id}>
@@ -125,9 +114,9 @@ const OngoingSummit = () => {
               />
             </CarouselContainer>
           ) : null
-        )}
+        )} */}
 
-        {summitData.map(
+        {/* {summitData.map(
           (summit, index) =>
             // summit.items가 비어있거나 undefined일 경우 UploadSuggestion을 렌더링
             (!Array.isArray(summit.items) || summit.items.length === 0) && (
@@ -138,6 +127,25 @@ const OngoingSummit = () => {
                 caption="써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요."
               />
             )
+        )} */}
+
+        {summitData.map((summit) =>
+          Array.isArray(summit.items) && summit.items.length > 0 ? (
+            <CarouselContainer key={summit.id}>
+              <Carousel
+                title={summit.title}
+                items={summit.items}
+                summitId={summit.id}
+              />
+            </CarouselContainer>
+          ) : (
+            <UploadSuggestion
+              key={summit.id}
+              summitId={summit.id}
+              header={summit.title}
+              caption="써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요."
+            />
+          )
         )}
       </SummitSection>
 
