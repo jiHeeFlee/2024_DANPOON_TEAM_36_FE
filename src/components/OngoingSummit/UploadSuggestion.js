@@ -46,7 +46,7 @@ const Container = styled.div`
   border-radius: 10px;
 
   box-shadow: 5px 5px 20px 2px #00000040;
-  margin-top: 40px;
+  margin: 40px 0;
 `;
 
 const Header = styled.p`
