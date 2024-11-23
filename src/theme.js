@@ -8,6 +8,7 @@ const theme={
       200:'#E8E8E8',
       100:'#F8F8F8',
       white:'#fff',
+      salmon:'#FFAD99'
   },
   fonts:{
       h1:{

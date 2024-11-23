@@ -1,14 +1,30 @@
+import { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
 import themeGet from "../utils/themeGet";
-import { BsBoxArrowInRight,
+import { BsBoxArrowInRight,BsFillArrowLeftSquareFill,
     BsPersonFill,
     BsFileEarmarkCheckFill,
     BsArrowRightSquareFill
 } from 'react-icons/bs';
+import Modal from '../components/Modal';
 
 
-function NavigationBar(){
+function NavigationBar({active}){
+    const [isLogin,setIsLogin]=useState(true);
+
+    // TODO : 로그 아웃 시 기능
+    // const handle_logout_click=()=>{}
+
+    useEffect(() => {
+        if (localStorage.getItem('accessToken') === null) {
+            setIsLogin(false); // 상태 업데이트
+        }
+    }, []);
+        
+    useEffect(() => {
+        console.log('login state updated:', isLogin); // 상태 변경 감지 후 로그 출력
+    }, [isLogin]);
 
     return(
         <>
@@ -30,10 +46,18 @@ function NavigationBar(){
                         </Nav_item>
                     </StyledLink>
                     <StyledLink to={'/login'}>
-                        <Nav_item>
-                            <BsArrowRightSquareFill size={25}/>
-                            로그인
-                        </Nav_item>
+                        {isLogin && (
+                            <Nav_item>
+                                <BsFillArrowLeftSquareFill size={25}/>
+                                로그아웃
+                            </Nav_item>
+                        )}
+                        {!isLogin && (
+                            <Nav_item>
+                                <BsArrowRightSquareFill size={25}/>
+                                로그인
+                            </Nav_item>
+                        )}
                     </StyledLink>
                 </Nav_container>
             </Container>
@@ -43,16 +67,17 @@ function NavigationBar(){
 
 export default NavigationBar;
 
-
 const Container=styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
 
     padding: 20px;
 
     color: ${themeGet('color.white')};
+
+    box-sizing: border-box;
 `;
 
 const Logo=styled.p`
@@ -81,6 +106,14 @@ const Nav_item=styled.div`
     gap:10px;
 
     font-size: ${themeGet('fonts.body1.size')};
+
+    padding-bottom: 11px;
+    box-sizing: border-box;
+    border-bottom: 5px solid transparent;
+    &:hover{
+        font-weight: 700;
+        border-bottom: 5px solid ${themeGet('color.white')};
+    }
 `;
 
 const StyledLink=styled(Link)`
