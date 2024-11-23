@@ -59,30 +59,48 @@ function Mypage() {
     });
   }, []);
 
+  // const [userInfo, setUserInfo] = useState(MypageMockup);
+
   return (
     <Container>
-      <NavigationBar 
-        // active="mypage" 
-        />
+      <NavigationBar
+      // active="mypage" 
+      />
       <Title>마이 페이지</Title>
       <Header>
         <span>{userInfo.name}</span>님 안녕하세요
       </Header>
-      <Wrapper>
-        <Info
-          participant_type={userInfo.userType}
-          styled={{ margin: "40px auto 25px auto" }}
-        />
-        {/* TODO : 제안 PTList 에 대한 API 없기 때문에 아직 붙이지 않음*/}
-        {userInfo.userType === "ENTREPRENEUR" && <VideoWrapper />}
-        {userInfo.userType === "INVESTOR" && <PTList />}
+      {/* TODO : 제안 PTList 에 대한 API 없기 때문에 아직 붙이지 않음*/}
+      {/* {userInfo.userType === "ENTREPRENEUR" &&
+        <Wrapper>
+          <Info
+            participant_type={userInfo.userType}
+            styled={{ margin: "40px auto 25px auto" }}
+          />
+          <VideoWrapper />
+          <LikePTVideo type="like"/>
+        </Wrapper>
+      }
+      {userInfo.userType === "INVESTOR" &&
+        <Wrapper>
+          <Info
+            participant_type={userInfo.userType}
+            styled={{ margin: "40px auto 25px auto" }}
+          />
+          <LikePTVideo />
+          <LikePTVideo />
+        </Wrapper>
+      } */}
 
-        <LikePTVideo />
-      </Wrapper>
+              {/* TODO : 제안 PTList 에 대한 API 없기 때문에 아직 붙이지 않음*/}
+              {userInfo.userType === "ENTREPRENEUR" && <VideoWrapper />}
+        {userInfo.userType === "INVESTOR" && <PTList />}
       <Footer />
     </Container>
   );
 }
+
+
 
 export default Mypage;
 
