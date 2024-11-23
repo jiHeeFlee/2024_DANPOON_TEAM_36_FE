@@ -28,11 +28,22 @@ const PT = () => {
   
   const navigate = useNavigate();
 
-  const { boardId } = useParams();  // URL 파라미터로부터 boardId를 가져옵니다.
-  
-  const currentPtInfo = SummitMapTest[boardId] && SummitMapTest[boardId].length > 0
-  ? SummitMapTest[boardId][0] // 첫 번째 PT 정보 가져오기
-  : null; 
+  // const { boardId } = useParams();  // URL 파라미터로부터 boardId를 가져옵니다.
+  const boardId=String(useParams().boardId); // boardId를 문자열로 변환
+
+  const currentPtInfo =
+    SummitMapTest[boardId] && SummitMapTest[boardId].length > 0
+      ? SummitMapTest[boardId][0]
+      : { 
+        // SummitMapTest 데이터 없는 경우 출력
+        service_info:'제목 알 수 없음',
+        name: "발표자 알 수 없음",
+        description: "설명 알 수 없음",
+        company: "회사 알 수 없음",
+        date: "",
+        pturl: "",
+      };
+
 
 
   const [isHeartFilled, setIsHeartFilled] = useState(false);
@@ -137,23 +148,39 @@ const PT = () => {
     <Container>
       <Header>
         <NavigationBar />
-        <TitleContainer>
-          <Title>{currentPtInfo.service_info}</Title>
-          <EditDelete 
-            color="white"
-            size={36}
-            onDelete={handleDeleteButtonClick}
-            type='pt'
-          />
-        </TitleContainer>
-        <Description>
+        {currentPtInfo ? (
+          <TitleContainer>
+            <Title>{currentPtInfo.service_info}</Title>
+            <EditDelete 
+              color="white"
+              size={36}
+              onDelete={handleDeleteButtonClick}
+              type='pt'
+            />
+          </TitleContainer>
+        ):(
+          <p>PT 정보를 찾을 수 없습니다.</p>
+        )}
+        {/* <Description>
           {descriptionSentences.map((sentence, index) => (
             <p key={index}>
               {sentence.trim()}
               {index !== descriptionSentences.length - 1 && "."}
             </p>
           ))}
-        </Description>
+        </Description> */}
+        {currentPtInfo ? (
+             <Description>
+             {descriptionSentences.map((sentence, index) => (
+               <p key={index}>
+                 {sentence.trim()}
+                 {index !== descriptionSentences.length - 1 && "."}
+               </p>
+             ))}
+           </Description>
+          ):(
+            <p>PT 정보를 찾을 수 없습니다.</p>
+        )}
       </Header>
       <ContentContainer>
         <ContentSection>
@@ -196,10 +223,16 @@ const PT = () => {
             <VideoInfo>
               <DateText>{currentPtInfo.date}</DateText>
 
-              <PresenterWrapper>
-                <Label>발표자</Label>
-                <Name>{currentPtInfo.name}</Name>
-              </PresenterWrapper>
+              {currentPtInfo ? (
+                <>
+                  <PresenterWrapper>
+                    <Label>발표자</Label>
+                    <Name>{currentPtInfo.name}</Name>
+                  </PresenterWrapper>
+                </>
+              ) : (
+                <p>PT 정보를 찾을 수 없습니다.</p>
+              )}
               <CompanyWrapper>
                 <Label>소속</Label>
                 <CompanyContainer>
