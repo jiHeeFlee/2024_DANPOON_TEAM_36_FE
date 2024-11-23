@@ -23,6 +23,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { SummitMapTest } from "../constants/SummitMapTest";
 import { getBoard } from "../apis/Board/getBoard";
 import { giveInvest } from "../apis/Investment/giveInvest";
+import { deleteBoard } from "../apis/Board/deleteBoard";
 
 const PT = () => {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ const PT = () => {
       console.log(res);
     });
   };
+
   // 댓글 등록 (saveComment 사용)
   const handleRegisterComment = (commentText, name) => {
     try {
@@ -170,6 +172,7 @@ const PT = () => {
             size={36}
             onDelete={handleDeleteButtonClick}
             type="pt"
+            id={boardId}
           />
         </TitleContainer>
         <Description>
@@ -277,6 +280,7 @@ const PT = () => {
           type="yes_no"
           onClick={() => {
             console.log("PT 삭제 처리");
+            deleteBoard(boardId);
             setIsDeleteModalOpen(false);
           }}
         />

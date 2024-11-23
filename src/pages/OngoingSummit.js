@@ -40,11 +40,9 @@ const OngoingSummit = () => {
     },
   ];
 
-  const [isMock, setIsMock] = useState(true);
   const [summitData, setSummitData] = useState([]);
   const [boardData, setBoardData] = useState({});
   const addBoardData = (summitId, data) => {
-    console.log(summitId, data);
     let temp = boardData[summitId];
     if (temp !== undefined) {
       temp.push(data);
@@ -75,7 +73,8 @@ const OngoingSummit = () => {
   useEffect(() => {
     getAllSummit().then((res) => {
       if (res.status === 200) {
-        setSummitData(res.data.data.slice(-3));
+        const _temp = [...res.data.data.slice(-3)];
+        setSummitData([...res.data.data.slice(-3)]);
       }
     });
   }, []);
@@ -122,14 +121,23 @@ const OngoingSummit = () => {
       </SummitSection> */}
 
       <SummitSection>
-        {summitData.map((summit) => {
-          <CarouselContainer key={summit.id}>
-            <Carousel
-              title={summit.title}
-              items={boardData[summit.id]}
+        {summitData.map((summit, index) => {
+          boardData[summit.id] === undefined ? (
+            <UploadSuggestion
+              key={index}
               summitId={summit.id}
+              header={summit.title}
+              caption="써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요."
             />
-          </CarouselContainer>;
+          ) : (
+            <CarouselContainer key={summit.id}>
+              <Carousel
+                title={summit.title}
+                items={boardData[summit.id]}
+                summitId={summit.id}
+              />
+            </CarouselContainer>
+          );
         })}
         {/* <CarouselContainer key={summit.id}>
           <Carousel
