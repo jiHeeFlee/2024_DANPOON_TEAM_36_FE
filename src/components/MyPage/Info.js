@@ -20,9 +20,9 @@ function Info({ participant_type }) {
           <Header>내 정보</Header>
           <Wrapper>
             <WrapperContents>
-              <MyInfoComponent title="구분" content="예비 투자자" />
+              <MyInfoComponent title="구분" content={userInfo.userType} />
               <MyInfoComponent title="연락처" content={userInfo.phoneNumber} />
-              <MyInfoComponent title="이메일" content="TODO@email.com" />
+              <MyInfoComponent title="이메일" content={userInfo.email} />
               <MyInfoComponent
                 title="알림톡"
                 content={
@@ -56,9 +56,9 @@ function Info({ participant_type }) {
           <Header>내 정보</Header>
           <Wrapper>
             <WrapperContents>
-              <MyInfoComponent title="구분" content="예비 투자자" />
+              <MyInfoComponent title="구분" content={userInfo.userType} />
               <MyInfoComponent title="연락처" content={userInfo.phoneNumber} />
-              <MyInfoComponent title="이메일" content="TODO@email.com" />
+              <MyInfoComponent title="이메일" content={userInfo.email} />
               <MyInfoComponent
                 title="알림톡"
                 content={
