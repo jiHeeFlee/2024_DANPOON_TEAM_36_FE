@@ -4,7 +4,7 @@ import themeGet from '../utils/themeGet';
 import NavigationBar from "../components/NavigationBar";
 import Carousel from '../components/OngoingSummit/Carousel';
 
-import UplaodSuggestion from '../components/OngoingSummit/UploadSuggestion';
+import UplaodSuggestion from '../components/OngoingSummit/UplaodSuggestion';
 import Footer from "../components/Footer";
 
 const OngoingSummit = () => {
