@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import Info from "../components/MyPage/Info";
 import VideoWrapper from "../components/MyPage/VideoWrapper";
 import LikePTVideo from "../components/MyPage/LikePTVideo";
+import PTList from "../components/MyPage/PTList";
 
 import { useSearchParams } from "react-router-dom";
 import { MypageMockup } from "../constants/MypageMockup";
@@ -24,7 +25,7 @@ function Mypage() {
       </Header>
 
 
-//       {participant_type === "ENTREPRENEUR" ? (
+{/* //       {participant_type === "ENTREPRENEUR" ? (
 //         <Wrapper>
 //           <Info
 //             participant_type="ENTREPRENEUR"
@@ -43,7 +44,7 @@ function Mypage() {
 //           <LikePTVideo type="like" />
 //         </Wrapper>
 //       ) 
-//     }
+//     } */}
 
       <Wrapper>
         <Info
