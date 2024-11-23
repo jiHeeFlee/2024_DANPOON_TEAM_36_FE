@@ -6,7 +6,7 @@ import Summit from './pages/Summit';
 import Upload from './pages/Upload';
 import PT from './pages/PT';
 import Mypage from './pages/Mypage';
-
+import LoginSuccess from './pages/LoginSuccess';
 
 const routes=[
     {
@@ -59,6 +59,11 @@ const routes=[
         element:<Mypage />,
         name:"회원 마이 페이지"
     },
+    {
+        path: "/login-success",
+        element: <LoginSuccess />,
+        name: "test",
+      },
 ]
 
 export default routes;

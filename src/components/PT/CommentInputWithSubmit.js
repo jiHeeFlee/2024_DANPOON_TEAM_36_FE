@@ -31,8 +31,11 @@ const CommentInputWithSubmit = ({ onSubmit, author }) => {
 export default CommentInputWithSubmit;
 
 const CommentInput = styled.div`
-  width: 47vw;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 47vw;
+  width: 100%;
   gap: 1rem;
 `;
 
@@ -62,4 +65,19 @@ const SubmitButton = styled.button`
   font-size: ${themeGet("fonts.body1.size")};
   width: 75px;
   height: 64px;
+  
+  &:hover{
+    color: ${themeGet('color.white')};
+    background-color: ${themeGet('color.salmon')};
+    transition: all 0.3s;
+  };
+  &:active{
+    color: ${themeGet('color.main')};
+    background-color: ${themeGet('color.white')};
+    border: 2px solid ${themeGet('color.main')};
+
+    font-weight: 700;
+
+    transition: all 0.3s;
+  }
 `;
