@@ -74,6 +74,7 @@ function Summit() {
               setIsModal(true); // 모달을 열도록 상태 업데이트
             }}
             route={ModalMessage.login.router}
+            summitId={summitId}
           />
         </InfoContainer>
 

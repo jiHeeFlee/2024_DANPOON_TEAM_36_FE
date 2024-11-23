@@ -42,49 +42,30 @@ const OngoingSummit = () => {
 
   const [summitData, setSummitData] = useState([]);
   const [boardData, setBoardData] = useState({});
-  const addBoardData = (summitId, data) => {
-    let temp = boardData[summitId];
-    if (temp !== undefined) {
-      temp.push(data);
-    } else {
-      temp = [];
-      temp.push(data);
-    }
-    setBoardData((prev) => ({ ...prev, [summitId]: temp }));
-  };
-  const findBoardData = (index) => {};
-  // useEffect(() => {
-  // for (let key in boardData) {
-  //   console.log("key : " + key + ", value : " + boardData[key]);
-  // }
-  //   console.log("B", boardData);
-  // }, [boardData]);
+
+  useEffect(() => {
+    getAllSummit().then((res) => {
+      if (res.status === 200) {
+        setSummitData(res.data.data.slice(-3));
+      }
+    });
+  }, []);
+
   useEffect(() => {
     try {
       summitData.forEach((value) => {
-        getBoardsBySummit(value.id).then((res) => {
-          addBoardData(value.id, res.data);
+        getBoardsBySummit(value.id).then(({ data }) => {
+          setBoardData((prev) => ({ ...prev, [value.id]: data }));
         });
       });
     } catch {
       setSummitData(summitMockData);
     }
   }, [summitData]);
-  useEffect(() => {
-    getAllSummit().then((res) => {
-      if (res.status === 200) {
-        const _temp = [...res.data.data.slice(-3)];
-        setSummitData([...res.data.data.slice(-3)]);
-      }
-    });
-  }, []);
 
   // useEffect(() => {
-  //   getAllSummit().then((res) => {
-  //     const _summitData = res.data.data;
-  //     setSummitData(_summitData);
-  //   });
-  // }, []);
+  //   console.log("@@", summitData, boardData);
+  // }, [boardData, summitData]);
 
   return (
     <MainContainer>
@@ -122,7 +103,7 @@ const OngoingSummit = () => {
 
       <SummitSection>
         {summitData.map((summit, index) => {
-          boardData[summit.id] === undefined ? (
+          return boardData[summit.id] === undefined ? (
             <UploadSuggestion
               key={index}
               summitId={summit.id}
@@ -138,6 +119,7 @@ const OngoingSummit = () => {
               />
             </CarouselContainer>
           );
+          // );
         })}
         {/* <CarouselContainer key={summit.id}>
           <Carousel
