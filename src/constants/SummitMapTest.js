@@ -15,8 +15,8 @@ export const SummitMapTest = {
         optional_url: "",
         url: '/pt/1',
         header: SummitInfoContents["1"].header,  // SummitInfoContents에서 정보 가져오기
-        info: SummitInfoContents["1"].info 
-
+        info: SummitInfoContents["1"].info,
+        pturl:'https://cake-tumble-2da.notion.site/PT-YE-Summit-e85e6db74b3b45f5a38a1bc3ef571ea7?pvs=4'
       },
       {
         thumbnail: noneThumbnail,
@@ -28,7 +28,8 @@ export const SummitMapTest = {
         optional_url: "",
         url: '/pt/2',
         header: SummitInfoContents["1"].header,  // SummitInfoContents에서 정보 가져오기
-        info: SummitInfoContents["1"].info 
+        info: SummitInfoContents["1"].info,
+        ptutl:'https://cake-tumble-2da.notion.site/Run-With-Mate-186101ac4908464fa458f648c8068012?pvs=4',
       },
       {
         thumbnail: noneThumbnail,
@@ -41,7 +42,8 @@ export const SummitMapTest = {
         optional_url: "",
         url: '/pt/3',
         header: SummitInfoContents["1"].header,  // SummitInfoContents에서 정보 가져오기
-        info: SummitInfoContents["1"].info 
+        info: SummitInfoContents["1"].info,
+        pturl:'https://cake-tumble-2da.notion.site/meal-8a880d7c03f44aa3b6d36f882068658d?pvs=4'
       },
       {
         thumbnail: noneThumbnail,
@@ -53,7 +55,8 @@ export const SummitMapTest = {
         optional_url: "",
         url: '/pt/4',
         header: SummitInfoContents["1"].header,  // SummitInfoContents에서 정보 가져오기
-        info: SummitInfoContents["1"].info 
+        info: SummitInfoContents["1"].info,
+        pturl:'https://cake-tumble-2da.notion.site/eb7555209e88496f9727465e03b644ba?pvs=4'
       }
     ],
     "2": [],
@@ -68,7 +71,8 @@ export const SummitMapTest = {
         optional_url: "",
         url: '/pt/5',
         header: SummitInfoContents["3"].header,  // SummitInfoContents에서 정보 가져오기
-        info: SummitInfoContents["3"].info 
+        info: SummitInfoContents["3"].info,
+        pturl:'https://cake-tumble-2da.notion.site/a74019d7992f4b2eab82178077d906f6?pvs=4'
       }
     ]
   };
