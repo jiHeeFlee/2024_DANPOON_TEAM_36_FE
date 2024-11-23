@@ -3,11 +3,8 @@ import themeGet from "../../utils/themeGet";
 
 import MyPTVideo from "./MyPTVideo";
 import ProposeCard from "./ProposeCard";
-import { useRecoilValue } from "recoil";
-import { myInvestState } from "../../state";
 
 function VideoWrapper() {
-  const myInvest = useRecoilValue(myInvestState);
   return (
     <Container>
       <MyPTVideo />
