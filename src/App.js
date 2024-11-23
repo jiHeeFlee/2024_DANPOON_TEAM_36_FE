@@ -10,13 +10,15 @@ function App() {
   ));
 
   return (
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <RecoilRoot>
         <Router>
-          <Routes>{elements}</Routes>
+          <Routes>
+            {elements}
+          </Routes>
         </Router>
-      </ThemeProvider>
-    </RecoilRoot>
+      </RecoilRoot>
+    </ThemeProvider>
   );
 }
 
