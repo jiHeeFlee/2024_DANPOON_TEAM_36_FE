@@ -204,8 +204,8 @@ const PT = () => {
                 <Label>소속</Label>
                 <CompanyContainer>
                   <Name>{currentPtInfo.company}</Name>
-                  {currentPtInfo.optional_url !== '' && (
-                    <StyledBiLink onClick={()=>window.open(currentPtInfo.optional_url)}/>
+                  {currentPtInfo.pturl !== '' && (
+                    <StyledBiLink onClick={()=>window.open(currentPtInfo.pturl)}/>
                   )}
                 </CompanyContainer>
               </CompanyWrapper>
