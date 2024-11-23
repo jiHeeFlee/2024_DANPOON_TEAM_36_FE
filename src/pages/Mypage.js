@@ -52,9 +52,9 @@ function Mypage() {
     });
     getMyInvest(userId, 0).then((response) => {
       if (response) {
-        setMyVideo(response.data.data);
+        setMyInvest(response.data.data);
       } else {
-        setMyVideo();
+        setMyInvest();
       }
     });
   }, []);
