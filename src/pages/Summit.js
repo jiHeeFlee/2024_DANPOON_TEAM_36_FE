@@ -1,4 +1,4 @@
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import themeGet from "../utils/themeGet";
 
@@ -7,26 +7,27 @@ import SummitItem from "../components/Summit/SummitItem";
 import GotoUpload from "../components/Summit/GotoUpload";
 import Modal from "../components/Modal";
 import Background from "../components/Background";
-import Footer from '../components/Footer';
+import Footer from "../components/Footer";
 
 import { ModalMessage } from "../constants/ModalMessage";
 import { SummitInfoContents } from "../constants/SummitMockup";
 import { SummitMapTest } from "../constants/SummitMapTest";
 
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 function Summit() {
   const [isModal, setIsModal] = useState(false);
   const [gotoUpload, setGotoUpload] = useState(false);
 
-  const { summitId } = useParams(); 
-  const summitData = SummitMapTest[summitId] || [];  
-  const currentSummitInfo = SummitInfoContents[summitId] || SummitInfoContents["1"];
+  const { summitId } = useParams();
+  const summitData = SummitMapTest[summitId] || [];
+  const currentSummitInfo =
+    SummitInfoContents[summitId] || SummitInfoContents["1"];
 
   const handle_button_click = () => {
     // setIsModal(true);
-    setIsModal((prev)=>!prev);
-    console.log('handle butto click');
+    setIsModal((prev) => !prev);
+    console.log("handle butto click");
   };
 
   const handle_close_modal = () => {
@@ -38,9 +39,11 @@ function Summit() {
   };
 
   const info_lines = currentSummitInfo.info
-  ? currentSummitInfo.info.split(".").map((line) => line.trim()).filter((line) => line.length > 0)
-  : []; 
-
+    ? currentSummitInfo.info
+        .split(".")
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0)
+    : [];
 
   return (
     <>

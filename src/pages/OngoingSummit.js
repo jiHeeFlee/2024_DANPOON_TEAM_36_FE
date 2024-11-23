@@ -4,15 +4,16 @@ import themeGet from "../utils/themeGet";
 import NavigationBar from "../components/NavigationBar";
 import Carousel from "../components/OngoingSummit/Carousel";
 
-
-import UploadSuggestion from '../components/OngoingSummit/UploadSugeestion';
+import UploadSuggestion from "../components/OngoingSummit/UploadSuggestion";
 
 import Footer from "../components/Footer";
 import { getAllSummit } from "../apis/Summit/getAllSummit";
 import { useEffect, useState } from "react";
 
-import { SummitInfoContents } from '../constants/SummitMockup';
-import { SummitMapTest } from '../constants/SummitMapTest';
+import { SummitInfoContents } from "../constants/SummitMockup";
+import { SummitMapTest } from "../constants/SummitMapTest";
+import { getSummit } from "../apis/Summit/getSummit";
+import { getBoardsBySummit } from "../apis/Board/getBoardsBySummit";
 
 const OngoingSummit = () => {
   const summitMockData = [
@@ -22,7 +23,6 @@ const OngoingSummit = () => {
 
       items: SummitMapTest["1"],
       info: SummitInfoContents["1"],
-
     },
     {
       id: "2",
@@ -30,7 +30,6 @@ const OngoingSummit = () => {
 
       items: SummitMapTest["2"],
       info: SummitInfoContents["2"],
-
     },
     {
       id: "3",
@@ -38,9 +37,9 @@ const OngoingSummit = () => {
 
       items: SummitMapTest["3"],
       info: SummitInfoContents["3"],
-
     },
   ];
+
 
   const [summitData, setSummitData] = useState(summitMockData);
   useEffect(() => {
@@ -48,6 +47,22 @@ const OngoingSummit = () => {
       setSummitData(res.data.data);
     });
   }, []);
+
+  const [boardData, setBoardData] = useState([{}]);
+  // useEffect(() => {
+  //   summitData.forEach((value) => {
+  //     getBoardsBySummit(value.id).then((res) => {
+  //       setBoardData(res.data);
+  //     });
+  //   });
+  // }, [summitData]);
+  // useEffect(() => {
+  //   getAllSummit().then((res) => {
+  //     const _summitData = res.data.data;
+  //     setSummitData(_summitData);
+  //   });
+  // }, []);
+
 
   return (
     <MainContainer>
@@ -60,6 +75,7 @@ const OngoingSummit = () => {
           </Description>
         </TitleSection>
       </Header>
+
 
       {/* <SummitSection>
 
@@ -75,12 +91,12 @@ const OngoingSummit = () => {
           summit.items.length === 0 && (
             <UploadSuggestion 
               key={index}
+
               summitId={summit.id}
-              header={summit.title}
-              caption='써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요.'
-              />
-          )
+            />
+          </CarouselContainer>
         ))}
+
       </SummitSection> */}
 
 <SummitSection>
@@ -105,6 +121,7 @@ const OngoingSummit = () => {
       )
     ))}
   </SummitSection>
+
 
       <Footer />
     </MainContainer>

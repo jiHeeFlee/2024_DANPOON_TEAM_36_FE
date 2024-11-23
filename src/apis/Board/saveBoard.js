@@ -1,4 +1,4 @@
-import { axiosAuthClient } from "../axios";
+import { axiosAuthClient, axiosAuthClientMulti } from "../axios";
 
 /*
     String title,
@@ -10,7 +10,7 @@ import { axiosAuthClient } from "../axios";
 
 export const saveBoard = async (data) => {
   try {
-    return await axiosAuthClient.post(`/v1/api/board`, data);
+    return await axiosAuthClientMulti.post(`/v1/api/board/summit/13`, data);
   } catch (error) {
     console.log("saveBoard 에러");
   }
