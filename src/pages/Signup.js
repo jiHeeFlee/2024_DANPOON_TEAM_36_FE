@@ -123,7 +123,11 @@ function SignUp() {
     } else {
       console.log("회원 정보 등록 완료!");
       console.log("upload form data : ", { ...formData });
-      saveAdditionalInfo(formData);
+      saveAdditionalInfo(formData).then((res) => {
+        if (res.status !== 200) {
+          alert("문제가 발생했습니다. 관리자에 문의해주세요");
+        }
+      });
       setIsModal(true);
     }
   };
@@ -216,35 +220,46 @@ function SignUp() {
               />
             </CompanyWrapper>
 
- {/* 'YOUTH'일 경우만 사업자 등록 번호와 사업 아이디어 필드 보이게 하기 */}
- {participant_type === 'ENTREPRENEUR' && (
+            {/* 'YOUTH'일 경우만 사업자 등록 번호와 사업 아이디어 필드 보이게 하기 */}
+            {participant_type === "ENTREPRENEUR" && (
               <>
                 {/* 사업자 등록 번호 */}
-                <Inputs 
-                  header={InputMessage.signup.registration_number.header} 
-                  placeholder={InputMessage.signup.registration_number.placeholder} 
+                <Inputs
+                  header={InputMessage.signup.registration_number.header}
+                  placeholder={
+                    InputMessage.signup.registration_number.placeholder
+                  }
                   star={InputMessage.signup.registration_number.star}
                   caption={InputMessage.signup.registration_number.caption}
-                  onChange={(e) => handleInputChange("businessRegistrationNumber", e.target.value)} // onChange 제대로 전달
+                  onChange={(e) =>
+                    handleInputChange(
+                      "businessRegistrationNumber",
+                      e.target.value
+                    )
+                  } // onChange 제대로 전달
                 />
 
                 {/* 사업 아이디어 및 분야 */}
-                <Inputs 
-                  header={'사업 아이디어 및 분야'}
-                  placeholder={'사업 아이디어 및 분야를 입력하세요'} 
+                <Inputs
+                  header={"사업 아이디어 및 분야"}
+                  placeholder={"사업 아이디어 및 분야를 입력하세요"}
                   star={InputMessage.signup.idea_sector.star}
-                  onChange={(e) => handleInputChange("businessIdeaField", e.target.value)} // onChange 제대로 전달
+                  onChange={(e) =>
+                    handleInputChange("businessIdeaField", e.target.value)
+                  } // onChange 제대로 전달
                 />
               </>
             )}
 
             {/* 'INVESTOR'일 경우에만 투자 관심 분야 보이게 하기 */}
-            {participant_type === 'INVESTOR' && (
-              <Inputs 
+            {participant_type === "INVESTOR" && (
+              <Inputs
                 header={InputMessage.signup.idea_sector.header} // 투자 관심 분야 추가
-                placeholder={InputMessage.signup.idea_sector.placeholder} 
+                placeholder={InputMessage.signup.idea_sector.placeholder}
                 star={InputMessage.signup.idea_sector.star}
-                onChange={(e) => handleInputChange("businessIdeaField", e.target.value)} // 투자 관심 분야
+                onChange={(e) =>
+                  handleInputChange("businessIdeaField", e.target.value)
+                } // 투자 관심 분야
               />
             )}
 

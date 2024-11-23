@@ -20,15 +20,15 @@ import { getBoardsBySummit } from "../apis/Board/getBoardsBySummit";
 function Summit() {
   const [isModal, setIsModal] = useState(false);
   const [gotoUpload, setGotoUpload] = useState(false);
-
+  const [summitData, setSummitData] = useState([]);
   const { summitId } = useParams();
-  const summitData = SummitMapTest[summitId] || [];
+  // const summitData = SummitMapTest[summitId] || [];
   const currentSummitInfo =
     SummitInfoContents[summitId] || SummitInfoContents["1"];
 
   useEffect(() => {
     getBoardsBySummit(summitId).then((res) => {
-      console.log(res);
+      setSummitData(res.data);
     });
   }, []);
   const handle_button_click = () => {
@@ -44,6 +44,9 @@ function Summit() {
   const handle_gotoUpload_button = () => {
     setGotoUpload((prev) => !prev);
   };
+  useEffect(() => {
+    console.log(summitData);
+  }, [summitData]);
 
   const info_lines = currentSummitInfo.info
     ? currentSummitInfo.info
@@ -84,10 +87,10 @@ function Summit() {
             {summitData.map((item, index) => (
               <SummitItem
                 key={index}
-                thumbnail={item.thumbnail}
-                service_info={item.service_info}
-                name={item.name}
-                router={item.url}
+                thumbnail={item.imgUrl}
+                service_info={item.title}
+                name={item.writerMemberName}
+                router={"/PT/" + item.boardId}
               />
             ))}
           </ItemGrid>

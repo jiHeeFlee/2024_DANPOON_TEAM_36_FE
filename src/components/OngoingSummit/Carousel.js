@@ -60,10 +60,10 @@ const Carousel = ({ items, title, summitId }) => {
           {items.map((item, index) => (
             <SummitItem
               key={index}
-              thumbnail={item.thumbnail}
-              service_info={item.service_info}
-              name={item.name}
-              router={item.url}
+              thumbnail={item.imgUrl}
+              service_info={item.title}
+              name={item.writerMemberName}
+              router={"/summit/" + item.boardId}
             />
           ))}
         </CarouselWrapper>
