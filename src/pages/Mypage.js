@@ -8,56 +8,68 @@ import Info from "../components/MyPage/Info";
 import VideoWrapper from "../components/MyPage/VideoWrapper";
 import LikePTVideo from "../components/MyPage/LikePTVideo";
 import PTList from "../components/MyPage/PTList";
-
-import { useSearchParams } from "react-router-dom";
+import {
+  likePTVideosState,
+  myVideoState,
+  mypageInfoState,
+  userIdState,
+} from "../state";
+import { useRecoilState } from "recoil";
+import { getMyInfo } from "../apis/Member/getMyInfo";
 import { MypageMockup } from "../constants/MypageMockup";
+import { getBoardLike } from "../apis/Board/getBoardLike";
 import { LikePTVideoMockup } from "../constants/LikePTVideoMockup";
-
+import { getMyBoard } from "../apis/Board/getMyBoard";
 function Mypage() {
-  const [participant_type, setParticipant_type] = useState("ENTREPRENEUR");
+  const [userInfo, setUserInfo] = useRecoilState(mypageInfoState);
+  const [likePTVideos, setLikePTVideos] = useRecoilState(likePTVideosState);
+  const [myVideo, setMyVideo] = useRecoilState(myVideoState);
+  const [userId, setUserId] = useRecoilState(userIdState);
+  useEffect(() => {
+    console.log(userInfo.participant_type);
+  }, [userInfo]);
+  useEffect(() => {
+    getMyInfo(userId).then((response) => {
+      if (response) {
+        setUserInfo(response);
+      } else {
+        setUserInfo(MypageMockup);
+      }
+    });
+    getBoardLike(userId).then((response) => {
+      if (response) {
+        setLikePTVideos(response);
+      } else {
+        setLikePTVideos(LikePTVideoMockup);
+      }
+    });
+    getMyBoard(userId).then((response) => {
+      if (response) {
+        setMyVideo(response);
+      } else {
+        setMyVideo();
+      }
+    });
+  }, []);
 
   return (
     <Container>
       <NavigationBar active="mypage" />
       <Title>마이 페이지</Title>
       <Header>
-        <span>{MypageMockup.name}</span>님 안녕하세요
+        <span>{userInfo.name}</span>님 안녕하세요
       </Header>
-
-
-{/* //       {participant_type === "ENTREPRENEUR" ? (
-//         <Wrapper>
-//           <Info
-//             participant_type="ENTREPRENEUR"
-//             styled={{ margin: "40px auto 25px auto" }}
-//           />
-//           <VideoWrapper />
-//           <LikePTVideo type="like" />
-//         </Wrapper>
-//       ) : (
-//         <Wrapper>
-//           <Info
-//             participant_type="INVESTOR"
-//             styled={{ margin: "40px auto 25px auto" }}
-//           />
-//           <LikePTVideo type="propose" />
-//           <LikePTVideo type="like" />
-//         </Wrapper>
-//       ) 
-//     } */}
-
       <Wrapper>
         <Info
-          participant_type={MypageMockup.userType}
+          participant_type={userInfo.userType}
           styled={{ margin: "40px auto 25px auto" }}
         />
         {/* TODO : 제안 PTList 에 대한 API 없기 때문에 아직 붙이지 않음*/}
-        {MypageMockup.userType === "ENTREPRENEUR" && <VideoWrapper />}
-        {MypageMockup.userType === "INVESTOR" && <PTList />}
+        {userInfo.userType === "ENTREPRENEUR" && <VideoWrapper />}
+        {userInfo.userType === "INVESTOR" && <PTList />}
 
         <LikePTVideo />
       </Wrapper>
-
       <Footer />
     </Container>
   );
@@ -138,8 +150,8 @@ const Wrapper = styled.div`
   min-height: 1379px;
   border-radius: 20px;
 
-  margin: 40px 162px 0 162px;
-  padding: 80px 120px 0  120px;
+  margin: 40px 162px;
+  padding: 80px 120px;
 
   gap: 30px;
 
