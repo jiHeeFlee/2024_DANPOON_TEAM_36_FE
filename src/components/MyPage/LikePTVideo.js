@@ -7,32 +7,30 @@ import { SummitMapTest } from "../../constants/SummitMapTest";
 // import TestImg01 from "../../assets/img/test_img6.jpg";
 
 function LikePTVideo({ type, data }) {
-
-
+  console.log("@@@@", SummitMapTest);
   const headerText =
-  type === 'like' ? '좋아요 누른 PT 영상 둘러 보기' : '투자 제안 보낸 PT 영상';
-const emptyText =
-  type === 'like'
-    ? '아직 좋아요 버튼을 누른 영상이 없습니다!'
-    : '아직 투자 제안을 보낸 PT 영상이 없습니다!';
-
+    type === "like"
+      ? "좋아요 누른 PT 영상 둘러 보기"
+      : "투자 제안 보낸 PT 영상";
+  const emptyText =
+    type === "like"
+      ? "아직 좋아요 버튼을 누른 영상이 없습니다!"
+      : "아직 투자 제안을 보낸 PT 영상이 없습니다!";
 
   return (
     <Container>
       <Header>{headerText}</Header>
       <SummitItemContainer>
-        {SummitMapTest.length > 0 ? (
+        {SummitMapTest[1].length > 0 ? (
           <ItemGrid>
-            {SummitMapTest.map((item, index) => (
-              <SummitItemWrapper key={index}>
-                <SummitItem
-                  thumbnail={item.thumbnail}
-                  service_info={item.service_info}
-                  name={item.name}
-                  router={item.url}
-                />
-              </SummitItemWrapper>
-            ))}
+            <SummitItemWrapper>
+              <SummitItem
+                thumbnail={SummitMapTest[1][0].thumbnail}
+                service_info={SummitMapTest[1][0].service_info}
+                name={SummitMapTest[1][0].name}
+                router={SummitMapTest[1][0].url}
+              />
+            </SummitItemWrapper>
           </ItemGrid>
         ) : (
           <div>{emptyText}</div>
@@ -79,7 +77,6 @@ const ItemGrid = styled.div`
 
   overflow-x: auto;
   padding-bottom: 15px;
-
 
   &::-webkit-scrollbar {
     display: none;

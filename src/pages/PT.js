@@ -13,7 +13,7 @@ import { ModalMessage } from "../constants/ModalMessage";
 
 import { BiLink } from "react-icons/bi";
 import { BsFillHeartFill } from "react-icons/bs";
-import NoneThumbnail from '../../src/assets/img/noneThumbnail.svg';
+import NoneThumbnail from "../../src/assets/img/noneThumbnail.svg";
 
 import { saveComment } from "../apis/Comment/saveComment";
 import { updateComment } from "../apis/Comment/updateComment";
@@ -21,30 +21,19 @@ import { deleteComment } from "../apis/Comment/deleteComment";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { SummitMapTest } from "../constants/SummitMapTest";
-
-
+import { getBoard } from "../apis/Board/getBoard";
+import { giveInvest } from "../apis/Investment/giveInvest";
+import { deleteBoard } from "../apis/Board/deleteBoard";
 
 const PT = () => {
-  
   const navigate = useNavigate();
 
-  // const { boardId } = useParams();  // URL 파라미터로부터 boardId를 가져옵니다.
-  const boardId=String(useParams().boardId); // boardId를 문자열로 변환
+  const { boardId } = useParams(); // URL 파라미터로부터 boardId를 가져옵니다.
 
   const currentPtInfo =
     SummitMapTest[boardId] && SummitMapTest[boardId].length > 0
-      ? SummitMapTest[boardId][0]
-      : { 
-        // SummitMapTest 데이터 없는 경우 출력
-        service_info:'제목 알 수 없음',
-        name: "발표자 알 수 없음",
-        description: "설명 알 수 없음",
-        company: "회사 알 수 없음",
-        date: "",
-        pturl: "",
-      };
-
-
+      ? SummitMapTest[boardId][0] // 첫 번째 PT 정보 가져오기
+      : null;
 
   const [isHeartFilled, setIsHeartFilled] = useState(false);
 
@@ -55,23 +44,46 @@ const PT = () => {
   const [deleteMessage, setDeleteMessage] = useState("");
   const [newComment, setNewComment] = useState("");
 
+  const [mock, setMock] = useState(false);
 
-  const [error, setError] = useState(null);
+  // {
+  //   "boardId": 0,
+  //   "comment": "string"
+  // }
 
+  const recallComment = () => {
+    getBoard(boardId).then((res) => {
+      //comments 변경
+      console.log(res);
+    });
+  };
 
   // 댓글 등록 (saveComment 사용)
   const handleRegisterComment = (commentText, name) => {
+    try {
+      saveComment({
+        boardId: Number(boardId),
+        comment: commentText,
+      }).then((res) => {
+        console.log(res);
+      });
+    } catch {
+      console.error("댓글 등록 오류");
+      setMock(true);
+    }
     if (commentText.trim()) {
       const newComment = { id: comments.length + 1, text: commentText, name }; // 댓글 데이터 생성
       setComments((prevComments) => [...prevComments, newComment]); // 댓글 배열에 새 댓글 추가
     }
+    recallComment();
   };
+
   // const handleRegisterComment = async (commentText, name) => {
   //   try {
   //     const commentData = { text: commentText, name }; // 댓글 데이터
   //     const response = await saveComment(commentData); // 댓글 저장 API 호출
   //     setComments((prevComments) => [
-  //       ...prevComments, 
+  //       ...prevComments,
   //       { id: response.data.id, text: commentText, name } // 새 댓글 추가
   //     ]);
   //     setNewComment(""); // 댓글 입력창 초기화
@@ -81,33 +93,27 @@ const PT = () => {
   //   }
   // };
 
-  // 댓글 수정
-  // const handleEditComment = async (id, updatedText) => {
-  //   try {
-  //     const updatedComment = { text: updatedText };
-  //     const response = await updateComment(id, updatedComment); // 수정된 댓글 데이터 전송
-  //     setComments((prevComments) =>
-  //       prevComments.map((comment) =>
-  //         comment.id === id ? { ...comment, text: updatedText } : comment
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("댓글 수정 오류:", error);
-  //   }
-  // };
+  // TODO : 댓글 수정
+  const handleEditComment = (id, updatedText) => {
+    try {
+      updateComment(id, updatedText);
+    } catch {
+      setMock(true);
+      console.error("댓글 수정 오류");
+    }
+    recallComment();
+  };
 
-  // 댓글 삭제
-  // const handleDeleteComment = async (id) => {
-  //   try {
-  //     await deleteComment(id);
-  //     setComments((prevComments) =>
-  //       prevComments.filter((comment) => comment.id !== id)
-  //     ); // 삭제 후 목록에서 제거
-  //   } catch (error) {
-  //     console.error("댓글 삭제 오류:", error);
-  //   }
-  // };
-
+  // TODO : 댓글 삭제
+  const handleDeleteComment = (id) => {
+    try {
+      deleteComment(id);
+    } catch {
+      setMock(true);
+      console.error("댓글 삭제 오류:");
+    }
+    recallComment();
+  };
 
   const handleHeartClick = () => {
     setIsHeartFilled(!isHeartFilled);
@@ -125,12 +131,13 @@ const PT = () => {
   //   .split(".")
   //   .filter(Boolean);
 
-  const descriptionSentences = currentPtInfo && currentPtInfo.description
-  ? currentPtInfo.description.split(".").filter(Boolean)
-  : []; 
+  const descriptionSentences =
+    currentPtInfo && currentPtInfo.description
+      ? currentPtInfo.description.split(".").filter(Boolean)
+      : [];
 
-   // 삭제 버튼 클릭 핸들러
-   const handleDeleteButtonClick = (type) => {
+  // 삭제 버튼 클릭 핸들러
+  const handleDeleteButtonClick = (type) => {
     console.log("handleDeleteButtonClick 호출됨, type:", type); // 디버깅 추가
     if (type === "pt") {
       setDeleteMessage("등록된 PT 영상을\n삭제하시겠습니까?");
@@ -139,10 +146,19 @@ const PT = () => {
     } else {
       console.error("알 수 없는 type:", type); // undefined 문제 확인
     }
-  
+
     setIsDeleteModalOpen(true);
   };
 
+  const completeInvest = () => {
+    giveInvest(boardId);
+  };
+
+  useEffect(() => {
+    getBoard(boardId).then((res) => {
+      console.log(res);
+    });
+  }, []);
 
   return (
     <Container>
@@ -151,14 +167,14 @@ const PT = () => {
         {currentPtInfo ? (
           <TitleContainer>
             <Title>{currentPtInfo.service_info}</Title>
-            <EditDelete 
+            <EditDelete
               color="white"
               size={36}
               onDelete={handleDeleteButtonClick}
-              type='pt'
+              type="pt"
             />
           </TitleContainer>
-        ):(
+        ) : (
           <p>PT 정보를 찾을 수 없습니다.</p>
         )}
         {/* <Description>
@@ -170,16 +186,16 @@ const PT = () => {
           ))}
         </Description> */}
         {currentPtInfo ? (
-             <Description>
-             {descriptionSentences.map((sentence, index) => (
-               <p key={index}>
-                 {sentence.trim()}
-                 {index !== descriptionSentences.length - 1 && "."}
-               </p>
-             ))}
-           </Description>
-          ):(
-            <p>PT 정보를 찾을 수 없습니다.</p>
+          <Description>
+            {descriptionSentences.map((sentence, index) => (
+              <p key={index}>
+                {sentence.trim()}
+                {index !== descriptionSentences.length - 1 && "."}
+              </p>
+            ))}
+          </Description>
+        ) : (
+          <p>PT 정보를 찾을 수 없습니다.</p>
         )}
       </Header>
       <ContentContainer>
@@ -188,7 +204,7 @@ const PT = () => {
             <VideoCommentWrapper>
               <VideoContainer
                 // TODO : api통신으로 받은 이미지 아래에 삽입.
-                src={'[]'}
+                src={"[]"}
               />
               <CommentInputWithSubmit
                 onSubmit={handleRegisterComment}
@@ -197,8 +213,8 @@ const PT = () => {
             </VideoCommentWrapper>
 
             <CommentsWrapper>
-              {error ? (
-                <p>{error}</p>
+              {!mock ? (
+                <p>error!</p>
               ) : (
                 comments.map((comment) => (
                   <CommentItem
@@ -237,8 +253,10 @@ const PT = () => {
                 <Label>소속</Label>
                 <CompanyContainer>
                   <Name>{currentPtInfo.company}</Name>
-                  {currentPtInfo.pturl !== '' && (
-                    <StyledBiLink onClick={()=>window.open(currentPtInfo.pturl)}/>
+                  {currentPtInfo.pturl !== "" && (
+                    <StyledBiLink
+                      onClick={() => window.open(currentPtInfo.pturl)}
+                    />
                   )}
                 </CompanyContainer>
               </CompanyWrapper>
@@ -265,7 +283,10 @@ const PT = () => {
           icon="check"
           message={"투자 제안이 완료되었습니다.\n 미팅 제안을 기다려주세요."}
           button="확인"
-          onClose={handleCloseModal}
+          onClose={() => {
+            completeInvest();
+            handleCloseModal();
+          }}
         />
       )}
 
@@ -279,6 +300,7 @@ const PT = () => {
           type="yes_no"
           onClick={() => {
             console.log("PT 삭제 처리");
+            deleteBoard(boardId);
             setIsDeleteModalOpen(false);
           }}
         />
@@ -383,7 +405,7 @@ const VideoContainer = styled.div`
 
   /* 조건에 따른 배경 이미지 설정 */
   background-image: ${({ src }) =>
-  src === '[]' ? `url(${NoneThumbnail})` : `url(${src})`};
+    src === "[]" ? `url(${NoneThumbnail})` : `url(${src})`};
 `;
 const VideoInfo = styled.div`
   display: flex;

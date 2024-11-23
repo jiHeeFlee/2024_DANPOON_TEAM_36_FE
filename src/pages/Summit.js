@@ -14,6 +14,8 @@ import { SummitInfoContents } from "../constants/SummitMockup";
 import { SummitMapTest } from "../constants/SummitMapTest";
 
 import { useParams } from "react-router-dom";
+import { getSummit } from "../apis/Summit/getSummit";
+import { getBoardsBySummit } from "../apis/Board/getBoardsBySummit";
 
 function Summit() {
   const [isModal, setIsModal] = useState(false);
@@ -24,6 +26,11 @@ function Summit() {
   const currentSummitInfo =
     SummitInfoContents[summitId] || SummitInfoContents["1"];
 
+  useEffect(() => {
+    getBoardsBySummit(summitId).then((res) => {
+      console.log(res);
+    });
+  }, []);
   const handle_button_click = () => {
     // setIsModal(true);
     setIsModal((prev) => !prev);
@@ -67,6 +74,7 @@ function Summit() {
               setIsModal(true); // 모달을 열도록 상태 업데이트
             }}
             route={ModalMessage.login.router}
+            summitId={summitId}
           />
         </InfoContainer>
 

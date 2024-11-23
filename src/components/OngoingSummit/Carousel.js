@@ -8,6 +8,7 @@ import SummitItem from "../Summit/SummitItem";
 const Carousel = ({ items, title, summitId }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 3; // 한 페이지에 표시할 카드 개수
+  console.log(items);
 
   // 이전 버튼 클릭
   const handlePrev = () => {
@@ -40,70 +41,67 @@ const Carousel = ({ items, title, summitId }) => {
     if (summitId) {
       navigate(`/summit/${summitId}`);
     } else {
-      navigate('/summit');
+      navigate("/summit");
     }
   };
 
-
   return (
     <CarouselContainer>
-        <SemiContainer>
-          <MiniContainer>
-            <Title>{title}</Title>
-            <Button onClick={handleClick}>써밋 둘러보기</Button>
-          </MiniContainer>
-          <CarouselWrapper
-            style={{
-              transform: `translateX(-${(currentIndex * 100) / totalPages}%)`, // 페이지에 맞게 이동
-            }}
+      <SemiContainer>
+        <MiniContainer>
+          <Title>{title}</Title>
+          <Button onClick={handleClick}>써밋 둘러보기</Button>
+        </MiniContainer>
+        <CarouselWrapper
+          style={{
+            transform: `translateX(-${(currentIndex * 100) / totalPages}%)`, // 페이지에 맞게 이동
+          }}
+        >
+          {items.map((item, index) => (
+            <SummitItem
+              key={index}
+              thumbnail={item.thumbnail}
+              service_info={item.service_info}
+              name={item.name}
+              router={item.url}
+            />
+          ))}
+        </CarouselWrapper>
+      </SemiContainer>
+
+      {!items.length < 1 && (
+        <>
+          <LeftButton onClick={handlePrev} active={currentIndex > 0}>
+            <BsChevronLeft size={32} />
+          </LeftButton>
+          <RightButton
+            onClick={handleNext}
+            active={currentIndex < totalPages - 1}
           >
-            {items.map((item, index) => (
-              <SummitItem
-                key={index}
-                thumbnail={item.thumbnail}
-                service_info={item.service_info} 
-                name={item.name}
-                router={item.url}
-              />
-            ))}
-          </CarouselWrapper>
-        </SemiContainer>
+            <BsChevronRight size={32} />
+          </RightButton>
+        </>
+      )}
 
-        {!items.length < 1 && (
-          <>
-            <LeftButton onClick={handlePrev} active={currentIndex > 0}>
-              <BsChevronLeft size={32} />
-            </LeftButton>
-            <RightButton
-              onClick={handleNext}
-              active={currentIndex < totalPages - 1}
-            >
-              <BsChevronRight size={32} />
-            </RightButton>
-          </>
+      {/* 3개 이하일 때는 1개의 dot만 보여주고 active 상태로 표시 */}
+      <CarouselNav>
+        {items.length <= 3 ? (
+          <CarouselDot active={true} />
+        ) : (
+          Array.from({ length: totalPages }).map((_, index) => (
+            <CarouselDot
+              key={index}
+              active={index === currentIndex}
+              onClick={() => handleDotClick(index)}
+            />
+          ))
         )}
-
-        {/* 3개 이하일 때는 1개의 dot만 보여주고 active 상태로 표시 */}
-        <CarouselNav>
-          {items.length <= 3 ? (
-            <CarouselDot active={true} />
-          ) : (
-            Array.from({ length: totalPages }).map((_, index) => (
-              <CarouselDot
-                key={index}
-                active={index === currentIndex}
-                onClick={() => handleDotClick(index)}
-              />
-            ))
-          )}
-        </CarouselNav>
-      
+      </CarouselNav>
     </CarouselContainer>
   );
 };
 
 export default Carousel;
-
 
 const CarouselContainer = styled.div`
   display: flex;
@@ -118,17 +116,17 @@ const CarouselContainer = styled.div`
 const SemiContainer = styled.div`
   margin: 0;
   padding: 0;
-`
+`;
 
 const MiniContainer = styled.div`
   display: flex;
-  align-items: center;  /* 세로 정렬 */
-  width: 100%;  
+  align-items: center; /* 세로 정렬 */
+  width: 100%;
   height: 40px;
 `;
 
 const Title = styled.div`
-  color: ${themeGet('color.500')};
+  color: ${themeGet("color.500")};
   font-size: ${themeGet("fonts.h3.size")};
   font-weight: bold;
   margin-right: 20px;
@@ -165,7 +163,6 @@ const CarouselWrapper = styled.div`
   justify-content: flex-start;
   gap: 40px;
 `;
-
 
 const CarouselButton = styled.button`
   position: absolute;

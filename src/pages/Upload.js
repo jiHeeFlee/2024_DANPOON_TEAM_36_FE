@@ -22,8 +22,10 @@ import { getMyBoard } from "../apis/Board/getMyBoard";
 // api - POST
 import { updateBoard } from "../apis/Board/updateBoard";
 import MyPTVideo from "../components/MyPage/MyPTVideo";
-
-function Upload({ summitId }) {
+import { useParams } from "react-router-dom";
+import { uploadImage } from "../apis/Feed/uploadImage";
+function Upload({ summit }) {
+  const { summitId } = useParams();
   const [isModal, setIsModal] = useState(false);
   const [modalContent, setModalContent] = useState(null); // 모달 내용을 동적으로 관리
   const [formData, setFormData] = useState({
@@ -71,7 +73,10 @@ function Upload({ summitId }) {
       });
     } else {
       // 정상 처리 로직
-      saveBoard(formData);
+      uploadImage(formData.thumbnail).then((res) => {
+        saveBoard(formData, summitId, res.data.data.imageUrls);
+      });
+
       handleOpenModal({
         icon: ModalMessage.pt.icon,
         message: ModalMessage.pt.message,
