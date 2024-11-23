@@ -61,7 +61,9 @@ function Mypage() {
 
   return (
     <Container>
-      <NavigationBar active="mypage" />
+      <NavigationBar 
+        // active="mypage" 
+        />
       <Title>마이 페이지</Title>
       <Header>
         <span>{userInfo.name}</span>님 안녕하세요
