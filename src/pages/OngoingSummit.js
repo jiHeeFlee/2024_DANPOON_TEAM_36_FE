@@ -55,8 +55,10 @@ const OngoingSummit = () => {
 
   const [summitData, setSummitData] = useState([{}]);
   useEffect(() => {
+    console.log("aa");
     getAllSummit().then((res) => {
       setSummitData(res.data.data);
+      summitData.forEach((value) => {});
     });
   }, []);
 
@@ -71,7 +73,6 @@ const OngoingSummit = () => {
           </Description>
         </TitleSection>
       </Header>
-
       <SummitSection>
         {summitData.map((summit, index) => (
           <CarouselContainer key={index}>
@@ -82,7 +83,6 @@ const OngoingSummit = () => {
             />
           </CarouselContainer>
         ))}
-
         {summitData.map((summit, index) => (
           <UplaodSuggestion
             key={index}
@@ -92,7 +92,6 @@ const OngoingSummit = () => {
           />
         ))}
       </SummitSection>
-
       <Footer />
     </MainContainer>
   );

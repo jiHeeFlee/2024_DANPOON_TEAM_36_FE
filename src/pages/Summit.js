@@ -1,4 +1,4 @@
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import themeGet from "../utils/themeGet";
 
@@ -7,13 +7,13 @@ import SummitItem from "../components/Summit/SummitItem";
 import GotoUpload from "../components/Summit/GotoUpload";
 import Modal from "../components/Modal";
 import Background from "../components/Background";
-import Footer from '../components/Footer';
+import Footer from "../components/Footer";
 
 import { ModalMessage } from "../constants/ModalMessage";
 import { SummitInfoContents } from "../constants/SummitMockup";
 import { SummitMapTest } from "../constants/SummitMapTest";
 
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -68,6 +68,7 @@ const ItemGrid = styled.div`
 `;
 
 function Summit() {
+  const { summitId } = useParams();
   const [isModal, setIsModal] = useState(false);
   const [gotoUpload, setGotoUpload] = useState(false);
 
@@ -88,9 +89,6 @@ function Summit() {
     .split(".")
     .map((line) => line.trim())
     .filter((line) => line.length > 0);
-
-
-
 
   return (
     <>
