@@ -40,29 +40,29 @@ const OngoingSummit = () => {
     },
   ];
 
-
+  const [isMock, setIsMock] = useState(true);
   const [summitData, setSummitData] = useState(summitMockData);
+  const [boardData, setBoardData] = useState([{}]);
+  useEffect(() => {
+    summitData.forEach((value) => {
+      getBoardsBySummit(value.id).then((res) => {
+        setBoardData(res.data);
+        setIsMock(false);
+      });
+    });
+  }, [summitData]);
   useEffect(() => {
     getAllSummit().then((res) => {
-      setSummitData(res.data.data);
+      if (res.status === 200) setSummitData(res.data.data.slice(-3));
     });
   }, []);
 
-  const [boardData, setBoardData] = useState([{}]);
-  // useEffect(() => {
-  //   summitData.forEach((value) => {
-  //     getBoardsBySummit(value.id).then((res) => {
-  //       setBoardData(res.data);
-  //     });
-  //   });
-  // }, [summitData]);
   // useEffect(() => {
   //   getAllSummit().then((res) => {
   //     const _summitData = res.data.data;
   //     setSummitData(_summitData);
   //   });
   // }, []);
-
 
   return (
     <MainContainer>
@@ -75,7 +75,6 @@ const OngoingSummit = () => {
           </Description>
         </TitleSection>
       </Header>
-
 
       {/* <SummitSection>
 
@@ -99,29 +98,33 @@ const OngoingSummit = () => {
 
       </SummitSection> */}
 
-<SummitSection>
-    {summitData.map((summit) => (
-      // summit.items가 배열일 때만 length를 사용할 수 있도록 조건 추가
-      Array.isArray(summit.items) && summit.items.length > 0 ? (
-        <CarouselContainer key={summit.id}>
-          <Carousel title={summit.title} items={summit.items} summitId={summit.id} />
-        </CarouselContainer>
-      ) : null
-    ))}
+      <SummitSection>
+        {summitData.map((summit) =>
+          // summit.items가 배열일 때만 length를 사용할 수 있도록 조건 추가
+          Array.isArray(summit.items) && summit.items.length > 0 ? (
+            <CarouselContainer key={summit.id}>
+              <Carousel
+                title={summit.title}
+                items={summit.items}
+                summitId={summit.id}
+              />
+            </CarouselContainer>
+          ) : null
+        )}
 
-    {summitData.map((summit, index) => (
-      // summit.items가 비어있거나 undefined일 경우 UploadSuggestion을 렌더링
-      (!Array.isArray(summit.items) || summit.items.length === 0) && (
-        <UploadSuggestion 
-          key={index}
-          summitId={summit.id}
-          header={summit.title}
-          caption="써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요."
-        />
-      )
-    ))}
-  </SummitSection>
-
+        {summitData.map(
+          (summit, index) =>
+            // summit.items가 비어있거나 undefined일 경우 UploadSuggestion을 렌더링
+            (!Array.isArray(summit.items) || summit.items.length === 0) && (
+              <UploadSuggestion
+                key={index}
+                summitId={summit.id}
+                header={summit.title}
+                caption="써밋 페이지에 접속해 가장 먼저 피칭 영상을 업로드해보세요."
+              />
+            )
+        )}
+      </SummitSection>
 
       <Footer />
     </MainContainer>
