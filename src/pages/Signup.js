@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import themeGet from "../utils/themeGet";
@@ -12,11 +12,10 @@ import Modal from "../components/Modal";
 import InputMessage from "../constants/InputMessage";
 import { ModalMessage } from "../constants/ModalMessage";
 
-
 function SignUp() {
   const navigate = useNavigate();
 
-  const [participant_type, setParticipantType] = useState('YOUTH');
+  const [participant_type, setParticipantType] = useState('');
 
   const [isTalk, setIsTalk] = useState(true);
   
@@ -68,15 +67,18 @@ function SignUp() {
       consentSummitAlerts: booleanValue,
     }));
   };
-  
-  
+
   const handleInputChange = (field, value) => {
     setFormData((prevData) => ({
       ...prevData,
-      [field]: value,
+      memberSignUpDTO: {
+        ...prevData.memberSignUpDTO,
+        [field]: value,
+      }
     }));
     console.log(`${field}가 변경됨: ${value}`);
   };
+  
   
   const handleAllCheckbox = (e) => {
     const checked = e.target.checked;
@@ -88,6 +90,7 @@ function SignUp() {
     console.log('isRequiredChecked : ', isRequiredChecked);
     console.log('isOptionalChecked : ', isOptionalChecked);
   };
+
   const handleRequiredCheckbox = () => {
     setIsRequiredChecked((prev) => !prev);
   };
@@ -131,7 +134,7 @@ function SignUp() {
       <Container>
         <NavigationBar />
         <Items>
-          <Header>회원 정보를 등록해주세요</Header>
+          <Header>회원 정보를 작성해주세요</Header>
           <SignupContainer>
             {/* 이름 */}
             <Inputs 
@@ -139,7 +142,7 @@ function SignUp() {
               placeholder={InputMessage.signup.name.placeholder} 
               star={InputMessage.signup.name.star}
               caption={InputMessage.signup.name.caption}
-              onChange={(e) => handleInputChange("name", e.target.value)}
+              onChange={(e) => handleInputChange("name", e.target.value)} 
             />
 
             {/* 연락처  */}
@@ -148,34 +151,33 @@ function SignUp() {
               placeholder={InputMessage.signup.contact.placeholder} 
               star={InputMessage.signup.contact.star}
               caption={InputMessage.signup.contact.caption}
-              onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+              onChange={(e) => handleInputChange("phoneNumber", e.target.value)} 
             />
-
-            {/* 이메일  */}
-            <Inputs 
+                      {/* 이메일 
+                      <Inputs 
               header={InputMessage.signup.email.header} 
               placeholder={InputMessage.signup.email.placeholder} 
               star={InputMessage.signup.email.star}
               caption={InputMessage.signup.email.caption}
               onChange={(e) => handleInputChange("email", e.target.value)}
-            />
-            
+            /> */}
+
             {/* Radio Group : 참여자 구분 */}
-            <Inputs
+<Inputs
               header={'참여자 구분'}
               star='true'
+              info={InputMessage.alert.info}
               caption={InputMessage.signup.participant_position.caption}
               type='radio'
               options={[
-                {label: '청년 창업가', value: 'YOUTH'},
+                {label: '청년 창업가', value: 'ENTREPRENEUR'},
                 {label: '예비 투자자', value: 'INVESTOR'}
               ]}
-              checkedValue={InputMessage.signup.participant_position.position.youth.value}
+              checkedValue={participant_type}
               onRadioChange={handleRadioPosition}
-              onChange={(e) => handleInputChange("userType", e.target.value)}
             />
 
-            <CompanyWrapper>
+<CompanyWrapper>
               {/* 소속 회사  */}
               <CompanyInputs
                 header={InputMessage.signup.company.header} 
@@ -193,22 +195,38 @@ function SignUp() {
                 onChange={(e) => handleInputChange("position", e.target.value)}
               />
             </CompanyWrapper>
-            
-            {/* 사업자 등록 번호  */}
-            <Inputs 
-              header={InputMessage.signup.registration_number.header} 
-              placeholder={InputMessage.signup.registration_number.placeholder} 
-              star={InputMessage.signup.registration_number.star}
-              caption={InputMessage.signup.registration_number.caption}
-              onChange={(e) => handleInputChange("businessRegistrationNumber", e.target.value)}
-            />
-            {/* 투자 관심 분야  */}
-            <Inputs 
-              header={InputMessage.signup.idea_sector.header} 
-              placeholder={InputMessage.signup.idea_sector.placeholder} 
-              star={InputMessage.signup.idea_sector.star}
-              onChange={(e) => handleInputChange("businessIdeaField", e.target.value)}
-            />
+
+            {/* 'YOUTH'일 경우만 사업자 등록 번호와 사업 아이디어 필드 보이게 하기 */}
+            {participant_type === 'ENTREPRENEUR' && (
+              <>
+                {/* 사업자 등록 번호 */}
+                <Inputs 
+                  header={InputMessage.signup.registration_number.header} 
+                  placeholder={InputMessage.signup.registration_number.placeholder} 
+                  star={InputMessage.signup.registration_number.star}
+                  caption={InputMessage.signup.registration_number.caption}
+                  onChange={(e) => handleInputChange("businessRegistrationNumber", e.target.value)} // onChange 제대로 전달
+                />
+
+                {/* 사업 아이디어 및 분야 */}
+                <Inputs 
+                  header={'사업 아이디어 및 분야'}
+                  placeholder={'사업 아이디어 및 분야를 입력하세요'} 
+                  star={InputMessage.signup.idea_sector.star}
+                  onChange={(e) => handleInputChange("businessIdeaField", e.target.value)} // onChange 제대로 전달
+                />
+              </>
+            )}
+
+            {/* 'INVESTOR'일 경우에만 투자 관심 분야 보이게 하기 */}
+            {participant_type === 'INVESTOR' && (
+              <Inputs 
+                header={InputMessage.signup.investor_interests.header} // 투자 관심 분야 추가
+                placeholder={InputMessage.signup.investor_interests.placeholder} 
+                star={InputMessage.signup.investor_interests.star}
+                onChange={(e) => handleInputChange("businessIdeaField", e.target.value)} // 투자 관심 분야
+              />
+            )}
 
             {/* Radio Group : 써밋 알림톡 수신 */}
             <Inputs
@@ -223,7 +241,6 @@ function SignUp() {
               ]}
               checkedValue={formData.memberSignUpDTO.consentSummitAlerts}
               onRadioChange={handleRadioTalk}
-              onChange={(e) => handleInputChange("consentSummitAlerts", e.target.value)}
             />
 
             {/* checkBox Group : 개인정보수집 및 이용동의 */}
@@ -245,30 +262,35 @@ function SignUp() {
                   </p>}
                 label={
                   <p style={{margin: 0, padding: 0, textAlign: 'center'}}>
-                    <span style={{color: '#FF582D', fontSize: '14px'}}>(필수)</span> 
-                    등록을 위한 개인정보 수집 및 이용에 동의합니다.
+                    <span style={{color: '#FF582D', fontSize: '14px'}}>(필수) </span> 
+                     등록을 위한 개인정보 수집 및 이용에 동의합니다.
                     <span style={{color: '#FF582D', fontSize: '14px'}}>*</span>
                   </p>
                 }
+                style={{marginTop:'16px'}}
+                onClick={handleRequiredCheckbox}
                 checkedValue={isRequiredChecked}
-                onChange={handleRequiredCheckbox} // 필수 선택 동작
               />
-              {/* 선택 체크 박스 */}
+              
+              {/* 선택 동의 체크 박스 */}
               <Inputs 
                 type="checkBox"
+                caption={
+                  <p style={{textAlign: 'center'}}>
+                    <span style={{color: '#FF582D', fontSize: '14px'}}>*</span> 선택사항입니다.
+                  </p>}
                 label={
-                  <p style={{margin:0, padding:0, textAlign:'center'}}>
-                      <span style={{color:'#707070', fontSize:'14px', fontWeight:'500'}}>(선택)</span>
-                      등록을 위한 개인정보 수집 및 이용에 동의합니다. 
-                      <span style={{color:'#707070', fontSize:'14px', fontWeight:'500'}}>(선택 정보)</span>
+                  <p style={{margin: 0, padding: 0, textAlign: 'center'}}>
+                    <span style={{color: '#FF582D', fontSize: '14px'}}>(선택) </span> 
+                    등록을 위한 개인정보 수집 및 이용에 동의합니다.
+                    <span style={{color: '#FF582D', fontSize: '14px'}}></span>
+
                   </p>
                 }
                 style={{marginTop:'16px'}}
-
                 onClick={handleOptionalCheckbox}
                 checkedValue={isOptionalChecked}
                 onChange={handleOptionalCheckbox} // 선택 동의 핸들러
-
               />
             </CheckboxContainer>
 
@@ -277,7 +299,7 @@ function SignUp() {
           {/* 회원 정보 등록 버튼 : 버튼 클릭시 api 통신 */}
           <UploadButton 
             onClick={handleUploadButton}
-            text='회원 정보 등록하기'
+            text='회원 정보 작성 완료'
           />
         </Items>
         <Footer />
@@ -288,7 +310,6 @@ function SignUp() {
             icon={ModalMessage.agree.icon}
             message={ModalMessage.agree.message}
             button={ModalMessage.agree.button}
-
             onClose={handleCheckRequired}
           />
         )}
@@ -299,17 +320,17 @@ function SignUp() {
             icon={ModalMessage.signup.icon}
             message={ModalMessage.signup.message}
             button={ModalMessage.signup.button}
-
-            //백그라운드 클릭 시 메인으로 이동하게 설정
             onClose={handleCloseModal}
           />
         )}
       </Container>
     </>
   );
-};
+}
 
 export default SignUp;
+
+
 
 const Container = styled.div`
     display: flex;

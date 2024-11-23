@@ -2,20 +2,29 @@ import styled from 'styled-components';
 import themeGet from '../../utils/themeGet';
 
 import GotoUpload from '../Summit/GotoUpload';
+import { useNavigate } from 'react-router-dom';
 
 function UplaodSuggestion({
     header,
     caption,
-    // 추후 라우터 작업 진행하기
-    // router
+    summitId
 }){
+
+const navigate = useNavigate();
+const handleClick = () => {
+    if (summitId) {
+      navigate(`/summit/${summitId}`);
+    } else {
+      navigate('/summit');
+    }
+  };
+
 
     return(
         <>
             <Container>
-                <Header>{header} 를 선도하는 청년 창업가가 되고 싶으신가요?</Header>
+                <Header onClick={handleClick}> '{header}'를 선도하는 청년 창업가가 되고 싶으신가요?</Header>
                 <Caption>{caption}</Caption>
-
                 <GotoUpload />
 
             </Container>
@@ -54,6 +63,8 @@ const Header=styled.p`
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
+
+    cursor: pointer;
 `;
 const Caption=styled.p`
     text-align: left;

@@ -19,9 +19,13 @@ const Container = styled.div`
 
   margin: 0;
 
-  width: 100vw;
+  width: 99vw;
 
-  background-color: ${themeGet("color.main")};
+  background: linear-gradient(
+    180deg,
+    ${themeGet("color.main")} 60%,
+    ${themeGet("color.100")} 40%
+  );
 `;
 
 const InfoContainer = styled.div`

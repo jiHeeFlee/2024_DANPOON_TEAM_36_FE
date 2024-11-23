@@ -7,12 +7,13 @@ import Footer from "../components/Footer";
 import Info from "../components/MyPage/Info";
 import VideoWrapper from "../components/MyPage/VideoWrapper";
 import LikePTVideo from "../components/MyPage/LikePTVideo";
-import PTList from "../components/MyPage/PTList";
 
+import { useSearchParams } from "react-router-dom";
 import { MypageMockup } from "../constants/MypageMockup";
 import { LikePTVideoMockup } from "../constants/LikePTVideoMockup";
 
 function Mypage() {
+  const [participant_type, setParticipant_type] = useState("ENTREPRENEUR");
 
   return (
     <Container>
@@ -21,6 +22,29 @@ function Mypage() {
       <Header>
         <span>{MypageMockup.name}</span>님 안녕하세요
       </Header>
+
+
+//       {participant_type === "ENTREPRENEUR" ? (
+//         <Wrapper>
+//           <Info
+//             participant_type="ENTREPRENEUR"
+//             styled={{ margin: "40px auto 25px auto" }}
+//           />
+//           <VideoWrapper />
+//           <LikePTVideo type="like" />
+//         </Wrapper>
+//       ) : (
+//         <Wrapper>
+//           <Info
+//             participant_type="INVESTOR"
+//             styled={{ margin: "40px auto 25px auto" }}
+//           />
+//           <LikePTVideo type="propose" />
+//           <LikePTVideo type="like" />
+//         </Wrapper>
+//       ) 
+//     }
+
       <Wrapper>
         <Info
           participant_type={MypageMockup.userType}
@@ -32,6 +56,7 @@ function Mypage() {
 
         <LikePTVideo />
       </Wrapper>
+
       <Footer />
     </Container>
   );
@@ -112,8 +137,8 @@ const Wrapper = styled.div`
   min-height: 1379px;
   border-radius: 20px;
 
-  margin: 40px 162px;
-  padding: 80px 120px;
+  margin: 40px 162px 0 162px;
+  padding: 80px 120px 0  120px;
 
   gap: 30px;
 

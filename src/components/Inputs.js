@@ -24,6 +24,8 @@ function Inputs({
 
     isCheckBox
 }) {
+
+    const handleChange = onChange || (() => {});
     return (
         <Container>
             {/* header가 있을 때만 Header 컴포넌트를 렌더링 */}
@@ -54,7 +56,7 @@ function Inputs({
                             checkedValue={checkedValue === option.value}
                             onChange={(e) => {
                                 onRadioChange(e);
-                                onChange(e);
+                                handleChange(e); ;
                             }}
                         >
                             <RadioText>{option.label}</RadioText>
