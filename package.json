@@ -2,6 +2,7 @@
   "name": "yesummit",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jiHeeFlee.github.io/2024_DANPOON_TEAM_36_FE",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
