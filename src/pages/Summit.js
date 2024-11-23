@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import styled from "styled-components";
 import themeGet from "../utils/themeGet";
 
@@ -12,6 +12,8 @@ import Footer from '../components/Footer';
 import { ModalMessage } from "../constants/ModalMessage";
 import { SummitInfoContents } from "../constants/SummitMockup";
 import { SummitMapTest } from "../constants/SummitMapTest";
+
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -86,6 +88,9 @@ function Summit() {
     .split(".")
     .map((line) => line.trim())
     .filter((line) => line.length > 0);
+
+
+
 
   return (
     <>
