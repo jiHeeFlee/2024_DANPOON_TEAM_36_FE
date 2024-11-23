@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import themeGet from "../utils/themeGet";
 
@@ -18,27 +18,23 @@ import NoneThumbnail from '../../src/assets/img/noneThumbnail.svg';
 import { saveComment } from "../apis/Comment/saveComment";
 import { updateComment } from "../apis/Comment/updateComment";
 import { deleteComment } from "../apis/Comment/deleteComment";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { SummitMapTest } from "../constants/SummitMapTest";
 
-// API로부터 받아올 데이터 목(mock) 설정
-const mockPTData = {
-  title: "의사와 환자를 연결하는 원격 진료 서비스, 닥터나우",
-  description: `닥터나우는 현대인들이 언제 어디서나 쉽게 의료 서비스를 받을 수 있도록 돕기 위해 만들어졌습니다.
-                 원격 진료를 통해 의료 접근성을 높이고, 환자와 의사 간의 소통을 간편하게 만들고자 했습니다.
-                 우리 서비스는 특히 바쁜 일상 속에서 의료를 필요로 하는 많은 사람들에게 큰 도움을 주고 있습니다.
-                 앞으로도 더욱 발전하여 더 많은 분들에게 신뢰받는 헬스케어 솔루션을 제공하겠습니다.`,
-  presenter: "최재형 대표님",
-  company: "닥터 나우",
-  date: "2024.10.28",
-  optional_url:'https://www.naver.com/',
-};
+
 
 const PT = () => {
+  
   const navigate = useNavigate();
 
-  const { boardId } = useParams();
+  const { boardId } = useParams();  // URL 파라미터로부터 boardId를 가져옵니다.
+  
+  const currentPtInfo = SummitMapTest[boardId] && SummitMapTest[boardId].length > 0
+  ? SummitMapTest[boardId][0] // 첫 번째 PT 정보 가져오기
+  : null; 
+
+
   const [isHeartFilled, setIsHeartFilled] = useState(false);
 
   const [isInvestModalOpen, setIsInvestModalOpen] = useState(false);
@@ -48,50 +44,59 @@ const PT = () => {
   const [deleteMessage, setDeleteMessage] = useState("");
   const [newComment, setNewComment] = useState("");
 
-  const [author, setAuthor] = useState("");
+
   const [error, setError] = useState(null);
 
 
   // 댓글 등록 (saveComment 사용)
-  const handleRegisterComment = async (text) => {
-    try {
-      const commentData = { text }; // 등록할 댓글 데이터
-      const response = await saveComment(commentData); // API 호출
-      setComments((prevComments) => [...prevComments, response.data]); // 댓글 목록에 추가
-      setNewComment(""); // 댓글 입력 필드 초기화
-    } catch (error) {
-      console.error("댓글 등록 오류:", error);
+  const handleRegisterComment = (commentText, name) => {
+    if (commentText.trim()) {
+      const newComment = { id: comments.length + 1, text: commentText, name }; // 댓글 데이터 생성
+      setComments((prevComments) => [...prevComments, newComment]); // 댓글 배열에 새 댓글 추가
     }
   };
+  // const handleRegisterComment = async (commentText, name) => {
+  //   try {
+  //     const commentData = { text: commentText, name }; // 댓글 데이터
+  //     const response = await saveComment(commentData); // 댓글 저장 API 호출
+  //     setComments((prevComments) => [
+  //       ...prevComments, 
+  //       { id: response.data.id, text: commentText, name } // 새 댓글 추가
+  //     ]);
+  //     setNewComment(""); // 댓글 입력창 초기화
+  //   } catch (error) {
+  //     console.error("댓글 등록 오류:", error);
+  //     setError("댓글 등록 중 문제가 발생했습니다.");
+  //   }
+  // };
 
   // 댓글 수정
-  const handleEditComment = async (id, updatedText) => {
-    try {
-      const updatedComment = { text: updatedText };
-      const response = await updateComment(id, updatedComment); // 수정된 댓글 데이터 전송
-      setComments((prevComments) =>
-        prevComments.map((comment) =>
-          comment.id === id ? { ...comment, text: updatedText } : comment
-        )
-      );
-    } catch (error) {
-      console.error("댓글 수정 오류:", error);
-    }
-  };
+  // const handleEditComment = async (id, updatedText) => {
+  //   try {
+  //     const updatedComment = { text: updatedText };
+  //     const response = await updateComment(id, updatedComment); // 수정된 댓글 데이터 전송
+  //     setComments((prevComments) =>
+  //       prevComments.map((comment) =>
+  //         comment.id === id ? { ...comment, text: updatedText } : comment
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error("댓글 수정 오류:", error);
+  //   }
+  // };
 
   // 댓글 삭제
-  const handleDeleteComment = async (id) => {
-    try {
-      await deleteComment(id);
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment.id !== id)
-      ); // 삭제 후 목록에서 제거
-    } catch (error) {
-      console.error("댓글 삭제 오류:", error);
-    }
-  };
+  // const handleDeleteComment = async (id) => {
+  //   try {
+  //     await deleteComment(id);
+  //     setComments((prevComments) =>
+  //       prevComments.filter((comment) => comment.id !== id)
+  //     ); // 삭제 후 목록에서 제거
+  //   } catch (error) {
+  //     console.error("댓글 삭제 오류:", error);
+  //   }
+  // };
 
-  // 댓글 목록
 
   const handleHeartClick = () => {
     setIsHeartFilled(!isHeartFilled);
@@ -105,9 +110,13 @@ const PT = () => {
     setIsInvestModalOpen(false);
   };
 
-  const descriptionSentences = mockPTData.description
-    .split(".")
-    .filter(Boolean);
+  // const descriptionSentences = ptData.description
+  //   .split(".")
+  //   .filter(Boolean);
+
+  const descriptionSentences = currentPtInfo && currentPtInfo.description
+  ? currentPtInfo.description.split(".").filter(Boolean)
+  : []; 
 
    // 삭제 버튼 클릭 핸들러
    const handleDeleteButtonClick = (type) => {
@@ -124,14 +133,12 @@ const PT = () => {
   };
 
 
-  const ptData = SummitMapTest[boardId]; 
-
   return (
     <Container>
       <Header>
         <NavigationBar />
         <TitleContainer>
-          <Title>{ptData.title}</Title>
+          <Title>{currentPtInfo.service_info}</Title>
           <EditDelete 
             color="white"
             size={36}
@@ -158,7 +165,7 @@ const PT = () => {
               />
               <CommentInputWithSubmit
                 onSubmit={handleRegisterComment}
-                author={author}
+                name={currentPtInfo.name}
               />
             </VideoCommentWrapper>
 
@@ -169,7 +176,7 @@ const PT = () => {
                 comments.map((comment) => (
                   <CommentItem
                     key={comment.id}
-                    author={comment.author}
+                    name={comment.name}
                     text={comment.text}
                     onEdit={() => {}}
                     onDelete={() => {}}
@@ -187,18 +194,18 @@ const PT = () => {
 
           <ContentSectionRight>
             <VideoInfo>
-              <DateText>{mockPTData.date}</DateText>
+              <DateText>{currentPtInfo.date}</DateText>
 
               <PresenterWrapper>
                 <Label>발표자</Label>
-                <Name>{mockPTData.presenter}</Name>
+                <Name>{currentPtInfo.name}</Name>
               </PresenterWrapper>
               <CompanyWrapper>
                 <Label>소속</Label>
                 <CompanyContainer>
-                  <Name>{mockPTData.company}</Name>
-                  {mockPTData.optional_url !== '' && (
-                    <StyledBiLink onClick={()=>window.open(mockPTData.optional_url)}/>
+                  <Name>{currentPtInfo.company}</Name>
+                  {currentPtInfo.optional_url !== '' && (
+                    <StyledBiLink onClick={()=>window.open(currentPtInfo.optional_url)}/>
                   )}
                 </CompanyContainer>
               </CompanyWrapper>
@@ -389,10 +396,10 @@ const Label = styled.div`
 
 const Name = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   border: none;
   color: ${themeGet("color.500")};
-  margin-left: 16px;
+  margin-left: 35px;
 `;
 
 const CompanyWrapper = styled(PresenterWrapper)``;

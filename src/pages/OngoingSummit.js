@@ -67,6 +67,7 @@ const OngoingSummit = () => {
           </Description>
         </TitleSection>
       </Header>
+
       <SummitSection>
         {/* {summitData.map((summit) => (
           <CarouselContainer key={summit.id}>
@@ -86,6 +87,7 @@ const OngoingSummit = () => {
           />
         ))} */}
       </SummitSection>
+
       <Footer />
     </MainContainer>
   );
